@@ -21,11 +21,12 @@ int main(){
     while (getline(classes_per_uc, line)){
         istringstream line_(line);
 
-        // ler a linha
-        string UcCode, classCode; 
-        char c, r; // r -> '\r'
+        // ler o código da Uc
+        string UcCode, classCode;
+        getline(line_, UcCode, ',');
 
-        line_ >> UcCode >> c >> classCode >> r;
+        // ler o código da turma
+        getline(line_, classCode, '\r');
 
         // dar update das turmas que têm a UC
         bool seen = false;
