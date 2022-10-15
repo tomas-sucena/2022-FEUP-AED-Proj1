@@ -6,7 +6,7 @@
 #include <iostream>
 #include "Class.h"
 
-
+using namespace std;
 
 class UC
 {
@@ -27,7 +27,7 @@ public:
     }
     void remove_class(Class anime){
         for(auto kanna = classes_.begin(); kanna != classes_.end();kanna++){
-            if(*kanna.equals(anime)){
+            if(kanna->equals(anime)){
                 classes_.erase(kanna, kanna+1);
             }
         }
