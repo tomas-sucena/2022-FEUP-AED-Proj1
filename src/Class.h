@@ -17,7 +17,7 @@ public:
     }
 
     bool equals(Class anime){
-        return (anime.getClassCode() == ClassCode_)
+        return (anime.getClassCode() == ClassCode_);
     }
 
 
