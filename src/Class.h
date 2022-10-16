@@ -1,9 +1,8 @@
 #ifndef CLASS_H
 #define CLASS_H
 
-#include <string>
-#include <vector>
 #include <iostream>
+#include <string>
 
 using namespace std;
 
@@ -16,7 +15,7 @@ class Class {
         Class(string ClassCode);
 
         // methods
-        string get_classCode();
+        string get_ClassCode();
         bool equals(Class anime);
         bool operator<(Class c);
 };

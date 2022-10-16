@@ -3,24 +3,23 @@
 
 #include <iostream>
 #include <string>
-#include <vector>
-#include "Class.h"
+#include <set>
 
 using namespace std;
 
 class UC {
     private:
         string UcCode_;
-        vector<Class> classes_;
+        set<string> classes_;
 
     public:
         // constructor
-        UC(string UcCode, vector<Class> classes);
+        UC(string UcCode, set<string> classes);
 
         // methods
         void print_classes();
         string get_UcCode();
-        void remove_class(Class anime);
+        void remove_class(string anime);
 };
 
 #endif
