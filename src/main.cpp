@@ -40,6 +40,30 @@ int main(){
         all_UCs.push_back(uc);
     }
 
+    // ler o 2º ficheiro
+    ifstream classes;
+
+    getline(classes, line);
+
+    while (getline(classes, line)){
+        istringstream line_(line);
+
+        string ClassCode, UcCode, Weekday, Type;
+        float StartHour, Duration;
+
+        // ler a ClassCode
+        getline(line_, ClassCode, ',');
+
+        // ler o UcCode
+        getline(line_, UcCode, ',');
+
+        // ler o Weekday
+        getline(line_, Weekday, ',');
+
+        // ler a StartHour
+        line_ >> StartHour;
+    }
+
     /*-----LER COMANDOS-----*/
     vector<string> command = {"display", "print", "show"};
     vector<string> target = {"all", "student", "UC"};

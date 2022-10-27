@@ -9,7 +9,7 @@ using namespace std;
 
 struct block{
     string UcCode, weekday, type;
-    int start, end;
+    float start, end;
 };
 
 class Schedule{
