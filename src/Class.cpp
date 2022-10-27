@@ -6,8 +6,8 @@ string Class::get_ClassCode(){
     return ClassCode_;
 }
 
-bool Class::equals(Class anime){
-    return (anime.get_ClassCode() == ClassCode_);
+bool Class::equals(Class c){
+    return (c.get_ClassCode() == ClassCode_);
 }
 
 bool Class::operator<(Class c){
