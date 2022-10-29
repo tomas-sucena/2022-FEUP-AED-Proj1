@@ -7,6 +7,7 @@
 
 #include "UC.h"
 #include "Class.h"
+#include "Student.h"
 
 using namespace std;
 
@@ -90,9 +91,9 @@ int main(){
     vector<string> target = {"all", "student", "UC"};
     vector<string> what = {"student", "UC", "classes"}; 
 
-b:  cout << "Hello! How can I be of assistance?" << endl;
+    cout << "Hello! How can I be of assistance?" << endl;
 
-    string s1, s2, s3; 
+b:  string s1, s2, s3; 
     cin >> s1 >> s2 >> s3;
 
     bool valid = false;
@@ -158,7 +159,7 @@ b:  cout << "Hello! How can I be of assistance?" << endl;
         cout << "Invalid command! Please, type another command." << endl;
     }
 
-    cout << endl;
+    cout << endl << "Anything else?" << endl;
     goto b;
 
     /*

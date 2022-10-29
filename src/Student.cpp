@@ -1,4 +1,4 @@
-#include "student.h"
+#include "Student.h"
 
 Student::Student(string studentCode, string studentName) : studentCode_(studentCode), studentName_(studentName){}
 
