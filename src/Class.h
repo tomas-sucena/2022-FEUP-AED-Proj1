@@ -15,7 +15,7 @@ class Class {
         Class(string classCode);
 
         // methods
-        string get_ClassCode();
+        string get_classCode();
         bool equals(Class anime);
         bool operator<(Class c);
 };

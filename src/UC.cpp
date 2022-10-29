@@ -1,7 +1,10 @@
 #include "UC.h"
 
 UC::UC(string ucCode, set<string> classes) : 
-    ucCode_(ucCode), classes_(classes) {}
+       ucCode_(ucCode), classes_(classes) {}
+
+UC::UC(string ucCode, set<string> classes, Schedule schedule) :
+       ucCode_(ucCode), classes_(classes), schedule_(schedule) {};
 
 void UC::print_classes(){
     for (string anime : classes_){

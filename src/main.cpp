@@ -12,12 +12,12 @@ using namespace std;
 
 int main(){
     /*-----LER FICHEIROS-----*/
+    // ler o 1º ficheiro
     ifstream classes_per_uc("../classes_per_uc.csv");
 
     string line; getline(classes_per_uc, line); // ignorar o cabeçalho
-    
-    // ler o 1º ficheiro
-    map<string, set<string>> uc_map;
+
+    map<string, set<string>> mappy;
     
     while (getline(classes_per_uc, line)){
         istringstream line_(line);
@@ -30,23 +30,22 @@ int main(){
         // ler o ClassCode
         getline(line_, classCode, '\r');
 
-        uc_map[ucCode].insert(classCode);
+        mappy[ucCode].insert(classCode);
     }
 
     vector<UC> all_UCs;
-    for (auto it = uc_map.begin(); it != uc_map.end(); it++){
+    for (auto it = mappy.begin(); it != mappy.end(); it++){
         UC uc(it->first, it->second);
 
         all_UCs.push_back(uc);
     }
 
     // ler o 2º ficheiro
-    map<string, set<string>> class_map;
-    uc_map.clear();
-
-    ifstream classes;
+    ifstream classes("../classes.csv");
 
     getline(classes, line); // ignorar o cabeçalho
+
+    map<string, set<Block>> uc_blocks, class_blocks;
 
     while (getline(classes, line)){
         istringstream line_(line);
@@ -71,7 +70,17 @@ int main(){
 
         // ler o Type
         getline(line_, type, '\r');
+
+        uc_blocks[ucCode].insert(Block(classCode, weekday, startHour, duration, type));
+        class_blocks[ucCode].insert(Block(ucCode, weekday, startHour, duration, type));
     }
+
+    // atualizar o vetor de UCs
+    for (UC uc : all_UCs){
+        ;
+    }
+
+
 
     /*-----LER COMANDOS-----*/
     vector<string> command = {"display", "print", "show"};

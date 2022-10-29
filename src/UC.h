@@ -17,6 +17,7 @@ class UC {
     public:
         // constructor
         UC(string ucCode, set<string> classes);
+        UC(string ucCode, set<string> classes, Schedule schedule);
 
         // methods
         void print_classes();

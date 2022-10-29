@@ -8,16 +8,19 @@ using namespace std;
 
 class Block{
     private:
-        string classCode_;
+        string code_;
         string weekday_;
-        float start_;
+        float startHour_;
         float end_;
         string type_;
     
     public:
         // constructor
-        Block(string classCode, string weekday, string start, 
+        Block(string code, string weekday, string startHour, 
               string duration, string type);
+
+        // methods
+        float get_startHour();
 };
 
 #endif

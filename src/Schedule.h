@@ -10,10 +10,12 @@ using namespace std;
 
 class Schedule{
     private:
-        list<Block> l;
+        list<Block> blocks_;
 
     public:
+        // constructors
         Schedule();
+        Schedule(list<Block> blocks);
 };
 
 #endif
