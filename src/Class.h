@@ -18,6 +18,8 @@ class Class {
 
         // methods
         string get_classCode();
+        Schedule get_schedule();
+
         bool equals(Class anime);
         bool operator<(Class c);
 };

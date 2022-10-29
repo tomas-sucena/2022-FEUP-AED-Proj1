@@ -12,6 +12,10 @@ void UC::print_classes(){
     }
 }
 
+string UC::get_UcCode(){
+    return ucCode_;
+}
+
 void UC::remove_class(string classCode){
     for(auto kanna = classes_.begin(); kanna != classes_.end();){
         if (*kanna == classCode){
@@ -23,10 +27,10 @@ void UC::remove_class(string classCode){
     }
 }
 
-string UC::get_UcCode(){
-    return ucCode_;
-}
-
 void UC::add_schedule(Schedule schedule){
     schedule_ = schedule;
+}
+
+Schedule UC::get_schedule(){
+    return schedule_;
 }

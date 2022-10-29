@@ -7,6 +7,10 @@ string Class::get_classCode(){
     return classCode_;
 }
 
+Schedule Class::get_schedule(){
+    return schedule_;
+}
+
 bool Class::equals(Class c){
     return (c.get_classCode() == classCode_);
 }

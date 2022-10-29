@@ -22,9 +22,12 @@ class UC {
         // methods
         void print_classes();
         string get_UcCode();
+
         void add_class(string classCode);
         void remove_class(string classCode);
+
         void add_schedule(Schedule schedule);
+        Schedule get_schedule();
 };
 
 #endif

@@ -72,11 +72,11 @@ int main(){
         getline(line_, type, '\r');
 
         uc_blocks[ucCode].push_back(Block(classCode, weekday, startHour, duration, type));
-        class_blocks[ucCode].push_back(Block(ucCode, weekday, startHour, duration, type));
+        class_blocks[classCode].push_back(Block(ucCode, weekday, startHour, duration, type));
     }
 
     // atualizar o vetor de UCs
-    for (UC uc : all_UCs){
+    for (UC& uc : all_UCs){
         uc.add_schedule(Schedule(uc_blocks[uc.get_UcCode()]));
     }
 
@@ -90,17 +90,18 @@ int main(){
     vector<string> target = {"all", "student", "UC"};
     vector<string> what = {"student", "UC", "classes"}; 
 
-    cout << "Hello! How can I be of assistance?" << endl;
+b:  cout << "Hello! How can I be of assistance?" << endl;
 
     string s1, s2, s3; 
     cin >> s1 >> s2 >> s3;
+
+    bool valid = false;
 
     if (s2 == "UC" && s3 == "classes"){
         cout << endl << "Understood. Please select the desired UC." << endl;
 
         string uc; cin >> uc;
         
-        bool valid = false;
         for (UC u : all_UCs){
             if (u.get_UcCode() == uc){
                 cout << endl << "The UC " << "\033[1m" << uc << 
@@ -115,9 +116,50 @@ int main(){
             cout << "I'm sorry, but that UC does not exist." << endl;
         }
     }
-    else{
-        cout << "Invalid command! Please, type another command.";
+    else if (s2 == "UC" && s3 == "schedule"){
+        cout << endl << "Understood. Please select the desired UC." << endl;
+
+        string uc; cin >> uc;
+
+        for (UC u : all_UCs){
+            if (u.get_UcCode() == uc){
+                cout << endl << "The UC " << "\033[1m" << uc << 
+                "\033[0m" << " has the following schedule:" << endl;
+
+                u.get_schedule().print();
+                valid = true;
+            } 
+        }
+
+        if (!valid){
+            cout << "I'm sorry, but that UC does not exist." << endl;
+        }
     }
+    else if (s2 == "class" && s3 == "schedule"){
+        cout << endl << "Understood. Please select the desired class." << endl;
+
+        string classCode; cin >> classCode;
+
+        for (Class c : all_classes){
+            if (c.get_classCode() == classCode){
+                cout << endl << "The class " << "\033[1m" << classCode << 
+                "\033[0m" << " has the following schedule:" << endl;
+
+                c.get_schedule().print();
+                valid = true;
+            } 
+        }
+
+        if (!valid){
+            cout << "I'm sorry, but that class does not exist." << endl;
+        }
+    }
+    else{
+        cout << "Invalid command! Please, type another command." << endl;
+    }
+
+    cout << endl;
+    goto b;
 
     /*
     if (it1 != command.end() && it2 != target.end() && it3 != what.end()){
