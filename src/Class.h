@@ -8,11 +8,11 @@ using namespace std;
 
 class Class {
     private:
-        string ClassCode_;
+        string classCode_;
 
     public:
         // constructor
-        Class(string ClassCode);
+        Class(string classCode);
 
         // methods
         string get_ClassCode();

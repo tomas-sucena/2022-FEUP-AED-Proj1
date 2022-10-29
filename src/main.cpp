@@ -14,54 +14,63 @@ int main(){
     /*-----LER FICHEIROS-----*/
     ifstream classes_per_uc("../classes_per_uc.csv");
 
-    string line; getline(classes_per_uc, line);
+    string line; getline(classes_per_uc, line); // ignorar o cabeçalho
     
     // ler o 1º ficheiro
-    map<string, set<string>> mappy;
+    map<string, set<string>> uc_map;
     
     while (getline(classes_per_uc, line)){
         istringstream line_(line);
 
-        string UcCode, ClassCode;
+        string ucCode, classCode;
 
-        // ler o código da UC
-        getline(line_, UcCode, ',');
+        // ler o UcCode
+        getline(line_, ucCode, ',');
 
-        // ler o código da turma
-        getline(line_, ClassCode, ',');
+        // ler o ClassCode
+        getline(line_, classCode, '\r');
 
-        mappy[UcCode].insert(ClassCode);
+        uc_map[ucCode].insert(classCode);
     }
 
     vector<UC> all_UCs;
-    for (auto it = mappy.begin(); it != mappy.end(); it++){
+    for (auto it = uc_map.begin(); it != uc_map.end(); it++){
         UC uc(it->first, it->second);
 
         all_UCs.push_back(uc);
     }
 
     // ler o 2º ficheiro
+    map<string, set<string>> class_map;
+    uc_map.clear();
+
     ifstream classes;
 
-    getline(classes, line);
+    getline(classes, line); // ignorar o cabeçalho
 
     while (getline(classes, line)){
         istringstream line_(line);
 
-        string ClassCode, UcCode, Weekday, Type;
-        float StartHour, Duration;
+        string classCode, ucCode, weekday, 
+               startHour, duration, type;
 
         // ler a ClassCode
-        getline(line_, ClassCode, ',');
+        getline(line_, classCode, ',');
 
         // ler o UcCode
-        getline(line_, UcCode, ',');
+        getline(line_, ucCode, ',');
 
         // ler o Weekday
-        getline(line_, Weekday, ',');
+        getline(line_, weekday, ',');
 
         // ler a StartHour
-        line_ >> StartHour;
+        getline(line_, startHour, ',');
+
+        // ler a Duration
+        getline(line_, duration, ',');
+
+        // ler o Type
+        getline(line_, type, '\r');
     }
 
     /*-----LER COMANDOS-----*/
@@ -91,7 +100,7 @@ int main(){
         }
 
         if (!valid){
-            cout << "I'm sorry, but that UC does not exist.";
+            cout << "I'm sorry, but that UC does not exist." << endl;
         }
     }
     else{

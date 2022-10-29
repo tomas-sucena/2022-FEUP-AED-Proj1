@@ -1,7 +1,7 @@
 #include "UC.h"
 
-UC::UC(string UcCode, set<string> classes) : 
-    UcCode_(UcCode), classes_(classes) {}
+UC::UC(string ucCode, set<string> classes) : 
+    ucCode_(ucCode), classes_(classes) {}
 
 void UC::print_classes(){
     for (string anime : classes_){
@@ -9,9 +9,9 @@ void UC::print_classes(){
     }
 }
 
-void UC::remove_class(string anime){
+void UC::remove_class(string classCode){
     for(auto kanna = classes_.begin(); kanna != classes_.end();){
-        if (*kanna == anime){
+        if (*kanna == classCode){
             kanna = classes_.erase(kanna);
         }
         else{
@@ -21,5 +21,5 @@ void UC::remove_class(string anime){
 }
 
 string UC::get_UcCode(){
-    return UcCode_;
+    return ucCode_;
 }

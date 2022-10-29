@@ -1,16 +1,16 @@
 #include "Class.h"
 
-Class::Class(string ClassCode) : ClassCode_(ClassCode) {}
+Class::Class(string classCode) : classCode_(classCode) {}
 
 string Class::get_ClassCode(){
-    return ClassCode_;
+    return classCode_;
 }
 
 bool Class::equals(Class c){
-    return (c.get_ClassCode() == ClassCode_);
+    return (c.get_ClassCode() == classCode_);
 }
 
 bool Class::operator<(Class c){
-    return (ClassCode_ < c.get_ClassCode());
+    return (classCode_ < c.get_ClassCode());
 }
 

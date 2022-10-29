@@ -4,17 +4,13 @@
 #include <iostream>
 #include <list>
 #include <vector>
+#include "Block.h"
 
 using namespace std;
 
-struct block{
-    string UcCode, weekday, type;
-    float start, end;
-};
-
 class Schedule{
     private:
-        list<block> l;
+        list<Block> l;
 
     public:
         Schedule();
