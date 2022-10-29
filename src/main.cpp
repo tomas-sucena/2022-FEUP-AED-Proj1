@@ -45,7 +45,7 @@ int main(){
 
     getline(classes, line); // ignorar o cabeçalho
 
-    map<string, set<Block>> uc_blocks, class_blocks;
+    map<string, list<Block>> uc_blocks, class_blocks;
 
     while (getline(classes, line)){
         istringstream line_(line);
@@ -71,16 +71,19 @@ int main(){
         // ler o Type
         getline(line_, type, '\r');
 
-        uc_blocks[ucCode].insert(Block(classCode, weekday, startHour, duration, type));
-        class_blocks[ucCode].insert(Block(ucCode, weekday, startHour, duration, type));
+        uc_blocks[ucCode].push_back(Block(classCode, weekday, startHour, duration, type));
+        class_blocks[ucCode].push_back(Block(ucCode, weekday, startHour, duration, type));
     }
 
     // atualizar o vetor de UCs
     for (UC uc : all_UCs){
-        ;
+        uc.add_schedule(Schedule(uc_blocks[uc.get_UcCode()]));
     }
 
-
+    vector<Class> all_classes;
+    for (auto it = class_blocks.begin(); it != class_blocks.end(); it++){
+        all_classes.push_back(Class(it->first, Schedule(it->second)));
+    }
 
     /*-----LER COMANDOS-----*/
     vector<string> command = {"display", "print", "show"};

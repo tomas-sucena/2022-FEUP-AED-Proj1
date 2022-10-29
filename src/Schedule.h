@@ -16,6 +16,9 @@ class Schedule{
         // constructors
         Schedule();
         Schedule(list<Block> blocks);
+
+        // methods
+        void print();
 };
 
 #endif

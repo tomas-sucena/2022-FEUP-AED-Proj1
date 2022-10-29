@@ -24,6 +24,7 @@ class UC {
         string get_UcCode();
         void add_class(string classCode);
         void remove_class(string classCode);
+        void add_schedule(Schedule schedule);
 };
 
 #endif

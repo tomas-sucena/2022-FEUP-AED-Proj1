@@ -3,16 +3,18 @@
 
 #include <iostream>
 #include <string>
+#include "Schedule.h"
 
 using namespace std;
 
 class Class {
     private:
         string classCode_;
+        Schedule schedule_;
 
     public:
         // constructor
-        Class(string classCode);
+        Class(string classCode, Schedule schedule);
 
         // methods
         string get_classCode();

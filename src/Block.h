@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <string>
+#include <map>
 
 using namespace std;
 
@@ -21,6 +22,8 @@ class Block{
 
         // methods
         float get_startHour();
+        string get_weekday();
+        bool operator<(Block b);
 };
 
 #endif

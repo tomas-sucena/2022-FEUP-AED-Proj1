@@ -26,3 +26,7 @@ void UC::remove_class(string classCode){
 string UC::get_UcCode(){
     return ucCode_;
 }
+
+void UC::add_schedule(Schedule schedule){
+    schedule_ = schedule;
+}

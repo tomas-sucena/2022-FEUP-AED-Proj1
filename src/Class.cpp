@@ -1,6 +1,7 @@
 #include "Class.h"
 
-Class::Class(string classCode) : classCode_(classCode) {}
+Class::Class(string classCode, Schedule schedule) : 
+             classCode_(classCode), schedule_(schedule) {}
 
 string Class::get_classCode(){
     return classCode_;
