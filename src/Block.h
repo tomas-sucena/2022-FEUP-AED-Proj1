@@ -12,8 +12,8 @@ class Block{
     private:
         string code_;
         string weekday_;
-        string startHour_;
-        string endHour_;
+        float startHour_;
+        float endHour_;
         string type_;
     
     public:
@@ -24,13 +24,11 @@ class Block{
         // methods
         string get_code();
         string get_weekday();
-        string get_startHour();
-        string get_endHour();
+        float get_startHour();
+        float get_endHour();
         string get_type();
         
-        bool operator<(Block b);
-        string to_hours(string time);
-        
+        bool operator<(Block b);        
 };
 
 #endif

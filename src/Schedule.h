@@ -19,6 +19,7 @@ class Schedule{
 
         // methods
         void print();
+        string to_hours(float time);
 };
 
 #endif
