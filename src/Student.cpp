@@ -15,5 +15,5 @@ void Student::set_UcperClass(map<string,list<string>> sub){
 }
 
 bool Student::operator<(Student s){
-    return this->get_studentName() < s.get_studentName();
+    return (studentName_ < s.get_studentName());
 }

@@ -99,6 +99,7 @@ int main(){
     map<string, list<string>> sub;
     string reference = "";
     Student a = Student(reference, reference);
+    getline(students,line);
     bool first_loop = true;
     while(getline(students,line)){
         istringstream line_(line);
