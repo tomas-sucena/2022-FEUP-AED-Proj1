@@ -24,6 +24,7 @@ class Student{
         string get_studentCode();
         string get_studentName();
         void set_UcperClass(map<string,list<string>> sub);
+        bool operator<(Student s);
 };
 
 #endif

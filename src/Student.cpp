@@ -13,3 +13,7 @@ string Student::get_studentName(){
 void Student::set_UcperClass(map<string,list<string>> sub){
     UcperClass = sub;
 }
+
+bool Student::operator<(Student s){
+    return this->get_studentName() < s.get_studentName();
+}

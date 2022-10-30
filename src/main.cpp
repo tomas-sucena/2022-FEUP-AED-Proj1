@@ -83,6 +83,16 @@ int main(){
         class_blocks[classCode].push_back(Block(ucCode, weekday, startHour, duration, type));
     }
 
+     // atualizar o vetor de UCs
+    for (UC& uc : all_UCs){
+        uc.add_schedule(Schedule(uc_blocks[uc.get_UcCode()]));
+    }
+
+    vector<Class> all_classes;
+    for (auto it = class_blocks.begin(); it != class_blocks.end(); it++){
+        all_classes.push_back(Class(it->first, Schedule(it->second)));
+    }
+
     //ler o 3º ficheiro
     ifstream students("../students_classes.csv");
     set<Student> all_students;
@@ -119,15 +129,6 @@ int main(){
         sub[classcode].push_back(uccode);
     }
 
-    // atualizar o vetor de UCs
-    for (UC& uc : all_UCs){
-        uc.add_schedule(Schedule(uc_blocks[uc.get_UcCode()]));
-    }
-
-    vector<Class> all_classes;
-    for (auto it = class_blocks.begin(); it != class_blocks.end(); it++){
-        all_classes.push_back(Class(it->first, Schedule(it->second)));
-    }
 
     /*-----LER COMANDOS-----*/
     map<string, int> command = {{"display", 1}, {"print", 1}, {"show", 1}, {"request", 2}};
