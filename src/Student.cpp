@@ -9,3 +9,7 @@ string Student::get_studentCode(){
 string Student::get_studentName(){
     return studentName_;
 }
+
+void Student::set_UcperClass(map<string,list<string>> sub){
+    UcperClass = sub;
+}

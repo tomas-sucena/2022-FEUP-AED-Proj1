@@ -83,6 +83,42 @@ int main(){
         class_blocks[classCode].push_back(Block(ucCode, weekday, startHour, duration, type));
     }
 
+    //ler o 3º ficheiro
+    ifstream students("../students_classes.csv");
+    set<Student> all_students;
+    map<string, list<string>> sub;
+    string reference = "";
+    Student a = Student(reference, reference);
+    bool first_loop = true;
+    while(getline(students,line)){
+        istringstream line_(line);
+        string studentcode, studentname, uccode, classcode;
+        
+        //ler o student code
+        getline(line_, studentcode,',');
+        
+        //ler o student name
+        getline(line_, studentname,',');
+
+        //ler o UC code
+        getline(line_, uccode,',');
+
+        //ler o class code
+        getline(line_, classcode,'\r');
+
+        if(studentcode != reference){
+            reference = studentcode;
+            if(!first_loop){
+                a.set_UcperClass(sub);
+                all_students.insert(a);
+            }
+            a = Student(studentcode,studentname);
+            first_loop = false;
+        }
+
+        sub[classcode].push_back(uccode);
+    }
+
     // atualizar o vetor de UCs
     for (UC& uc : all_UCs){
         uc.add_schedule(Schedule(uc_blocks[uc.get_UcCode()]));
