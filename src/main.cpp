@@ -166,29 +166,6 @@ b:  string s1, s2, s3;
 
     // processar o comando    
     switch (command[s1] + target[s2] + what[s3]){
-        case(17) : { // display UC classes
-            cout << endl << "Understood. Please select the desired UC." << endl;
-
-            string uc; cin >> uc;
-            
-            for (UC u : all_UCs){
-                if (u.get_UcCode() == uc){
-                    cout << endl << "The UC " << "\033[1m" << uc << 
-                    "\033[0m" << " has the following classes:" << endl;
-
-                    u.print_classes();
-
-                    valid = true;
-                    break;
-                } 
-            }
-
-            if (!valid){
-                cout << endl << "I'm sorry, but that UC does not exist." << endl;
-            }
-
-            break;
-        }
         case(14) : { // display UC schedule
             cout << endl << "Understood. Please select the desired UC." << endl;
 
@@ -235,6 +212,29 @@ b:  string s1, s2, s3;
 
             break;
         }
+        case(17) : { // display UC classes
+            cout << endl << "Understood. Please select the desired UC." << endl;
+
+            string uc; cin >> uc;
+            
+            for (UC u : all_UCs){
+                if (u.get_UcCode() == uc){
+                    cout << endl << "The UC " << "\033[1m" << uc << 
+                    "\033[0m" << " has the following classes:" << endl;
+
+                    u.print_classes();
+
+                    valid = true;
+                    break;
+                } 
+            }
+
+            if (!valid){
+                cout << endl << "I'm sorry, but that UC does not exist." << endl;
+            }
+
+            break;
+        }
         case (21) : { // display student classes
             cout << endl << "Understood. Please write the code (upXXXXXXXXX) of the desired student." << endl;
 
@@ -243,7 +243,7 @@ b:  string s1, s2, s3;
             for (Student s : all_students){
                 if (s.get_studentCode() == studentCode){
                     cout << endl << "The student " << "\033[1m" << s.get_studentName() << "\033[0m" 
-                    << '(' << studentCode << ')' << " belongs to the following classes:" << endl;
+                    << " (up" << studentCode << ')' << " belongs to the following classes:" << endl;
 
                     s.print_classes();
 
