@@ -127,9 +127,11 @@ int main(){
     for (auto info : student_info){
         Student s(info.first.first, info.first.second);
 
+        cout << info.first.first << ' ' << info.first.second << endl;
+
         s.set_UcperClass(info.second);
 
-        all_students.insert(s);
+        /*all_students.insert(s);*/
     }
 
 
