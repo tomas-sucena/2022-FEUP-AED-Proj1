@@ -11,6 +11,13 @@
 
 using namespace std;
 
+// função auxiliar usada para tratar dos comandos
+void lowercase(string& s){
+    for (char& c : s){
+        c = tolower(c);
+    }
+}
+
 int main(){
     /*-----LER FICHEIROS-----*/
     // ler o 1º ficheiro
@@ -87,107 +94,96 @@ int main(){
     }
 
     /*-----LER COMANDOS-----*/
-    vector<string> command = {"display", "print", "show"};
-    vector<string> target = {"all", "student", "UC"};
-    vector<string> what = {"student", "UC", "classes"}; 
+    map<string, int> command = {{"display", 1}, {"print", 1}, {"show", 1}, {"request", 2}};
+    map<string, int> target = {{"UC", 3}, {"class", 5}, {"student", 7}, {"all", 9}};
+    map<string, int> what = {{"schedule", 10}, {"classes", 13}, {"UC", 16}, {"student", 19}}; 
 
     cout << "Hello! How can I be of assistance?" << endl;
 
 b:  string s1, s2, s3; 
-    cin >> s1 >> s2 >> s3;
-
     bool valid = false;
 
-    if (s2 == "UC" && s3 == "classes"){
-        cout << endl << "Understood. Please select the desired UC." << endl;
-
-        string uc; cin >> uc;
-        
-        for (UC u : all_UCs){
-            if (u.get_UcCode() == uc){
-                cout << endl << "The UC " << "\033[1m" << uc << 
-                "\033[0m" << " has the following classes:" << endl;
-
-                u.print_classes();
-                valid = true;
-            } 
-        }
-
-        if (!valid){
-            cout << "I'm sorry, but that UC does not exist." << endl;
-        }
+    cin >> s1; lowercase(s1);
+    if (s1 == "quit" || s1 == "no"){
+        goto e;
     }
-    else if (s2 == "UC" && s3 == "schedule"){
-        cout << endl << "Understood. Please select the desired UC." << endl;
 
-        string uc; cin >> uc;
+    cin >> s2 >> s3;
+    lowercase(s2); lowercase(s3);
 
-        for (UC u : all_UCs){
-            if (u.get_UcCode() == uc){
-                cout << endl << "The UC " << "\033[1m" << uc << 
-                "\033[0m" << " has the following schedule:" << endl;
+    // processar o comando    
+    switch (command[s1] + target[s2] + what[s3]){
+        case(17) : {
+            cout << endl << "Understood. Please select the desired UC." << endl;
 
-                u.get_schedule().print();
-                valid = true;
-            } 
+            string uc; cin >> uc;
+            
+            for (UC u : all_UCs){
+                if (u.get_UcCode() == uc){
+                    cout << endl << "The UC " << "\033[1m" << uc << 
+                    "\033[0m" << " has the following classes:" << endl;
+
+                    u.print_classes();
+                    valid = true;
+                } 
+            }
+
+            if (!valid){
+                cout << endl << "I'm sorry, but that UC does not exist." << endl;
+            }
+
+            break;
         }
+        case(14) : {
+            cout << endl << "Understood. Please select the desired UC." << endl;
 
-        if (!valid){
-            cout << "I'm sorry, but that UC does not exist." << endl;
+            string uc; cin >> uc;
+
+            for (UC u : all_UCs){
+                if (u.get_UcCode() == uc){
+                    cout << endl << "The UC " << "\033[1m" << uc << 
+                    "\033[0m" << " has the following schedule:" << endl;
+
+                    u.get_schedule().print();
+                    valid = true;
+                } 
+            }
+
+            if (!valid){
+                cout << endl << "I'm sorry, but that UC does not exist." << endl;
+            }
+
+            break;
         }
-    }
-    else if (s2 == "class" && s3 == "schedule"){
-        cout << endl << "Understood. Please select the desired class." << endl;
+        case(16) : {
+            cout << endl << "Understood. Please select the desired class." << endl;
 
-        string classCode; cin >> classCode;
+            string classCode; cin >> classCode;
 
-        for (Class c : all_classes){
-            if (c.get_classCode() == classCode){
-                cout << endl << "The class " << "\033[1m" << classCode << 
-                "\033[0m" << " has the following schedule:" << endl;
+            for (Class c : all_classes){
+                if (c.get_classCode() == classCode){
+                    cout << endl << "The class " << "\033[1m" << classCode << 
+                    "\033[0m" << " has the following schedule:" << endl;
 
-                c.get_schedule().print();
-                valid = true;
-            } 
+                    c.get_schedule().print();
+                    valid = true;
+                } 
+            }
+
+            if (!valid){
+                cout << endl << "I'm sorry, but that class does not exist." << endl;
+            }
+
+            break;
         }
-
-        if (!valid){
-            cout << "I'm sorry, but that class does not exist." << endl;
+        default : {
+            cout << endl << "Invalid command! Please, type another command." << endl;
+            goto b;
         }
-    }
-    else{
-        cout << "Invalid command! Please, type another command." << endl;
     }
 
     cout << endl << "Anything else?" << endl;
     goto b;
 
-    /*
-    if (it1 != command.end() && it2 != target.end() && it3 != what.end()){
-        if (s2 == "UC"){
-            if (s3 == "classes"){
-                cout << "Understood. Please select the desired UC.";
-
-                string uc; cin >> uc;
-                
-                cout << "\033[1" + uc +  "\033[0m";
-
-                bool valid = false;
-                for (UC u : all_UCs){
-                    if (u.get_UcCode() == uc){
-                        u.print_classes();
-                        valid = true;
-                    } 
-                }
-
-                if (!valid){
-                    cout << "I'm sorry, but that UC does not exist.";
-                }
-            }
-        }
-    }
-    else{
-        cout << "Invalid command! Please, type another command.";
-    }
-    */
+e:  cout << endl << "See you next time!" << endl;
 }
