@@ -15,6 +15,9 @@ class Block{
         float startHour_;
         float endHour_;
         string type_;
+
+        // dias da semana
+        static map<string, int> week;
     
     public:
         // constructor
@@ -22,13 +25,13 @@ class Block{
               string duration, string type);
 
         // methods
-        string get_code();
-        string get_weekday();
-        float get_startHour();
-        float get_endHour();
-        string get_type();
-        
-        bool operator<(Block b);        
+        string get_code() const;
+        string get_weekday() const;
+        float get_startHour() const;
+        float get_endHour() const;
+        string get_type() const;
+
+        friend bool operator<(const Block& b1, const Block& b2);
 };
 
 #endif

@@ -11,6 +11,19 @@
 
 using namespace std;
 
+// overloadings
+bool operator<(const Student& s1, const Student& s2){
+    return (s1.get_studentName() < s2.get_studentName());
+}
+
+bool operator<(const Block& b1, const Block& b2){
+    if (b1.get_weekday() == b2.get_weekday()){
+        return (b1.get_startHour() < b2.get_startHour());
+    }
+    
+    return (Block::week[b1.get_weekday()] < Block::week[b2.get_weekday()]);
+}
+
 // função auxiliar usada para tratar dos comandos
 void lowercase(string& s){
     for (char& c : s){
@@ -135,8 +148,8 @@ int main(){
 
     /*-----LER COMANDOS-----*/
     map<string, int> command = {{"display", 1}, {"print", 1}, {"show", 1}, {"request", 2}};
-    map<string, int> target = {{"UC", 3}, {"class", 5}, {"student", 7}, {"all", 9}};
-    map<string, int> what = {{"schedule", 10}, {"classes", 13}, {"UC", 16}, {"student", 19}}; 
+    map<string, int> target = {{"uc", 3}, {"class", 5}, {"student", 7}, {"all", 9}};
+    map<string, int> what = {{"schedule", 10}, {"classes", 13}, {"uc", 16}, {"student", 19}}; 
 
     cout << "Hello! How can I be of assistance?" << endl;
 
@@ -223,15 +236,14 @@ b:  string s1, s2, s3;
             break;
         }
         case (21) : { // display student classes
-            cout << endl << "Understood. Please write the student code of the desired student."
-                 << endl;
+            cout << endl << "Understood. Please write the code (upXXXXXXXXX) of the desired student." << endl;
 
             string studentCode; cin >> studentCode;
 
             for (Student s : all_students){
                 if (s.get_studentCode() == studentCode){
                     cout << endl << "The student " << "\033[1m" << s.get_studentName() << "\033[0m" 
-                    << '(' << studentCode << ')' << " has the following classes:" << endl;
+                    << '(' << studentCode << ')' << " belongs to the following classes:" << endl;
 
                     s.print_classes();
 

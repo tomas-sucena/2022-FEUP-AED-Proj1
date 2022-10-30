@@ -21,13 +21,11 @@ class Student{
         Student(string studentCode, string studentName);
         
         // methods
-        string get_studentCode();
-        string get_studentName();
+        string get_studentCode() const;
+        string get_studentName() const;
 
         void set_UcperClass(map<string, list<string>> sub);
-        void print_classes();
-        
-        bool operator<(Student s);
+        void print_classes() const;
 };
 
 #endif
