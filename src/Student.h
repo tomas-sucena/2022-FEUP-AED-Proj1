@@ -13,7 +13,7 @@ class Student{
     private:
         string studentCode_;
         string studentName_;
-        map<string,list<string>> UcperClass;
+        map<string, list<string>> UcperClass;
         Schedule schedule_;
 
     public:
@@ -23,7 +23,10 @@ class Student{
         // methods
         string get_studentCode();
         string get_studentName();
-        void set_UcperClass(map<string,list<string>> sub);
+
+        void set_UcperClass(map<string, list<string>> sub);
+        void print_classes();
+        
         bool operator<(Student s);
 };
 

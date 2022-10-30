@@ -83,7 +83,7 @@ int main(){
         class_blocks[classCode].push_back(Block(ucCode, weekday, startHour, duration, type));
     }
 
-     // atualizar o vetor de UCs
+    // atualizar o vetor de UCs
     for (UC& uc : all_UCs){
         uc.add_schedule(Schedule(uc_blocks[uc.get_UcCode()]));
     }
@@ -93,41 +93,43 @@ int main(){
         all_classes.push_back(Class(it->first, Schedule(it->second)));
     }
 
-    //ler o 3º ficheiro
-    ifstream students("../students_classes.csv");
-    set<Student> all_students;
-    map<string, list<string>> sub;
-    string reference = "";
-    Student a = Student(reference, reference);
-    getline(students,line);
-    bool first_loop = true;
-    while(getline(students,line)){
+    // ler o 3º ficheiro
+    ifstream students_classes("../students_classes.csv");
+    
+    getline(students_classes, line); // ignorar o cabeçalho
+
+    map<pair<string, string>, 
+        map<string, list<string>>> student_info;
+
+    while (getline(students_classes, line)){
         istringstream line_(line);
-        string studentcode, studentname, uccode, classcode;
+
+        string studentCode, studentName, 
+               ucCode, classCode;
         
-        //ler o student code
-        getline(line_, studentcode,',');
+        // ler o student code
+        getline(line_, studentCode,',');
         
-        //ler o student name
-        getline(line_, studentname,',');
+        // ler o student name
+        getline(line_, studentName,',');
 
-        //ler o UC code
-        getline(line_, uccode,',');
+        // ler o UC code
+        getline(line_, ucCode,',');
 
-        //ler o class code
-        getline(line_, classcode,'\r');
+        // ler o class code
+        getline(line_, classCode,'\r');
 
-        if(studentcode != reference){
-            reference = studentcode;
-            if(!first_loop){
-                a.set_UcperClass(sub);
-                all_students.insert(a);
-            }
-            a = Student(studentcode,studentname);
-            first_loop = false;
-        }
+        student_info[{studentCode, studentName}]
+                    [classCode].push_back(ucCode);
+    }
 
-        sub[classcode].push_back(uccode);
+    set<Student> all_students;
+    for (auto info : student_info){
+        Student s(info.first.first, info.first.second);
+
+        s.set_UcperClass(info.second);
+
+        all_students.insert(s);
     }
 
 
@@ -151,7 +153,7 @@ b:  string s1, s2, s3;
 
     // processar o comando    
     switch (command[s1] + target[s2] + what[s3]){
-        case(17) : {
+        case(17) : { // display UC classes
             cout << endl << "Understood. Please select the desired UC." << endl;
 
             string uc; cin >> uc;
@@ -162,7 +164,9 @@ b:  string s1, s2, s3;
                     "\033[0m" << " has the following classes:" << endl;
 
                     u.print_classes();
+
                     valid = true;
+                    break;
                 } 
             }
 
@@ -172,7 +176,7 @@ b:  string s1, s2, s3;
 
             break;
         }
-        case(14) : {
+        case(14) : { // display UC schedule
             cout << endl << "Understood. Please select the desired UC." << endl;
 
             string uc; cin >> uc;
@@ -183,7 +187,9 @@ b:  string s1, s2, s3;
                     "\033[0m" << " has the following schedule:" << endl;
 
                     u.get_schedule().print();
+
                     valid = true;
+                    break;
                 } 
             }
 
@@ -193,7 +199,7 @@ b:  string s1, s2, s3;
 
             break;
         }
-        case(16) : {
+        case(16) : { // display class schedule
             cout << endl << "Understood. Please select the desired class." << endl;
 
             string classCode; cin >> classCode;
@@ -204,12 +210,38 @@ b:  string s1, s2, s3;
                     "\033[0m" << " has the following schedule:" << endl;
 
                     c.get_schedule().print();
+
                     valid = true;
+                    break;
                 } 
             }
 
             if (!valid){
                 cout << endl << "I'm sorry, but that class does not exist." << endl;
+            }
+
+            break;
+        }
+        case (21) : { // display student classes
+            cout << endl << "Understood. Please write the student code of the desired student."
+                 << endl;
+
+            string studentCode; cin >> studentCode;
+
+            for (Student s : all_students){
+                if (s.get_studentCode() == studentCode){
+                    cout << endl << "The student " << "\033[1m" << s.get_studentName() << "\033[0m" 
+                    << '(' << studentCode << ')' << " has the following classes:" << endl;
+
+                    s.print_classes();
+
+                    valid = true;
+                    break;
+                }
+            }
+
+            if (!valid){
+                cout << endl << "I'm sorry, but that student code is not valid." << endl;
             }
 
             break;

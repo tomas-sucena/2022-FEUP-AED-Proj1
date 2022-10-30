@@ -10,8 +10,14 @@ string Student::get_studentName(){
     return studentName_;
 }
 
-void Student::set_UcperClass(map<string,list<string>> sub){
+void Student::set_UcperClass(map<string, list<string>> sub){
     UcperClass = sub;
+}
+
+void Student::print_classes(){
+    for (auto info : UcperClass){
+        cout << info.first << endl;
+    }
 }
 
 bool Student::operator<(Student s){
