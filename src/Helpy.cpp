@@ -3,14 +3,15 @@
 #include <sstream>
 
 // função auxiliar usada para tratar dos comandos
-void lowercase(string& s){
+void lowercase(string& s, bool uppercase = false){
     for (char& c : s){
-        c = tolower(c);
+        c = (uppercase) ? toupper(c) :
+                          tolower(c);
     }
 }
 
-
-Helpy::Helpy(set<Student> students, vector<UC> UCs, vector<Class> classes): all_students(students), all_UCs(UCs), all_classes(classes){};
+Helpy::Helpy(set<Student> students, vector<UC> UCs, vector<Class> classes): 
+             all_students(students), all_UCs(UCs), all_classes(classes){}
 
 void Helpy::terminal(){
     /*-----LER COMANDOS-----*/
@@ -33,118 +34,28 @@ b:  string s1, s2, s3;
 
     // processar o comando    
     switch (command[s1] + target[s2] + what[s3]){
-        case(14) : { // display UC schedule
-            cout << endl << "Understood. Please select the desired UC." << endl;
-
-            string uc; cin >> uc;
-
-            for (UC u : all_UCs){
-                if (u.get_UcCode() == uc){
-                    cout << endl << "The UC " << "\033[1m" << uc << 
-                    "\033[0m" << " has the following schedule:" << endl;
-
-                    u.get_schedule().print();
-
-                    valid = true;
-                    break;
-                } 
-            }
-
-            if (!valid){
-                cout << endl << "I'm sorry, but that UC does not exist." << endl;
-            }
+        case(14) : {
+            display_uc_schedule(valid);
 
             break;
         }
-        case(16) : { // display class schedule
-            cout << endl << "Understood. Please select the desired class." << endl;
-
-            string classCode; cin >> classCode;
-
-            for (Class c : all_classes){
-                if (c.get_classCode() == classCode){
-                    cout << endl << "The class " << "\033[1m" << classCode << 
-                    "\033[0m" << " has the following schedule:" << endl;
-
-                    c.get_schedule().print();
-
-                    valid = true;
-                    break;
-                } 
-            }
-
-            if (!valid){
-                cout << endl << "I'm sorry, but that class does not exist." << endl;
-            }
+        case(16) : {
+            display_class_schedule(valid);
 
             break;
         }
-
-        case(17) : { // display UC classes
-            cout << endl << "Understood. Please select the desired UC." << endl;
-
-            string uc; cin >> uc;
-            
-            for (UC u : all_UCs){
-                if (u.get_UcCode() == uc){
-                    cout << endl << "The UC " << "\033[1m" << uc << 
-                    "\033[0m" << " has the following classes:" << endl;
-
-                    u.print_classes();
-
-                    valid = true;
-                    break;
-                } 
-            }
-
-            if (!valid){
-                cout << endl << "I'm sorry, but that UC does not exist." << endl;
-            }
+        case(17) : {
+            display_uc_classes(valid);
 
             break;
         }
-        case(18) : { // display student schedule
-            cout << endl << "Understood. Please write the code (upXXXXXXXXX) of the desired student." << endl;
-            string studentCode; cin >> studentCode;
-
-            for (Student s : all_students){
-                if (s.get_studentCode() == studentCode){
-                    cout << endl << "The student " << "\033[1m" << s.get_studentName() << "\033[0m" 
-                    << " (up" << studentCode << ')' << " has the following schedule:" << endl;
-
-                    s.get_schedule().print();
-
-                    valid = true;
-                    break;
-                }
-            }
-
-            if (!valid){
-                cout << endl << "I'm sorry, but that student code is not valid." << endl;
-            }
+        case(18) : {
+            display_student_schedule(valid);
 
             break;
         }
-        case (21) : { // display student classes
-            cout << endl << "Understood. Please write the code (upXXXXXXXXX) of the desired student." << endl;
-
-            string studentCode; cin >> studentCode;
-
-            for (Student s : all_students){
-                if (s.get_studentCode() == studentCode){
-                    cout << endl << "The student " << "\033[1m" << s.get_studentName() << "\033[0m" 
-                    << " (up" << studentCode << ')' << " belongs to the following classes:" << endl;
-
-                    s.print_classes();
-
-                    valid = true;
-                    break;
-                }
-            }
-
-            if (!valid){
-                cout << endl << "I'm sorry, but that student code is not valid." << endl;
-            }
+        case(21) : {
+            display_student_classes(valid);
 
             break;
         }
@@ -160,3 +71,114 @@ b:  string s1, s2, s3;
 e:  cout << endl << "See you next time!" << endl;
 }
 
+void Helpy::display_uc_schedule(bool& valid) const{
+    cout << endl << "Understood. Please select the desired UC." << endl;
+
+    string uc; cin >> uc;
+    lowercase(uc, true);
+
+    for (UC u : all_UCs){
+        if (u.get_UcCode() == uc){
+            cout << endl << "The UC " << "\033[1m" << uc << 
+            "\033[0m" << " has the following schedule:" << endl;
+
+            u.get_schedule().print();
+
+            valid = true;
+            break;
+        } 
+    }
+
+    if (!valid){
+        cout << endl << "I'm sorry, but that UC does not exist." << endl;
+    }
+}
+
+void Helpy::display_class_schedule(bool& valid) const{
+    cout << endl << "Understood. Please select the desired class." << endl;
+
+    string classCode; cin >> classCode;
+
+    for (Class c : all_classes){
+        if (c.get_classCode() == classCode){
+            cout << endl << "The class " << "\033[1m" << classCode << 
+            "\033[0m" << " has the following schedule:" << endl;
+
+            c.get_schedule().print();
+
+            valid = true;
+            break;
+        } 
+    }
+
+    if (!valid){
+        cout << endl << "I'm sorry, but that class does not exist." << endl;
+    }
+}
+
+void Helpy::display_uc_classes(bool& valid) const{
+    cout << endl << "Understood. Please select the desired UC." << endl;
+
+    string uc; cin >> uc;
+    lowercase(uc, true);
+    
+    for (UC u : all_UCs){
+        if (u.get_UcCode() == uc){
+            cout << endl << "The UC " << "\033[1m" << uc << 
+            "\033[0m" << " has the following classes:" << endl;
+
+            u.print_classes();
+
+            valid = true;
+            break;
+        } 
+    }
+
+    if (!valid){
+        cout << endl << "I'm sorry, but that UC does not exist." << endl;
+    }
+}
+
+void Helpy::display_student_schedule(bool& valid) const{
+    cout << endl << "Understood. Please write the code (upXXXXXXXXX) of the desired student." << endl;
+    
+    string studentCode; cin >> studentCode;
+
+    for (Student s : all_students){
+        if (s.get_studentCode() == studentCode){
+            cout << endl << "The student " << "\033[1m" << s.get_studentName() << "\033[0m" 
+            << " (up" << studentCode << ')' << " has the following schedule:" << endl;
+
+            s.get_schedule().print();
+
+            valid = true;
+            break;
+        }
+    }
+
+    if (!valid){
+        cout << endl << "I'm sorry, but that student code is not valid." << endl;
+    }
+}
+
+void Helpy::display_student_classes(bool& valid) const{
+    cout << endl << "Understood. Please write the code (upXXXXXXXXX) of the desired student." << endl;
+
+    string studentCode; cin >> studentCode;
+
+    for (Student s : all_students){
+        if (s.get_studentCode() == studentCode){
+            cout << endl << "The student " << "\033[1m" << s.get_studentName() << "\033[0m" 
+            << " (up" << studentCode << ')' << " belongs to the following classes:" << endl;
+
+            s.print_classes();
+
+            valid = true;
+            break;
+        }
+    }
+
+    if (!valid){
+        cout << endl << "I'm sorry, but that student code is not valid." << endl;
+    }
+}
