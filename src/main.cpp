@@ -120,16 +120,16 @@ int main(){
         string studentCode, studentName, 
                ucCode, classCode;
         
-        // ler o student code
+        // ler o StudentCode
         getline(line_, studentCode,',');
         
-        // ler o student name
+        // ler o StudentName
         getline(line_, studentName,',');
 
-        // ler o UC code
+        // ler o UcCode
         getline(line_, ucCode,',');
 
-        // ler o class code
+        // ler a ClassCode
         getline(line_, classCode,'\r');
 
         student_info[{studentCode, studentName}]
@@ -137,23 +137,31 @@ int main(){
     }
 
     set<Student> all_students;
-    list<Block> sub;
     for (auto info : student_info){
         Student s(info.first.first, info.first.second);
+        
+        list<Block> blocks;
 
-         //stupid code that makes me wanna die
-        for (auto it : info.second){
-            for(auto i : class_blocks[it.first]){
-                for(auto a : it.second){
-                    if(a == i.get_code()){
-                        sub.push_back(i);
-                    }
+        // criar o horário do aluno
+        for (auto m : info.second){
+            int year = (m.first)[0] - '0';
+            int num = ((m.first[5] - '0') * 10 + (m.first[6] - '0'));
+            
+            Class& c = all_classes[15 * (year - 1) + (num - 1)];
+
+            auto it = m.second.begin();
+            for (Block& b : c.get_schedule().get_blocks()){
+                if (b.get_code() == *it){
+                    blocks.push_back(b);
+                    it++;
                 }
+
+                if (it == m.second.end()){break;}
             }
         }
+        
         s.set_UcperClass(info.second);
-        s.set_Schedule(Schedule(sub));
-        sub.clear();
+        s.set_Schedule(Schedule(blocks));
 
         all_students.insert(s);
     }
@@ -162,7 +170,7 @@ int main(){
     /*-----LER COMANDOS-----*/
     map<string, int> command = {{"display", 1}, {"print", 1}, {"show", 1}, {"request", 2}};
     map<string, int> target = {{"uc", 3}, {"class", 5}, {"student", 7}, {"all", 9}};
-    map<string, int> what = {{"schedule", 10}, {"classes", 13}, {"uc", 16}, {"student", 19}}; 
+    map<string, int> what = {{"schedule", 10}, {"classes", 13}, {"uc", 16}, {"students", 19}}; 
 
     cout << "Hello! How can I be of assistance?" << endl;
 
@@ -225,7 +233,6 @@ b:  string s1, s2, s3;
 
             break;
         }
-
         case(17) : { // display UC classes
             cout << endl << "Understood. Please select the desired UC." << endl;
 
@@ -271,7 +278,7 @@ b:  string s1, s2, s3;
 
             break;
         }
-        case (21) : { // display student classes
+        case(21) : { // display student classes
             cout << endl << "Understood. Please write the code (upXXXXXXXXX) of the desired student." << endl;
 
             string studentCode; cin >> studentCode;

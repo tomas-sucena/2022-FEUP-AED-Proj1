@@ -18,6 +18,7 @@ class Schedule{
         Schedule(list<Block> blocks);
 
         // methods
+        list<Block> get_blocks() const;
         void print();
         string to_hours(float time);
 };

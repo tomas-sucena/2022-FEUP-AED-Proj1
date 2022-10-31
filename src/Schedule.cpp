@@ -6,6 +6,10 @@ Schedule::Schedule(list<Block> blocks) : blocks_(blocks) {
     blocks_.sort();
 }
 
+list<Block> Schedule::get_blocks() const{
+    return blocks_;
+}
+
 void Schedule::print(){
     for (auto it = blocks_.begin(); it != blocks_.end(); it++){
         cout << it->get_weekday() << ": " << it->get_code() << ' ' << 
