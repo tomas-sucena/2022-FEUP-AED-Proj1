@@ -37,45 +37,25 @@ b:  string s1, s2, s3;
         case(14) : {
             display_uc_schedule(valid);
 
-            if (!valid){
-                cout << endl << "I'm sorry, but that UC does not exist." << endl;
-            }
-
             break;
         }
         case(16) : {
             display_class_schedule(valid);
-
-            if (!valid){
-                cout << endl << "I'm sorry, but that class does not exist." << endl;
-            }
 
             break;
         }
         case(17) : {
             display_uc_classes(valid);
 
-            if (!valid){
-                cout << endl << "I'm sorry, but that UC does not exist." << endl;
-            }
-
             break;
         }
-        case(18) : { // display student schedule
+        case(18) : {
             display_student_schedule(valid);
-
-            if (!valid){
-                cout << endl << "I'm sorry, but that student code is not valid." << endl;
-            }
 
             break;
         }
         case(21) : {
             display_student_classes(valid);
-
-            if (!valid){
-                cout << endl << "I'm sorry, but that student code is not valid." << endl;
-            }
 
             break;
         }
@@ -108,6 +88,10 @@ void Helpy::display_uc_schedule(bool& valid) const{
             break;
         } 
     }
+
+    if (!valid){
+        cout << endl << "I'm sorry, but that UC does not exist." << endl;
+    }
 }
 
 void Helpy::display_class_schedule(bool& valid) const{
@@ -125,6 +109,10 @@ void Helpy::display_class_schedule(bool& valid) const{
             valid = true;
             break;
         } 
+    }
+
+    if (!valid){
+        cout << endl << "I'm sorry, but that class does not exist." << endl;
     }
 }
 
@@ -145,6 +133,10 @@ void Helpy::display_uc_classes(bool& valid) const{
             break;
         } 
     }
+
+    if (!valid){
+        cout << endl << "I'm sorry, but that UC does not exist." << endl;
+    }
 }
 
 void Helpy::display_student_schedule(bool& valid) const{
@@ -163,6 +155,10 @@ void Helpy::display_student_schedule(bool& valid) const{
             break;
         }
     }
+
+    if (!valid){
+        cout << endl << "I'm sorry, but that student code is not valid." << endl;
+    }
 }
 
 void Helpy::display_student_classes(bool& valid) const{
@@ -180,5 +176,9 @@ void Helpy::display_student_classes(bool& valid) const{
             valid = true;
             break;
         }
+    }
+
+    if (!valid){
+        cout << endl << "I'm sorry, but that student code is not valid." << endl;
     }
 }
