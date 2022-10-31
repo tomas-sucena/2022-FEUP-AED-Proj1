@@ -137,10 +137,23 @@ int main(){
     }
 
     set<Student> all_students;
+    list<Block> sub;
     for (auto info : student_info){
         Student s(info.first.first, info.first.second);
 
+         //stupid code that makes me wanna die
+        for (auto it : info.second){
+            for(auto i : class_blocks[it.first]){
+                for(auto a : it.second){
+                    if(a == i.get_code()){
+                        sub.push_back(i);
+                    }
+                }
+            }
+        }
         s.set_UcperClass(info.second);
+        s.set_Schedule(Schedule(sub));
+        sub.clear();
 
         all_students.insert(s);
     }
@@ -212,6 +225,7 @@ b:  string s1, s2, s3;
 
             break;
         }
+
         case(17) : { // display UC classes
             cout << endl << "Understood. Please select the desired UC." << endl;
 
@@ -231,6 +245,28 @@ b:  string s1, s2, s3;
 
             if (!valid){
                 cout << endl << "I'm sorry, but that UC does not exist." << endl;
+            }
+
+            break;
+        }
+        case(18) : { // display student schedule
+            cout << endl << "Understood. Please write the code (upXXXXXXXXX) of the desired student." << endl;
+            string studentCode; cin >> studentCode;
+
+            for (Student s : all_students){
+                if (s.get_studentCode() == studentCode){
+                    cout << endl << "The student " << "\033[1m" << s.get_studentName() << "\033[0m" 
+                    << " (up" << studentCode << ')' << " has the following schedule:" << endl;
+
+                    s.get_schedule().print();
+
+                    valid = true;
+                    break;
+                }
+            }
+
+            if (!valid){
+                cout << endl << "I'm sorry, but that student code is not valid." << endl;
             }
 
             break;

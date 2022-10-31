@@ -23,8 +23,11 @@ class Student{
         // methods
         string get_studentCode() const;
         string get_studentName() const;
+        Schedule get_schedule() const;
 
         void set_UcperClass(map<string, list<string>> sub);
+        void set_Schedule(Schedule a);
+
         void print_classes() const;
 };
 

@@ -10,8 +10,16 @@ string Student::get_studentName() const{
     return studentName_;
 }
 
+Schedule Student::get_schedule() const{
+    return schedule_;
+}
+
 void Student::set_UcperClass(map<string, list<string>> sub){
     UcperClass = sub;
+}
+
+void Student::set_Schedule(Schedule a){
+    schedule_ = a;
 }
 
 void Student::print_classes() const{
