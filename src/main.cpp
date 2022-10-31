@@ -137,20 +137,20 @@ int main(){
         list<Block> blocks;
 
         // criar o horário do aluno
-        for (auto m : info.second){
-            int year = (m.first)[0] - '0';
-            int num = ((m.first[5] - '0') * 10 + (m.first[6] - '0'));
+        for (auto el : info.second){
+            int year = (el.first)[0] - '0';
+            int num = ((el.first[5] - '0') * 10 + (el.first[6] - '0'));
             
             Class& c = all_classes[15 * (year - 1) + (num - 1)];
 
-            auto it = m.second.begin();
+            auto it = el.second.begin();
             for (Block& b : c.get_schedule().get_blocks()){
                 if (b.get_code() == *it){
                     blocks.push_back(b);
                     it++;
                 }
 
-                if (it == m.second.end()){break;}
+                if (it == el.second.end()){break;}
             }
         }
         

@@ -22,6 +22,9 @@ class Helpy {
         void display_uc_schedule(bool& valid) const;
         void display_class_schedule(bool& valid) const;
         void display_uc_classes(bool& valid) const;
+
+        void display_student_schedule(bool& valid) const;
+        void display_student_classes(bool& valid) const;
 };
 
 #endif
