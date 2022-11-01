@@ -1,6 +1,8 @@
 #include "Helpy.h"
+#include "Request.h"
 #include <fstream>
 #include <sstream>
+#include <queue>
 
 // função auxiliar usada para tratar dos comandos
 void lowercase(string& s, bool uppercase = false){
@@ -9,6 +11,9 @@ void lowercase(string& s, bool uppercase = false){
                           tolower(c);
     }
 }
+
+//queue for saving requests for later processing
+queue<Request> queuer;
 
 Helpy::Helpy(set<Student> students, vector<UC> UCs, vector<Class> classes): 
              all_students(students), all_UCs(UCs), all_classes(classes){}
@@ -37,8 +42,8 @@ void Helpy::terminal(){
 
 void Helpy::advanced_mode(){
     /*-----LER COMANDOS-----*/
-    map<string, int> command = {{"display", 1}, {"print", 1}, {"show", 1}, {"request", 2}};
-    map<string, int> target = {{"uc", 3}, {"class", 5}, {"student", 7}, {"all", 9}};
+    map<string, int> command = {{"display", 1}, {"print", 1}, {"show", 1}, {"remove", 2}, {"add",3}};
+    map<string, int> target = {{"uc", 4}, {"class", 5}, {"student", 7}, {"all", 9}};
     map<string, int> what = {{"schedule", 10}, {"classes", 13}, {"uc", 16}, {"students", 19}}; 
 
     cout << endl << "Hello! How can I be of assistance?" << endl;
@@ -80,6 +85,13 @@ b:  string s1, s2, s3;
             display_student_classes(valid);
 
             break;
+        }
+        case(22) : {
+            cout << "Please type the code (upXXXXXXXXX) of the desired student"<<endl;
+            string st; cin >>st;
+            cout << "Please type the code of the class you want to remove" << endl;
+            string cl; cin >> cl;
+            queuer.push(Request(s1,s2,s3,st,cl));
         }
         case (23) : {
             display_uc_students(valid);
