@@ -36,3 +36,11 @@ float Block::get_endHour() const{
 string Block::get_type() const{
     return type_;
 }
+
+bool Block::operator<(const Block& b) const{
+    if (weekday_ == b.get_weekday()){
+        return (startHour_ < b.get_startHour());
+    }
+    
+    return (Block::week[weekday_] < Block::week[b.get_weekday()]);
+}

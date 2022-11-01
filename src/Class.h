@@ -28,7 +28,7 @@ class Class {
         int size() const;
 
         bool equals(Class anime);
-        bool operator<(Class c);
+        bool operator<(const Class c) const; // overloading
 };
 
 #endif

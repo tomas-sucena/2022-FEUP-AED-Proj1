@@ -32,6 +32,8 @@ class Block{
         float get_startHour() const;
         float get_endHour() const;
         string get_type() const;
+
+        bool operator<(const Block& b) const; // overloading
 };
 
 #endif
