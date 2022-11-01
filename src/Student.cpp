@@ -18,10 +18,6 @@ void Student::set_UcperClass(map<string, list<string>> sub){
     UcperClass = sub;
 }
 
-void Student::set_Ucs(){
-    
-}
-
 void Student::set_Schedule(Schedule a){
     schedule_ = a;
 }

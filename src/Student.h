@@ -14,7 +14,6 @@ class Student{
         string studentCode_;
         string studentName_;
         map<string, list<string>> UcperClass;
-        set<string> studentUcs_;
         Schedule schedule_;
 
     public:
@@ -28,7 +27,6 @@ class Student{
 
         void set_UcperClass(map<string, list<string>> sub);
         void set_Schedule(Schedule a);
-        void set_Ucs();
 
         void print_classes() const;
 };
