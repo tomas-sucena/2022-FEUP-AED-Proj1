@@ -565,8 +565,7 @@ void Helpy::display_student_ucs(bool& valid) const{
     for (Student s : all_students){
         if (s.get_studentCode() == studentCode){
             cout << endl << "The student " << "\033[1m" << s.get_studentName() << "\033[0m" 
-            << " (up" << studentCode << ')' << " has the following UCs:" << endl; << endl;
-
+            << " (up" << studentCode << ')' << " has the following UCs:" << endl;
             s.print_ucs();
 
             valid = true;
@@ -575,5 +574,11 @@ void Helpy::display_student_ucs(bool& valid) const{
     }
      if (!valid){
         cout << endl << "I'm sorry, but that student code is not valid." << endl;
+    }
+}
+
+void processQueue(){
+    while(!queuer.empty()){
+        Request sub = queuer.front();
     }
 }

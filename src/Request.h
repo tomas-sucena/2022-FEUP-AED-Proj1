@@ -16,6 +16,11 @@ private:
     
 public:
     Request(string a, string b, string c, string d, string e);
+    string get_type() const;
+    string get_target() const;
+    string get_what() const;
+    string get_stupid() const;
+    string get_name() const;
 };
 
 
