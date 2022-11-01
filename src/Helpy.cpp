@@ -514,3 +514,14 @@ d1: cout << endl << "Would you like to order the students by code (upXXXXXXXXX) 
         cout << endl;
     }
 }
+
+
+void Helpy::write_file(int file){
+    ofstream temp();
+
+    switch (file){
+        case (1) : {
+        }
+    }
+
+}

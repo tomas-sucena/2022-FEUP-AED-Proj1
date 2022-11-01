@@ -32,6 +32,8 @@ class Helpy {
         void display_student_classes(bool& valid) const;
         
         void display_all_students() const;
+
+        void write_file(int file);
 };
 
 #endif
