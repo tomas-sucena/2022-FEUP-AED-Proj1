@@ -33,6 +33,8 @@ class Student{
 
         void print_classes() const;
         void print_ucs() const;
+
+        bool operator<(const Student& s) const; // overloading
 };
 
 #endif

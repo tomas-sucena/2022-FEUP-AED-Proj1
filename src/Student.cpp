@@ -38,3 +38,7 @@ void Student::print_ucs() const{
         cout << info.first << endl;
     }
 }
+
+bool Student::operator<(const Student& s) const{
+    return (studentName_ < s.get_studentName());
+}
