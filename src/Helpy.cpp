@@ -40,6 +40,9 @@ void Helpy::terminal(){
     }
 }
 
+                                ///         ADVANCED MODE       ///
+
+
 void Helpy::advanced_mode(){
     /*-----LER COMANDOS-----*/
     map<string, int> command = {{"display", 1}, {"print", 1}, {"show", 1}, {"remove", 2}, {"add",3}};
@@ -119,6 +122,8 @@ b:  string s1, s2, s3;
 
 e:  cout << endl << "See you next time!" << endl;
 }
+
+                            ///             GUIDED MODE             ////
 
 void Helpy::guided_mode(){
     /*-----LER COMANDOS-----*/
