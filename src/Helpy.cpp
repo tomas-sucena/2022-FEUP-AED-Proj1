@@ -44,7 +44,9 @@ void Helpy::terminal(){
 
 
 void Helpy::advanced_mode(){
+
     /*-----LER COMANDOS-----*/
+
     map<string, int> command = {{"display", 1}, {"print", 1}, {"show", 1}, {"remove", 2}, {"add",3}};
     map<string, int> target = {{"uc", 4}, {"class", 6}, {"student", 8}, {"all", 10}};
     map<string, int> what = {{"schedule", 11}, {"classes", 14}, {"uc", 17}, {"students", 20}}; 
@@ -125,9 +127,12 @@ e:  cout << endl << "See you next time!" << endl;
 
                             ///             GUIDED MODE             ////
 
+
 void Helpy::guided_mode(){
+
     /*-----LER COMANDOS-----*/
-    map<string, int> command = {{"display", 1}, {"print", 1}, {"show", 1}, {"request", 2}};
+
+    map<string, int> command = {{"display", 1}, {"print", 1}, {"show", 1}};
     map<string, int> target = {{"uc", 3}, {"class", 5}, {"student", 7}, {"all", 9}};
     map<string, int> what = {{"schedule", 10}, {"classes", 13}, {"uc", 16}, {"students", 19}}; 
 
@@ -192,6 +197,9 @@ b2: string s1, s2, s3;
             display_uc_students(valid);
 
             break;
+        }
+        case(24) : {
+            display_student_ucs(valid);
         }
         case(25) : {
             display_class_students(valid);
@@ -263,6 +271,7 @@ void Helpy::display_uc_classes(bool& valid) const{
 }
 
 void Helpy::display_uc_students(bool& valid) const{
+
     // ordenação por código ou nome
     cout << endl << "Would you like to order the students by code (upXXXXXXXXX) or by name?" << endl;
     
@@ -541,5 +550,24 @@ void Helpy::update_file(int file){
             //temp << "UcCode,ClassCode" << endl;
         }
     }
+}
 
+void Helpy::display_student_ucs(bool& valid) const{
+    cout <<endl << "Understood. Please write the code (upXXXXXXXXX) of the desired student." << endl;
+    string studentCode; cin >> studentCode;
+
+    for (Student s : all_students){
+        if (s.get_studentCode() == studentCode){
+            cout << endl << "The student " << "\033[1m" << s.get_studentName() << "\033[0m" 
+            << " (up" << studentCode << ')' << " has the following UCs:" << endl; << endl;
+
+            s.print_ucs;
+
+            valid = true;
+            break;
+        }
+    }
+     if (!valid){
+        cout << endl << "I'm sorry, but that student code is not valid." << endl;
+    }
 }
