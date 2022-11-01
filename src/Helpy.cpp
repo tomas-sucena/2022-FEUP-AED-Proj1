@@ -59,99 +59,18 @@ b:  string s1, s2, s3;
 
             break;
         }
+        case (23) : {
+            display_uc_students(valid);
+
+            break;
+        }
         case(25) : {
-            // ordenação por código ou por nome
-            cout << endl << "Would you like to order the students by code (upXXXXXXXXX) or by name?" << endl;
-            
-            cin.ignore();
-             
-        c2: string line; getline(cin, line);
-            lowercase(line);
-
-            istringstream line_(line);
-            string temp;
-
-            short by_code = 2;
-
-            while (line_ >> temp){      
-                lowercase(temp);
-
-                if (temp == "code"){
-                    by_code = 1; 
-                    break;
-                }
-                else if (temp == "name"){
-                    by_code = 0;
-                    break;
-                }
-            }
-
-            if (by_code == 2){
-                cout << endl << "Invalid command. Please, try again." << endl
-                     << "Would you like to order the students by code (upXXXXXXXXX) or by name?" << endl;
-                goto c2;
-            }
-
-            // ordenação ascendente ou descendente
-        c3: cout << endl << "And would you like to sort them in ascending or descending order?" << endl;
-
-            getline(cin, line);
-            lowercase(line);
-
-            istringstream line2_(line);
-
-            short descending = 2;
-
-            while (line2_ >> temp){ 
-                if (temp == "descending"){
-                    descending = 1; 
-                    break;
-                }
-                else if (temp == "ascending"){
-                    descending = 0;
-                    break;
-                }
-            }
-
-            if (descending == 2){
-                cout << "Invalid command. Please, try again." << endl;
-                goto c3;
-            }
-
-            display_class_students(valid, (bool) by_code, (bool) descending);
+            display_class_students(valid);
 
             break;
         }
         case(29) : {
-        c1: cout << endl << "Would you like to order the students by code (upXXXXXXXXX) or by name?" << endl;
-            
-            cin.ignore();
-             
-            string line; getline(cin, line);
-            lowercase(line);
-
-            short by_code = 2;
-
-            istringstream line_(line);
-            string temp;
-
-            while (line_ >> temp){           
-                if (temp == "code"){
-                    by_code = 1; 
-                    break;
-                }
-                else if (temp == "name"){
-                    by_code = 0;
-                    break;
-                }
-            }
-
-            if (by_code == 2){
-                cout << "Invalid command. Please, try again." << endl;
-                goto c1;
-            }
-
-            display_all_students((bool) by_code);
+            display_all_students();
 
             break;
         }
@@ -214,6 +133,88 @@ void Helpy::display_uc_classes(bool& valid) const{
     }
 }
 
+void Helpy::display_uc_students(bool& valid) const{
+    // ordenação por código ou nome
+    cout << endl << "Would you like to order the students by code (upXXXXXXXXX) or by name?" << endl;
+    
+    cin.ignore();
+        
+a1: string line; getline(cin, line);
+    lowercase(line);
+
+    istringstream line_(line);
+    string temp;
+
+    short by_code = 2;
+
+    while (line_ >> temp){      
+        lowercase(temp);
+
+        if (temp == "code"){
+            by_code = 1; 
+            break;
+        }
+        else if (temp == "name"){
+            by_code = 0;
+            break;
+        }
+    }
+
+    if (by_code == 2){
+        cout << endl << "Invalid command. Please, try again." << endl
+                << "Would you like to order the students by code (upXXXXXXXXX) or by name?" << endl;
+        goto a1;
+    }
+
+    // ordenação ascendente ou descendente
+a2: cout << endl << "And would you like to sort them in ascending or descending order?" << endl;
+
+    getline(cin, line);
+    lowercase(line);
+
+    istringstream line2_(line);
+
+    short descending = 2;
+
+    while (line2_ >> temp){ 
+        if (temp == "descending"){
+            descending = 1; 
+            break;
+        }
+        else if (temp == "ascending"){
+            descending = 0;
+            break;
+        }
+    }
+
+    if (descending == 2){
+        cout << "Invalid command. Please, try again." << endl;
+        goto a2;
+    }
+
+    // escolher a UC
+    cout << endl << "Understood. Please select the desired class." << endl;
+
+    string ucCode; cin >> ucCode;
+    lowercase(ucCode, true);
+
+    for (UC u : all_UCs){
+        if (u.get_UcCode() == ucCode){
+            cout << endl << "The UC " << "\033[1m" << ucCode << 
+            "\033[0m" << " has the following students:" << endl;
+
+            u.print_students(by_code, descending);
+
+            valid = true;
+            break;
+        } 
+    }
+
+    if (!valid){
+        cout << endl << "I'm sorry, but that UC does not exist." << endl;
+    }
+}
+
 void Helpy::display_class_schedule(bool& valid) const{
     cout << endl << "Understood. Please select the desired class." << endl;
 
@@ -236,7 +237,66 @@ void Helpy::display_class_schedule(bool& valid) const{
     }
 }
 
-void Helpy::display_class_students(bool& valid, bool by_code, bool descending) const{
+void Helpy::display_class_students(bool& valid) const{
+    // ordenação por código ou nome
+    cout << endl << "Would you like to order the students by code (upXXXXXXXXX) or by name?" << endl;
+    
+    cin.ignore();
+        
+c1: string line; getline(cin, line);
+    lowercase(line);
+
+    istringstream line_(line);
+    string temp;
+
+    short by_code = 2;
+
+    while (line_ >> temp){      
+        lowercase(temp);
+
+        if (temp == "code"){
+            by_code = 1; 
+            break;
+        }
+        else if (temp == "name"){
+            by_code = 0;
+            break;
+        }
+    }
+
+    if (by_code == 2){
+        cout << endl << "Invalid command. Please, try again." << endl
+                << "Would you like to order the students by code (upXXXXXXXXX) or by name?" << endl;
+        goto c1;
+    }
+
+    // ordenação ascendente ou descendente
+c2: cout << endl << "And would you like to sort them in ascending or descending order?" << endl;
+
+    getline(cin, line);
+    lowercase(line);
+
+    istringstream line2_(line);
+
+    short descending = 2;
+
+    while (line2_ >> temp){ 
+        if (temp == "descending"){
+            descending = 1; 
+            break;
+        }
+        else if (temp == "ascending"){
+            descending = 0;
+            break;
+        }
+    }
+
+    if (descending == 2){
+        cout << "Invalid command. Please, try again." << endl;
+        goto c2;
+    }
+
+    // escolher a turma
     cout << endl << "Understood. Please select the desired class." << endl;
 
     string classCode; cin >> classCode;
@@ -303,7 +363,37 @@ void Helpy::display_student_classes(bool& valid) const{
     }
 }
 
-void Helpy::display_all_students(bool by_code) const{
+void Helpy::display_all_students() const{
+    // ordenação por código ou nome
+d1: cout << endl << "Would you like to order the students by code (upXXXXXXXXX) or by name?" << endl;
+    
+    cin.ignore();
+        
+    string line; getline(cin, line);
+    lowercase(line);
+
+    short by_code = 2;
+
+    istringstream line_(line);
+    string temp;
+
+    while (line_ >> temp){           
+        if (temp == "code"){
+            by_code = 1; 
+            break;
+        }
+        else if (temp == "name"){
+            by_code = 0;
+            break;
+        }
+    }
+
+    if (by_code == 2){
+        cout << "Invalid command. Please, try again." << endl;
+        goto d1;
+    }
+
+    // imprimir todos os estudantes
     cout << endl << "Understood. These are all the students currently enrolled in LEIC:" << endl;
 
     for (Student s : all_students){
