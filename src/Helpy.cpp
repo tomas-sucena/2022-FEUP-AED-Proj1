@@ -49,6 +49,7 @@ void Helpy::terminal(){
 
 
 void Helpy::advanced_mode(){
+
     /*-----LER COMANDOS-----*/
     cout << endl << "Hello! How can I be of assistance?" << endl;
 
@@ -137,7 +138,9 @@ e:  cout << endl << "See you next time!" << endl;
 
                             ///             GUIDED MODE             ////
 
+
 void Helpy::guided_mode(){
+
     /*-----LER COMANDOS-----*/
     cout << endl << "Hello! How can I be of assistance?" << endl;
     cout << endl;
@@ -200,6 +203,9 @@ b2: string s1, s2, s3;
             display_uc_students(valid);
 
             break;
+        }
+        case(24) : {
+            display_student_ucs(valid);
         }
         case(25) : {
             display_class_students(valid);
@@ -271,6 +277,7 @@ void Helpy::display_uc_classes(bool& valid) const{
 }
 
 void Helpy::display_uc_students(bool& valid) const{
+
     // ordenação por código ou nome
     cout << endl << "Would you like to order the students by code (upXXXXXXXXX) or by name?" << endl;
     
@@ -549,5 +556,24 @@ void Helpy::update_file(int file){
             //temp << "UcCode,ClassCode" << endl;
         }
     }
+}
 
+void Helpy::display_student_ucs(bool& valid) const{
+    cout <<endl << "Understood. Please write the code (upXXXXXXXXX) of the desired student." << endl;
+    string studentCode; cin >> studentCode;
+
+    for (Student s : all_students){
+        if (s.get_studentCode() == studentCode){
+            cout << endl << "The student " << "\033[1m" << s.get_studentName() << "\033[0m" 
+            << " (up" << studentCode << ')' << " has the following UCs:" << endl; << endl;
+
+            s.print_ucs();
+
+            valid = true;
+            break;
+        }
+    }
+     if (!valid){
+        cout << endl << "I'm sorry, but that student code is not valid." << endl;
+    }
 }
