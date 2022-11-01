@@ -18,7 +18,7 @@ queue<Request> queuer;
 //maps to help with command reading
 map<string, int> command = {{"display", 1}, {"print", 1}, {"show", 1}, {"remove", 2}, {"add",3}};
 map<string, int> target = {{"uc", 4}, {"class", 6}, {"student", 8}, {"all", 10}};
-map<string, int> what = {{"schedule", 11}, {"classes", 14}, {"uc", 17}, {"students", 20}};
+map<string, int> what = {{"schedule", 11}, {"classes", 14}, {"class" , 14}, {"uc", 17}, {"students", 20}};
 
 Helpy::Helpy(set<Student> students, vector<UC> UCs, vector<Class> classes): 
              all_students(students), all_UCs(UCs), all_classes(classes){}
@@ -60,8 +60,18 @@ b:  string s1, s2, s3;
         goto e;
     }
 
-    cin >> s2 >> s3;
-    lowercase(s2); lowercase(s3);
+    cin >> s2;
+    lowercase(s2);
+
+    if(s1 == "process" && s2 == "queue"){
+        processQueue();
+        cout << "Queue has been processed" << endl;
+        goto b;
+    }
+
+    cin >> s3;
+    lowercase(s3);
+
 
     // processar o comando    
     switch (command[s1] + target[s2] + what[s3]){
@@ -122,6 +132,7 @@ b:  string s1, s2, s3;
     goto b;
 
 e:  cout << endl << "See you next time!" << endl;
+
 }
 
                             ///             GUIDED MODE             ////
