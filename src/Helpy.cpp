@@ -23,7 +23,7 @@ void Helpy::terminal(){
 
     cout << "Which mode would you prefer?" << endl << endl;
 a1: cout << "* Guided" << endl;
-    cout << "* Advanced" << endl;
+    cout << "* Advanced" << endl << endl;
 
     string line; getline(cin, line);
     lowercase(line);
