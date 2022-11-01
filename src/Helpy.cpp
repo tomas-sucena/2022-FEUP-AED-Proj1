@@ -15,6 +15,12 @@ void lowercase(string& s, bool uppercase = false){
 //queue for saving requests for later processing
 queue<Request> queuer;
 
+//maps to help with command reading
+map<string, int> command = {{"display", 1}, {"print", 1}, {"show", 1}, {"remove", 2}, {"add",3}};
+map<string, int> target = {{"uc", 4}, {"class", 6}, {"student", 8}, {"all", 10}};
+map<string, int> what = {{"schedule", 11}, {"classes", 14}, {"ucs", 17}, {"students", 20}};
+
+
 Helpy::Helpy(set<Student>& students, vector<UC>& UCs, vector<Class>& classes): 
              all_students(students), all_UCs(UCs), all_classes(classes){}
 
@@ -40,20 +46,20 @@ void Helpy::terminal(){
     }
 }
 
-void Helpy::advanced_mode(){
-    /*-----LER COMANDOS-----*/
-    map<string, int> command = {{"display", 1}, {"print", 1}, {"show", 1}, {"remove", 2}, {"add",3}};
-    map<string, int> target = {{"uc", 4}, {"class", 6}, {"student", 8}, {"all", 10}};
-    map<string, int> what = {{"schedule", 11}, {"classes", 14}, {"uc", 17}, {"students", 20}}; 
+                                ///         ADVANCED MODE       ///
 
+
+void Helpy::advanced_mode(){
+
+    /*-----LER COMANDOS-----*/
     cout << endl << "Hello! How can I be of assistance?" << endl;
 
-b:  string s1, s2, s3; 
+b1: string s1, s2, s3; 
     bool valid = false;
 
     cin >> s1; lowercase(s1);
     if (s1 == "quit" || s1 == "no"){
-        goto e;
+        goto e1;
     }
 
     cin >> s2 >> s3;
@@ -92,9 +98,16 @@ b:  string s1, s2, s3;
             cout << "Please type the code of the class you want to remove" << endl;
             string cl; cin >> cl;
             queuer.push(Request(s1,s2,s3,st,cl));
+
+            break;
         }
         case(25) : {
             display_uc_students(valid);
+
+            break;
+        }
+        case(26) : {
+            display_student_ucs(valid);
 
             break;
         }
@@ -110,22 +123,21 @@ b:  string s1, s2, s3;
         }
         default : {
             cout << endl << "Invalid command! Please, type another command." << endl;
-            goto b;
+            goto b1;
         }
     }
 
     cout << endl << "Anything else?" << endl;
-    goto b;
+    goto b1;
 
-e:  cout << endl << "See you next time!" << endl;
+e1: cout << endl << "See you next time!" << endl;
 }
 
-void Helpy::guided_mode(){
-    /*-----LER COMANDOS-----*/
-    map<string, int> command = {{"display", 1}, {"print", 1}, {"show", 1}, {"request", 2}};
-    map<string, int> target = {{"uc", 3}, {"class", 5}, {"student", 7}, {"all", 9}};
-    map<string, int> what = {{"schedule", 10}, {"classes", 13}, {"uc", 16}, {"students", 19}}; 
+                            ///             GUIDED MODE             ////
 
+void Helpy::guided_mode(){
+
+    /*-----LER COMANDOS-----*/
     cout << endl << "Hello! How can I be of assistance?" << endl;
     cout << endl;
     cout << "* Display" << endl;
@@ -156,44 +168,58 @@ b2: string s1, s2, s3;
 
     cin >> s3; lowercase(s3);
 
-    // processar o comando        
+    // processar o comando    
     switch (command[s1] + target[s2] + what[s3]){
-        case(14) : {
+        case(16) : {
             display_uc_schedule(valid);
 
             break;
         }
-        case(16) : {
+        case(18) : {
             display_class_schedule(valid);
 
             break;
         }
-        case(17) : {
+        case(19) : {
             display_uc_classes(valid);
 
             break;
         }
-        case(18) : {
+        case (20) : {
             display_student_schedule(valid);
 
             break;
         }
-        case(21) : {
+        case(23) : {
             display_student_classes(valid);
 
             break;
         }
-        case (23) : {
-            display_uc_students(valid);
+        case(24) : { // remove student classes
+            cout << "Please type the code (upXXXXXXXXX) of the desired student"<<endl;
+            string st; cin >>st;
+            cout << "Please type the code of the class you want to remove" << endl;
+            string cl; cin >> cl;
+            queuer.push(Request(s1,s2,s3,st,cl));
 
             break;
         }
         case(25) : {
+            display_uc_students(valid);
+
+            break;
+        }
+        case(26) : {
+            display_student_ucs(valid);
+
+            break;
+        }
+        case(27) : {
             display_class_students(valid);
 
             break;
         }
-        case(29) : {
+        case(31) : {
             display_all_students();
 
             break;
@@ -258,6 +284,7 @@ void Helpy::display_uc_classes(bool& valid) const{
 }
 
 void Helpy::display_uc_students(bool& valid) const{
+
     // ordenação por código ou nome
     cout << endl << "Would you like to order the students by code (upXXXXXXXXX) or by name?" << endl;
     
@@ -527,6 +554,27 @@ d1: cout << endl << "Would you like to order the students by code (upXXXXXXXXX) 
     }
 }
 
+void Helpy::display_student_ucs(bool& valid) const{
+    cout <<endl << "Understood. Please write the code (upXXXXXXXXX) of the desired student." << endl;
+    string studentCode; cin >> studentCode;
+
+    for (Student s : all_students){
+        if (s.get_studentCode() == studentCode){
+            cout << endl << "The student " << "\033[1m" << s.get_studentName() << "\033[0m" 
+            << " (up" << studentCode << ')' << " has the following UCs:" << endl;
+
+            s.print_ucs();
+
+            valid = true;
+            break;
+        }
+    }
+
+    if (!valid){
+        cout << endl << "I'm sorry, but that student code is not valid." << endl;
+    }
+}
+
 
 void Helpy::update_file(){
     ofstream out("temp.csv");
@@ -536,7 +584,5 @@ void Helpy::update_file(){
     /*for (Student s : all_students){
         for ()
     }*/
-
-    out << '\n';
-    out.close();
 }
+

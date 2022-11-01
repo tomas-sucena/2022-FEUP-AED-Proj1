@@ -73,3 +73,7 @@ bool Class::operator<(Class c){
     return (classCode_ < c.get_classCode());
 }
 
+int Class::size() const{
+    return students_.size();
+}
+
