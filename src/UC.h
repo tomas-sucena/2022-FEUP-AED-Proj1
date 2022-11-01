@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 #include <set>
+#include <algorithm>
 #include "Schedule.h"
 
 using namespace std;
@@ -21,12 +22,13 @@ class UC {
         UC(string ucCode, set<string> classes, Schedule schedule);
 
         // methods
-        void print_classes();
         string get_UcCode();
-
+        
+        void print_classes();
         void add_class(string classCode);
         void remove_class(string classCode);
 
+        void print_students(bool by_code, bool descending) const;
         void add_student(int studentCode, string studentName);
 
         void add_schedule(Schedule schedule);

@@ -1,5 +1,11 @@
 #include "UC.h"
 
+// função auxiliar usada na ordenação do students_
+bool foo(const pair<int, string> p1,
+                   const pair<int, string> p2){
+    return (p1.second < p2.second);
+}
+
 UC::UC(string ucCode, set<string> classes) : 
        ucCode_(ucCode), classes_(classes) {}
 
@@ -27,24 +33,36 @@ void UC::remove_class(string classCode){
     }
 }
 
-void UC::add_student(int studentCode, string studentName){
-    // pesquisa binária
-    int lower = 0, upper = (int) students_.size() - 1;
+void UC::print_students(bool by_code, bool descending) const{
+    vector<pair<int, string>> temp = students_;
 
-    int res = 0;
-    while (lower <= upper){
-        int mid = (lower + upper) / 2;
-
-        if (students_[mid].first < studentCode){
-            lower = mid + 1;
-            res = mid;
+    if (by_code){ // ordenar por código
+        if (descending){
+            reverse(temp.begin(), temp.end());
         }
-        else{
-            upper = mid - 1;
+
+        for (auto info : temp){
+            cout << info.first << " (" << info.second << 
+            ')' << endl;
         }
     }
+    else{ // ordenar por nome
+        sort(temp.begin(), temp.end(), foo);
 
-    students_.insert(students_.begin() + res, {studentCode, studentName});
+        if (descending){
+            reverse(temp.begin(), temp.end());
+        }
+
+        for (auto info : temp){
+            cout << info.second << " up(" << info.first << 
+            ")" << endl;  
+        }
+    }
+}
+
+void UC::add_student(int studentCode, string studentName){
+    students_.push_back({studentCode, studentName});
+    sort(students_.begin(), students_.end());
 }
 
 void UC::add_schedule(Schedule schedule){

@@ -45,7 +45,7 @@ void Class::print_students(bool by_code, bool descending) const{
 }
 
 void Class::add_student(int studentCode, string studentName){
-    // pesquisa binária
+    /*// pesquisa binária
     int lower = 0, upper = (int) students_.size() - 1;
 
     while (lower < upper){
@@ -53,13 +53,16 @@ void Class::add_student(int studentCode, string studentName){
 
         if (students_[mid].first < studentCode){
             lower = mid + 1;
+            res = mid;
         }
         else{
             upper = mid;
         }
     }
 
-    students_.insert(students_.begin() + lower, {studentCode, studentName});
+    students_.insert(students_.begin() + lower, {studentCode, studentName});*/
+    students_.push_back({studentCode, studentName});
+    sort(students_.begin(), students_.end());
 }
 
 bool Class::equals(Class c){
