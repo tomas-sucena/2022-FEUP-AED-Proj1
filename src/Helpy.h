@@ -14,7 +14,7 @@ class Helpy {
         
     public:
         // constructor
-        Helpy(set<Student> students, vector<UC> UCs, vector<Class> classes);
+        Helpy(set<Student>& students, vector<UC>& UCs, vector<Class>& classes);
 
         // methods
         void terminal();
@@ -33,7 +33,7 @@ class Helpy {
         
         void display_all_students() const;
 
-        void update_file(int file);
+        void update_file();
 };
 
 #endif

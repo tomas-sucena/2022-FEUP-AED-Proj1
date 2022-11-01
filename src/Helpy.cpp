@@ -15,7 +15,7 @@ void lowercase(string& s, bool uppercase = false){
 //queue for saving requests for later processing
 queue<Request> queuer;
 
-Helpy::Helpy(set<Student> students, vector<UC> UCs, vector<Class> classes): 
+Helpy::Helpy(set<Student>& students, vector<UC>& UCs, vector<Class>& classes): 
              all_students(students), all_UCs(UCs), all_classes(classes){}
 
 
@@ -528,13 +528,15 @@ d1: cout << endl << "Would you like to order the students by code (upXXXXXXXXX) 
 }
 
 
-void Helpy::update_file(int file){
-    ofstream temp();
+void Helpy::update_file(){
+    ofstream out("temp.csv");
 
-    switch (file){
-        case (1) : { // 1º ficheiro
-            //temp << "UcCode,ClassCode" << endl;
-        }
-    }
+    out << "StudentCode,StudentName,UcCode,ClassCode" << endl;
 
+    /*for (Student s : all_students){
+        for ()
+    }*/
+
+    out << '\n';
+    out.close();
 }
