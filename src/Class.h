@@ -3,6 +3,8 @@
 
 #include <iostream>
 #include <string>
+#include <set>
+#include <algorithm>
 #include "Schedule.h"
 
 using namespace std;
@@ -10,6 +12,7 @@ using namespace std;
 class Class {
     private:
         string classCode_;
+        vector<pair<int, string>> students_; // ordenado por código
         Schedule schedule_;
 
     public:
@@ -17,8 +20,11 @@ class Class {
         Class(string classCode, Schedule schedule);
 
         // methods
-        string get_classCode();
-        Schedule get_schedule();
+        string get_classCode() const;
+        Schedule get_schedule() const;
+        void print_students(bool by_code, bool descending) const;
+
+        void add_student(int studentCode, string studentName);
 
         bool equals(Class anime);
         bool operator<(Class c);

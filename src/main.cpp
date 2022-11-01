@@ -132,7 +132,10 @@ int main(){
 
     set<Student> all_students;
     for (auto info : student_info){
-        Student s(info.first.first, info.first.second);
+        string studentCode = info.first.first;
+        string studentName = info.first.second;
+
+        Student s(studentCode, studentName);
         
         list<Block> blocks;
 
@@ -142,6 +145,7 @@ int main(){
             int num = ((el.first[5] - '0') * 10 + (el.first[6] - '0'));
             
             Class& c = all_classes[15 * (year - 1) + (num - 1)];
+            c.add_student(stoi(studentCode), studentName);
 
             auto it = el.second.begin();
             for (Block& b : c.get_schedule().get_blocks()){

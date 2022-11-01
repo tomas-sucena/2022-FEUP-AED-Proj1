@@ -12,6 +12,7 @@ class UC {
     private:
         string ucCode_;
         set<string> classes_;
+        vector<pair<int, string>> students_; // ordenado por código
         Schedule schedule_;
 
     public:
@@ -25,6 +26,8 @@ class UC {
 
         void add_class(string classCode);
         void remove_class(string classCode);
+
+        void add_student(int studentCode, string studentName);
 
         void add_schedule(Schedule schedule);
         Schedule get_schedule();
