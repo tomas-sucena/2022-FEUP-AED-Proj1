@@ -45,6 +45,9 @@ void Helpy::terminal(){
     }
 }
 
+                                ///         ADVANCED MODE       ///
+
+
 void Helpy::advanced_mode(){
     /*-----LER COMANDOS-----*/
     cout << endl << "Hello! How can I be of assistance?" << endl;
@@ -120,6 +123,8 @@ b:  string s1, s2, s3;
 
 e:  cout << endl << "See you next time!" << endl;
 }
+
+                            ///             GUIDED MODE             ////
 
 void Helpy::guided_mode(){
     /*-----LER COMANDOS-----*/
