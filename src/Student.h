@@ -21,6 +21,8 @@ class Student{
     public:
         // constructor
         Student(string studentCode, string studentName);
+
+        bool operator<(const Student& s1) const;
         
         // methods
         string get_studentCode() const;

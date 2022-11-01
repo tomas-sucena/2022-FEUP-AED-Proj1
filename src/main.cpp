@@ -13,19 +13,6 @@
 
 using namespace std;
 
-// overloadings
-bool operator<(const Student& s1, const Student& s2){
-    return (s1.get_studentName() < s2.get_studentName());
-}
-
-bool operator<(const Block& b1, const Block& b2){
-    if (b1.get_weekday() == b2.get_weekday()){
-        return (b1.get_startHour() < b2.get_startHour());
-    }
-    
-    return (Block::week[b1.get_weekday()] < Block::week[b2.get_weekday()]);
-}
-
 int main(){
     /*-----LER FICHEIROS-----*/
     // ler o 1º ficheiro

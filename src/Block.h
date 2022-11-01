@@ -24,14 +24,14 @@ class Block{
         Block(string code, string weekday, string startHour, 
               string duration, string type);
 
+        bool operator<(const Block& b) const;
+
         // methods
         string get_code() const;
         string get_weekday() const;
         float get_startHour() const;
         float get_endHour() const;
         string get_type() const;
-
-        friend bool operator<(const Block& b1, const Block& b2);
 };
 
 #endif
