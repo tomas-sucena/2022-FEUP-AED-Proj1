@@ -193,11 +193,13 @@ b2: string s1, s2, s3;
 
             break;
         }
-        case(24) : {
-            display_student_ucs(valid);
-        }
         case(25) : {
             display_class_students(valid);
+
+            break;
+        }
+        case(26) : {
+            display_student_ucs(valid);
 
             break;
         }
@@ -554,7 +556,7 @@ void Helpy::display_student_ucs(bool& valid) const{
     for (Student s : all_students){
         if (s.get_studentCode() == studentCode){
             cout << endl << "The student " << "\033[1m" << s.get_studentName() << "\033[0m" 
-            << " (up" << studentCode << ')' << " has the following UCs:" << endl; << endl;
+            << " (up" << studentCode << ')' << " has the following UCs:" << endl << endl;
 
             s.print_ucs();
 
