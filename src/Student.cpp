@@ -3,6 +3,10 @@
 Student::Student(string studentCode, string studentName) :
         studentCode_(studentCode), studentName_(studentName){}
 
+bool Student::operator<(const Student& s) const{
+    return (get_studentName() < s.get_studentName());
+}
+
 string Student::get_studentCode() const{
     return studentCode_;
 }
