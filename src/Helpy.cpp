@@ -575,17 +575,25 @@ void Helpy::display_student_ucs(bool& valid) const{
     }
 }
 
-
-void Helpy::update_file(){
+void Helpy::rewrite_file(){
     ofstream out("temp.csv");
 
     out << "StudentCode,StudentName,UcCode,ClassCode" << endl;
 
-    /*for (Student s : all_students){
-        for ()
-    }*/
-}
+    for (Student s : all_students){
+        string studentCode = s.get_studentCode();
+        string studentName = s.get_studentName();
 
+        for (pair<string, string> p : s.get_ucs()){
+            out << studentCode << ',' << studentName 
+                << p.first << ',' << p.second << '\r'
+                << '\n';
+        }
+    }
+
+    remove("../students_classes.csv");
+    rename("temp.csv", "../students_classes.csv");
+}
 
 void Helpy::processQueue(){
     while(!queuer.empty()){

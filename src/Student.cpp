@@ -11,16 +11,24 @@ string Student::get_studentName() const{
     return studentName_;
 }
 
+map<string, string> Student::get_ucs() const{
+    return ucs_;
+}
+
+set<string> Student::get_classes() const{
+    return classes_;
+}
+
+Schedule Student::get_schedule() const{
+    return schedule_;
+}
+
 void Student::add_uc(string ucCode, string classCode){
     ucs_[ucCode] = classCode;
 }
 
 void Student::add_class(string classCode){
     classes_.insert(classCode);
-}
-
-Schedule Student::get_schedule() const{
-    return schedule_;
 }
 
 void Student::set_Schedule(Schedule a){

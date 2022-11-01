@@ -120,7 +120,8 @@ int main(){
 
     set<Student> all_students;
     for (auto info : student_info){
-        Student s(info.first.first, info.first.second);
+        Student s(info.first.first,   // código
+                  info.first.second); // nome
 
         for (pair<string, string> p : info.second){
             string ucCode = p.first,

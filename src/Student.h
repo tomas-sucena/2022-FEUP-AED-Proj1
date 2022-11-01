@@ -25,6 +25,8 @@ class Student{
         // methods
         string get_studentCode() const;
         string get_studentName() const;
+        map<string, string> get_ucs() const;
+        set<string> get_classes() const;
         Schedule get_schedule() const;
 
         void add_uc(string ucCode, string classCode);

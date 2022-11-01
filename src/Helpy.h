@@ -30,7 +30,7 @@ class Helpy {
         void guided_mode();
 
         void processQueue();
-        void update_file();
+        void rewrite_file();
         
         void display_uc_schedule(bool& valid) const;
         void display_uc_classes(bool& valid) const;
