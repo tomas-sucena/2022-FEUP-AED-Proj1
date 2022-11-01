@@ -43,8 +43,8 @@ void Helpy::terminal(){
 void Helpy::advanced_mode(){
     /*-----LER COMANDOS-----*/
     map<string, int> command = {{"display", 1}, {"print", 1}, {"show", 1}, {"remove", 2}, {"add",3}};
-    map<string, int> target = {{"uc", 4}, {"class", 5}, {"student", 7}, {"all", 9}};
-    map<string, int> what = {{"schedule", 10}, {"classes", 13}, {"uc", 16}, {"students", 19}}; 
+    map<string, int> target = {{"uc", 4}, {"class", 6}, {"student", 8}, {"all", 10}};
+    map<string, int> what = {{"schedule", 11}, {"classes", 14}, {"uc", 17}, {"students", 20}}; 
 
     cout << endl << "Hello! How can I be of assistance?" << endl;
 
@@ -61,49 +61,49 @@ b:  string s1, s2, s3;
 
     // processar o comando    
     switch (command[s1] + target[s2] + what[s3]){
-        case(14) : {
+        case(16) : {
             display_uc_schedule(valid);
 
             break;
         }
-        case(16) : {
+        case(18) : {
             display_class_schedule(valid);
 
             break;
         }
-        case(17) : {
+        case(19) : {
             display_uc_classes(valid);
 
             break;
         }
-        case(18) : {
+        case (20) : {
             display_student_schedule(valid);
 
             break;
         }
-        case(21) : {
+        case(23) : {
             display_student_classes(valid);
 
             break;
         }
-        case(22) : {
+        case(24) : { // remove student classes
             cout << "Please type the code (upXXXXXXXXX) of the desired student"<<endl;
             string st; cin >>st;
             cout << "Please type the code of the class you want to remove" << endl;
             string cl; cin >> cl;
             queuer.push(Request(s1,s2,s3,st,cl));
         }
-        case (23) : {
+        case(25) : {
             display_uc_students(valid);
 
             break;
         }
-        case(25) : {
+        case(27) : {
             display_class_students(valid);
 
             break;
         }
-        case(29) : {
+        case(31) : {
             display_all_students();
 
             break;
@@ -528,11 +528,12 @@ d1: cout << endl << "Would you like to order the students by code (upXXXXXXXXX) 
 }
 
 
-void Helpy::write_file(int file){
+void Helpy::update_file(int file){
     ofstream temp();
 
     switch (file){
-        case (1) : {
+        case (1) : { // 1º ficheiro
+            //temp << "UcCode,ClassCode" << endl;
         }
     }
 

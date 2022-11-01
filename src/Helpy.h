@@ -33,7 +33,7 @@ class Helpy {
         
         void display_all_students() const;
 
-        void write_file(int file);
+        void update_file(int file);
 };
 
 #endif
