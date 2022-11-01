@@ -14,8 +14,8 @@ class Student{
     private:
         string studentCode_;
         string studentName_;
-        map<string, list<string>> UcperClass;
-        set<string> studentUC_;
+        map<string, string> ucs_;
+        set<string> classes_;
         Schedule schedule_;
 
     public:
@@ -27,8 +27,8 @@ class Student{
         string get_studentName() const;
         Schedule get_schedule() const;
 
-        void set_UcperClass(map<string, list<string>> sub);
-        void set_Uc();
+        void add_uc(string ucCode, string classCode);
+        void add_class(string classCode);
         void set_Schedule(Schedule a);
 
         void print_classes() const;

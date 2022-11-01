@@ -107,7 +107,7 @@ int main(){
     getline(students_classes, line); // ignorar o cabeçalho
 
     map<pair<string, string>, 
-        map<string, list<string>>> student_info;
+        map<string, string>> student_info;
 
     while (getline(students_classes, line)){
         istringstream line_(line);
@@ -128,40 +128,20 @@ int main(){
         getline(line_, classCode,'\r');
 
         student_info[{studentCode, studentName}]
-                    [classCode].push_back(ucCode);
+                    [ucCode] = classCode;
     }
 
     set<Student> all_students;
     for (auto info : student_info){
-        string studentCode = info.first.first;
-        string studentName = info.first.second;
+        Student s(info.first.first, info.first.second);
 
-        Student s(studentCode, studentName);
-        
-        list<Block> blocks;
+        for (pair<string, string> p : info.second){
+            string ucCode = p.first,
+                   classCode = p.second;
 
-        // criar o horário do aluno
-        for (auto el : info.second){
-            int year = (el.first)[0] - '0';
-            int num = ((el.first[5] - '0') * 10 + (el.first[6] - '0'));
-            
-            Class& c = all_classes[15 * (year - 1) + (num - 1)];
-            c.add_student(stoi(studentCode), studentName);
-
-            auto it = el.second.begin();
-            for (Block& b : c.get_schedule().get_blocks()){
-                if (b.get_code() == *it){
-                    blocks.push_back(b);
-                    it++;
-                }
-
-                if (it == el.second.end()){break;}
-            }
+            s.add_uc(ucCode, classCode);
+            s.add_class(classCode);
         }
-        
-        s.set_UcperClass(info.second);
-        s.set_Uc();
-        s.set_Schedule(Schedule(blocks));
 
         all_students.insert(s);
     }
