@@ -1,8 +1,6 @@
 #include "Helpy.h"
-#include "Request.h"
 #include <fstream>
 #include <sstream>
-#include <queue>
 
 // função auxiliar usada para tratar dos comandos
 void lowercase(string& s, bool uppercase = false){
@@ -11,9 +9,6 @@ void lowercase(string& s, bool uppercase = false){
                           tolower(c);
     }
 }
-
-//queue for saving requests for later processing
-queue<Request> queuer;
 
 //maps to help with command reading
 map<string, int> command = {{"display", 1}, {"print", 1}, {"show", 1}, {"remove", 2}, {"add",3}};
@@ -597,7 +592,7 @@ void Helpy::update_file(){
 }
 
 
-void processQueue(){
+void Helpy::processQueue(){
     while(!queuer.empty()){
         Request sub = queuer.front();
     }
