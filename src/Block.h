@@ -24,6 +24,8 @@ class Block{
         Block(string code, string weekday, string startHour, 
               string duration, string type);
 
+        bool operator<(const Block& b) const;
+
         // methods
         string get_code() const;
         string get_weekday() const;

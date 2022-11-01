@@ -10,19 +10,17 @@ map<string, int> Helpy::what = {{"schedule", 24}, {"classes", 27}, {"ucs", 30}, 
 // função auxiliar usada para tratar dos comandos
 void lowercase(string& s, bool uppercase = false){
     for (char& c : s){
-        c = (uppercase) ? toupper(c) :
-                          tolower(c);
+        c = (uppercase) ? toupper(c) : tolower(c);
     }
 }
 
 Helpy::Helpy(set<Student>& students, vector<UC>& UCs, vector<Class>& classes): 
              all_students(students), all_UCs(UCs), all_classes(classes){}
 
-
 void Helpy::terminal(){
-    cout << "Which mode would you prefer?" << endl;
-    cout << "* Guided" << endl;
-    cout << "* Advanced" << endl;
+    cout << "Which mode would you prefer?" << endl << endl;
+a1: cout << "* Guided" << endl;
+    cout << "* Advanced" << endl << endl;
 
     string line; getline(cin, line);
     lowercase(line);
@@ -36,6 +34,10 @@ void Helpy::terminal(){
         }
         else if (temp == "advanced"){
             advanced_mode();
+        }
+        else{
+            cout << "Invalid command! Please choose one of the following:" << endl << endl;
+            goto a1;
         }
     }
 }
@@ -164,6 +166,7 @@ b2: string s1, s2, s3;
     cout << endl;
     cout << "* Classes" << endl;
     cout << "* Schedule" << endl;
+    cout << "* UCs" << endl;
     cout << endl;
 
     cin >> s3; lowercase(s3);
