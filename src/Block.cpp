@@ -9,14 +9,6 @@ Block::Block(string code, string weekday, string startHour, string duration, str
     endHour_ = stof(startHour) + stof(duration);
 }
 
-bool Block::operator<(const Block& b) const{
-    if (get_weekday() == b.get_weekday()){
-        return (get_startHour() < b.get_startHour());
-    }
-    
-    return (week[get_weekday()] < week[b.get_weekday()]);
-}
-
 string Block::get_code() const{
     return code_;
 }
