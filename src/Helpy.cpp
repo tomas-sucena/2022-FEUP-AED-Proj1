@@ -2,18 +2,17 @@
 #include <fstream>
 #include <sstream>
 
+map<string, int> Helpy::command = {{"display", 1}, {"print", 1}, {"show", 1}, 
+                                   {"remove", 2}, {"add",3}};
+map<string, int> Helpy::target = {{"uc", 6}, {"class", 8}, {"student", 10}, {"all", 12}};
+map<string, int> Helpy::what = {{"schedule", 24}, {"classes", 27}, {"ucs", 30}, {"students", 33}};
+
 // função auxiliar usada para tratar dos comandos
 void lowercase(string& s, bool uppercase = false){
     for (char& c : s){
         c = (uppercase) ? toupper(c) : tolower(c);
     }
 }
-
-//maps to help with command reading
-map<string, int> command = {{"display", 1}, {"print", 1}, {"show", 1}, {"remove", 2}, {"add",3}};
-map<string, int> target = {{"uc", 4}, {"class", 6}, {"student", 8}, {"all", 10}};
-map<string, int> what = {{"schedule", 11}, {"classes", 14}, {"ucs", 17}, {"students", 20}};
-
 
 Helpy::Helpy(set<Student>& students, vector<UC>& UCs, vector<Class>& classes): 
              all_students(students), all_UCs(UCs), all_classes(classes){}
@@ -46,10 +45,7 @@ a1: cout << "* Guided" << endl;
 }
 
                                 ///         ADVANCED MODE       ///
-
-
 void Helpy::advanced_mode(){
-
     /*-----LER COMANDOS-----*/
     cout << endl << "Hello! How can I be of assistance?" << endl;
 
@@ -73,35 +69,34 @@ b1: string s1, s2, s3;
     cin >> s3;
     lowercase(s3);
 
-
     // processar o comando    
     switch (command[s1] + target[s2] + what[s3]){
-        case(16) : {
+        case(31) : {
             display_uc_schedule(valid);
 
             break;
         }
-        case(18) : {
+        case(33) : {
             display_class_schedule(valid);
 
             break;
         }
-        case(19) : {
+        case(34) : {
             display_uc_classes(valid);
 
             break;
         }
-        case (20) : {
+        case (35) : {
             display_student_schedule(valid);
 
             break;
         }
-        case(23) : {
+        case(38) : {
             display_student_classes(valid);
 
             break;
         }
-        case(24) : { // remove student classes
+        case(39) : { // remove student classes
             cout << "Please type the code (upXXXXXXXXX) of the desired student"<<endl;
             string st; cin >>st;
             cout << "Please type the code of the class you want to remove" << endl;
@@ -110,22 +105,22 @@ b1: string s1, s2, s3;
 
             break;
         }
-        case(25) : {
+        case(40) : {
             display_uc_students(valid);
 
             break;
         }
-        case(26) : {
+        case(41) : {
             display_student_ucs(valid);
 
             break;
         }
-        case(27) : {
+        case(42) : {
             display_class_students(valid);
 
             break;
         }
-        case(31) : {
+        case(46) : {
             display_all_students();
 
             break;
@@ -180,32 +175,32 @@ b2: string s1, s2, s3;
 
     // processar o comando    
     switch (command[s1] + target[s2] + what[s3]){
-        case(16) : {
+        case(31) : {
             display_uc_schedule(valid);
 
             break;
         }
-        case(18) : {
+        case(33) : {
             display_class_schedule(valid);
 
             break;
         }
-        case(19) : {
+        case(34) : {
             display_uc_classes(valid);
 
             break;
         }
-        case (20) : {
+        case (35) : {
             display_student_schedule(valid);
 
             break;
         }
-        case(23) : {
+        case(38) : {
             display_student_classes(valid);
 
             break;
         }
-        case(24) : { // remove student classes
+        case(39) : { // remove student classes
             cout << "Please type the code (upXXXXXXXXX) of the desired student"<<endl;
             string st; cin >>st;
             cout << "Please type the code of the class you want to remove" << endl;
@@ -214,22 +209,22 @@ b2: string s1, s2, s3;
 
             break;
         }
-        case(25) : {
+        case(40) : {
             display_uc_students(valid);
 
             break;
         }
-        case(26) : {
+        case(41) : {
             display_student_ucs(valid);
 
             break;
         }
-        case(27) : {
+        case(42) : {
             display_class_students(valid);
 
             break;
         }
-        case(31) : {
+        case(46) : {
             display_all_students();
 
             break;
@@ -354,7 +349,7 @@ a2: cout << endl << "And would you like to sort them in ascending or descending 
     }
 
     // escolher a UC
-    cout << endl << "Understood. Please select the desired class." << endl;
+    cout << endl << "Understood. Please select the desired UC." << endl;
 
     string ucCode; cin >> ucCode;
     lowercase(ucCode, true);

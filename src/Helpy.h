@@ -14,7 +14,10 @@ class Helpy {
         vector<UC> all_UCs;
         vector<Class> all_classes;
 
-        //queue for saving requests for later processing
+        // mapas usados para processar comandos
+        static map<string, int> command, target, what;
+
+        // fila para guardar pedidos
         queue<Request> queuer;
         
     public:
@@ -26,6 +29,9 @@ class Helpy {
         void advanced_mode();
         void guided_mode();
 
+        void processQueue();
+        void update_file();
+        
         void display_uc_schedule(bool& valid) const;
         void display_uc_classes(bool& valid) const;
         void display_uc_students(bool& valid) const;
@@ -39,9 +45,7 @@ class Helpy {
         
         void display_all_students() const;
 
-        void update_file();
-
-        void processQueue();
+;
 };
 
 #endif

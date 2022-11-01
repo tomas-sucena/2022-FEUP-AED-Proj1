@@ -15,16 +15,12 @@ string Student::get_studentName() const{
     return studentName_;
 }
 
-void Student::set_UcperClass(map<string, list<string>> class_uc){
-    UcperClass = class_uc;
+void Student::add_uc(string ucCode, string classCode){
+    ucs_[ucCode] = classCode;
 }
 
-void Student::set_Uc(){
-    for (auto list_ : UcperClass){
-        for(auto uc : list_.second){
-        studentUC_.insert(uc);
-        }
-    }
+void Student::add_class(string classCode){
+    classes_.insert(classCode);
 }
 
 Schedule Student::get_schedule() const{
@@ -36,13 +32,17 @@ void Student::set_Schedule(Schedule a){
 }
 
 void Student::print_classes() const{
-    for (auto info : UcperClass){
-        cout << info.first << endl;
+    for (string classCode : classes_){
+        cout << classCode << endl;
     }
 }
 
 void Student::print_ucs() const{
-    for (auto info : studentUC_){
-        cout << info << endl;
+    for (auto info : ucs_){
+        cout << info.first << endl;
     }
+}
+
+bool Student::operator<(const Student& s) const{
+    return (studentName_ < s.get_studentName());
 }

@@ -69,7 +69,7 @@ bool Class::equals(Class c){
     return (c.get_classCode() == classCode_);
 }
 
-bool Class::operator<(Class c){
+bool Class::operator<(const Class c) const{
     return (classCode_ < c.get_classCode());
 }
 
