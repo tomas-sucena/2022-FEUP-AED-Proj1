@@ -8,6 +8,7 @@
         "ostream": "cpp",
         "iosfwd": "cpp",
         "iostream": "cpp",
-        "set": "cpp"
+        "set": "cpp",
+        "utility": "cpp"
     }
 }
