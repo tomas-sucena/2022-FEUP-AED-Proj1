@@ -22,6 +22,10 @@ string UC::get_UcCode(){
     return ucCode_;
 }
 
+set<string> UC::get_classes() const{
+    return classes_;
+}
+
 void UC::remove_class(string classCode){
     for(auto kanna = classes_.begin(); kanna != classes_.end();){
         if (*kanna == classCode){

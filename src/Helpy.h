@@ -5,16 +5,21 @@
 #include "UC.h"
 #include "Class.h"
 #include "Schedule.h"
+#include "Request.h"
+#include <queue>
 
 class Helpy {
     private:
         set<Student> all_students;
         vector<UC> all_UCs;
         vector<Class> all_classes;
+
+        //queue for saving requests for later processing
+        queue<Request> queuer;
         
     public:
         // constructor
-        Helpy(set<Student> students, vector<UC> UCs, vector<Class> classes);
+        Helpy(set<Student>& students, vector<UC>& UCs, vector<Class>& classes);
 
         // methods
         void terminal();
@@ -34,7 +39,9 @@ class Helpy {
         
         void display_all_students() const;
 
-        void update_file(int file);
+        void update_file();
+
+        void processQueue();
 };
 
 #endif

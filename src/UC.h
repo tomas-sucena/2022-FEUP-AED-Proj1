@@ -24,6 +24,7 @@ class UC {
         // methods
         string get_UcCode();
         
+        set<string> get_classes() const;
         void print_classes();
         void add_class(string classCode);
         void remove_class(string classCode);
