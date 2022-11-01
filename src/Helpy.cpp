@@ -15,6 +15,11 @@ void lowercase(string& s, bool uppercase = false){
 //queue for saving requests for later processing
 queue<Request> queuer;
 
+//maps to help with command reading
+map<string, int> command = {{"display", 1}, {"print", 1}, {"show", 1}, {"remove", 2}, {"add",3}};
+map<string, int> target = {{"uc", 4}, {"class", 6}, {"student", 8}, {"all", 10}};
+map<string, int> what = {{"schedule", 11}, {"classes", 14}, {"uc", 17}, {"students", 20}};
+
 Helpy::Helpy(set<Student> students, vector<UC> UCs, vector<Class> classes): 
              all_students(students), all_UCs(UCs), all_classes(classes){}
 
@@ -46,11 +51,6 @@ void Helpy::terminal(){
 void Helpy::advanced_mode(){
 
     /*-----LER COMANDOS-----*/
-
-    map<string, int> command = {{"display", 1}, {"print", 1}, {"show", 1}, {"remove", 2}, {"add",3}};
-    map<string, int> target = {{"uc", 4}, {"class", 6}, {"student", 8}, {"all", 10}};
-    map<string, int> what = {{"schedule", 11}, {"classes", 14}, {"uc", 17}, {"students", 20}}; 
-
     cout << endl << "Hello! How can I be of assistance?" << endl;
 
 b:  string s1, s2, s3; 
@@ -131,11 +131,6 @@ e:  cout << endl << "See you next time!" << endl;
 void Helpy::guided_mode(){
 
     /*-----LER COMANDOS-----*/
-
-    map<string, int> command = {{"display", 1}, {"print", 1}, {"show", 1}};
-    map<string, int> target = {{"uc", 3}, {"class", 5}, {"student", 7}, {"all", 9}};
-    map<string, int> what = {{"schedule", 10}, {"classes", 13}, {"uc", 16}, {"students", 19}}; 
-
     cout << endl << "Hello! How can I be of assistance?" << endl;
     cout << endl;
     cout << "* Display" << endl;
@@ -561,7 +556,7 @@ void Helpy::display_student_ucs(bool& valid) const{
             cout << endl << "The student " << "\033[1m" << s.get_studentName() << "\033[0m" 
             << " (up" << studentCode << ')' << " has the following UCs:" << endl; << endl;
 
-            s.print_ucs;
+            s.print_ucs();
 
             valid = true;
             break;
