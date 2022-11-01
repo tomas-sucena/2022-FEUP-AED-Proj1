@@ -23,12 +23,12 @@ class Helpy {
         void display_uc_classes(bool& valid) const;
 
         void display_class_schedule(bool& valid) const;
-        void display_class_students(bool& valid) const;
+        void display_class_students(bool& valid, bool by_code, bool descending) const;
 
         void display_student_schedule(bool& valid) const;
         void display_student_classes(bool& valid) const;
         
-        void display_all_students(bool by_code = 0) const;
+        void display_all_students(bool by_code) const;
 };
 
 #endif

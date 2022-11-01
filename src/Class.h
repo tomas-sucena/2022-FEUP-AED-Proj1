@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 #include <set>
+#include <algorithm>
 #include "Schedule.h"
 
 using namespace std;
@@ -11,7 +12,7 @@ using namespace std;
 class Class {
     private:
         string classCode_;
-        set<pair<int, string>> students_;
+        vector<pair<int, string>> students_; // ordenado por código
         Schedule schedule_;
 
     public:
@@ -21,7 +22,7 @@ class Class {
         // methods
         string get_classCode() const;
         Schedule get_schedule() const;
-        void print_students() const;
+        void print_students(bool by_code, bool descending) const;
 
         void add_student(int studentCode, string studentName);
 

@@ -12,7 +12,7 @@ class UC {
     private:
         string ucCode_;
         set<string> classes_;
-        set<pair<int, string>> students_;
+        vector<pair<int, string>> students_; // ordenado por código
         Schedule schedule_;
 
     public:

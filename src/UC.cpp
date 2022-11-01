@@ -28,7 +28,23 @@ void UC::remove_class(string classCode){
 }
 
 void UC::add_student(int studentCode, string studentName){
-    students_.insert({studentCode, studentName});
+    // pesquisa binária
+    int lower = 0, upper = (int) students_.size() - 1;
+
+    int res = 0;
+    while (lower <= upper){
+        int mid = (lower + upper) / 2;
+
+        if (students_[mid].first < studentCode){
+            lower = mid + 1;
+            res = mid;
+        }
+        else{
+            upper = mid - 1;
+        }
+    }
+
+    students_.insert(students_.begin() + res, {studentCode, studentName});
 }
 
 void UC::add_schedule(Schedule schedule){
