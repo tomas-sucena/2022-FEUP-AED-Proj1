@@ -45,26 +45,21 @@ void Class::print_students(bool by_code, bool descending) const{
 }
 
 void Class::add_student(int studentCode, string studentName){
-    /*
     // pesquisa binária
     int lower = 0, upper = (int) students_.size() - 1;
 
-    int res = 0;
-    while (lower <= upper){
+    while (lower < upper){
         int mid = (lower + upper) / 2;
 
         if (students_[mid].first < studentCode){
             lower = mid + 1;
         }
         else{
-            upper = mid - 1;
-            res = mid;
+            upper = mid;
         }
     }
 
-    students_.insert(students_.begin() + res, {studentCode, studentName});*/
-    students_.push_back({studentCode, studentName});
-    sort(students_.begin(), students_.end());
+    students_.insert(students_.begin() + lower, {studentCode, studentName});
 }
 
 bool Class::equals(Class c){
