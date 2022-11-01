@@ -159,7 +159,6 @@ int main(){
         }
         
         s.set_UcperClass(info.second);
-        s.set_Ucs();
         s.set_Schedule(Schedule(blocks));
 
         all_students.insert(s);
