@@ -62,8 +62,18 @@ b1: string s1, s2, s3;
         goto e1;
     }
 
-    cin >> s2 >> s3;
-    lowercase(s2); lowercase(s3);
+    cin >> s2;
+    lowercase(s2);
+
+    if(s1 == "process" && s2 == "queue"){
+        processQueue();
+        cout << "Queue has been processed" << endl;
+        goto b1;
+    }
+
+    cin >> s3;
+    lowercase(s3);
+
 
     // processar o comando    
     switch (command[s1] + target[s2] + what[s3]){
@@ -586,3 +596,9 @@ void Helpy::update_file(){
     }*/
 }
 
+
+void processQueue(){
+    while(!queuer.empty()){
+        Request sub = queuer.front();
+    }
+}
