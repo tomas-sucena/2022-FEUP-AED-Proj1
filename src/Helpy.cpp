@@ -13,13 +13,35 @@ void lowercase(string& s, bool uppercase = false){
 Helpy::Helpy(set<Student> students, vector<UC> UCs, vector<Class> classes): 
              all_students(students), all_UCs(UCs), all_classes(classes){}
 
+
 void Helpy::terminal(){
+    cout << "Which mode would you prefer?" << endl;
+    cout << "* Guided" << endl;
+    cout << "* Advanced" << endl;
+
+    string line; getline(cin, line);
+    lowercase(line);
+
+    istringstream line_(line);
+    string temp;
+
+    while (line_ >> temp){      
+        if (temp == "guided"){
+            guided_mode();
+        }
+        else if (temp == "advanced"){
+            advanced_mode();
+        }
+    }
+}
+
+void Helpy::advanced_mode(){
     /*-----LER COMANDOS-----*/
     map<string, int> command = {{"display", 1}, {"print", 1}, {"show", 1}, {"request", 2}};
     map<string, int> target = {{"uc", 3}, {"class", 5}, {"student", 7}, {"all", 9}};
     map<string, int> what = {{"schedule", 10}, {"classes", 13}, {"uc", 16}, {"students", 19}}; 
 
-    cout << "Hello! How can I be of assistance?" << endl;
+    cout << endl << "Hello! How can I be of assistance?" << endl;
 
 b:  string s1, s2, s3; 
     bool valid = false;
@@ -84,6 +106,96 @@ b:  string s1, s2, s3;
     goto b;
 
 e:  cout << endl << "See you next time!" << endl;
+}
+
+void Helpy::guided_mode(){
+    /*-----LER COMANDOS-----*/
+    map<string, int> command = {{"display", 1}, {"print", 1}, {"show", 1}, {"request", 2}};
+    map<string, int> target = {{"uc", 3}, {"class", 5}, {"student", 7}, {"all", 9}};
+    map<string, int> what = {{"schedule", 10}, {"classes", 13}, {"uc", 16}, {"students", 19}}; 
+
+    cout << endl << "Hello! How can I be of assistance?" << endl;
+    cout << endl;
+    cout << "* Display" << endl;
+    cout << "* Quit" << endl;
+    cout << endl;
+
+b2: string s1, s2, s3; 
+    bool valid = false;
+
+    cin >> s1; lowercase(s1);
+    if (s1 == "quit" || s1 == "no"){
+        goto e2;
+    }
+    else if (s1 == "display"){
+        cout << endl;
+        cout << "* UC" << endl;
+        cout << "* Class" << endl;
+        cout << "* Student" << endl;
+        cout << endl;
+    }
+
+    cin >> s2; lowercase(s2);
+
+    cout << endl;
+    cout << "* Classes" << endl;
+    cout << "* Schedule" << endl;
+    cout << endl;
+
+    cin >> s3; lowercase(s3);
+
+    // processar o comando        
+    switch (command[s1] + target[s2] + what[s3]){
+        case(14) : {
+            display_uc_schedule(valid);
+
+            break;
+        }
+        case(16) : {
+            display_class_schedule(valid);
+
+            break;
+        }
+        case(17) : {
+            display_uc_classes(valid);
+
+            break;
+        }
+        case(18) : {
+            display_student_schedule(valid);
+
+            break;
+        }
+        case(21) : {
+            display_student_classes(valid);
+
+            break;
+        }
+        case (23) : {
+            display_uc_students(valid);
+
+            break;
+        }
+        case(25) : {
+            display_class_students(valid);
+
+            break;
+        }
+        case(29) : {
+            display_all_students();
+
+            break;
+        }
+        default : {
+            cout << endl << "Invalid command! Please, type another command." << endl;
+            goto b2;
+        }
+    }
+
+    cout << endl << "Anything else?" << endl;
+    goto b2;
+
+e2: cout << endl << "See you next time!" << endl;
 }
 
 

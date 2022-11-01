@@ -18,6 +18,8 @@ class Helpy {
 
         // methods
         void terminal();
+        void advanced_mode();
+        void guided_mode();
 
         void display_uc_schedule(bool& valid) const;
         void display_uc_classes(bool& valid) const;
