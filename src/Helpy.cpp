@@ -224,11 +224,6 @@ b2: string s1, s2, s3;
 
             break;
         }
-        case(26) : {
-            display_student_ucs(valid);
-
-            break;
-        }
         case(31) : {
             display_all_students();
 
