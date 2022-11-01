@@ -4,6 +4,7 @@
 #include <vector>
 #include <string>
 #include <map>
+#include <set>
 
 #include "UC.h"
 #include "Class.h"
@@ -159,6 +160,7 @@ int main(){
         }
         
         s.set_UcperClass(info.second);
+        s.set_Uc();
         s.set_Schedule(Schedule(blocks));
 
         all_students.insert(s);
