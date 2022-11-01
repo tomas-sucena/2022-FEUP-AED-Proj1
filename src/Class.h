@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <string>
+#include <set>
 #include "Schedule.h"
 
 using namespace std;
@@ -10,6 +11,7 @@ using namespace std;
 class Class {
     private:
         string classCode_;
+        set<pair<int, string>> students_;
         Schedule schedule_;
 
     public:
@@ -17,8 +19,11 @@ class Class {
         Class(string classCode, Schedule schedule);
 
         // methods
-        string get_classCode();
-        Schedule get_schedule();
+        string get_classCode() const;
+        Schedule get_schedule() const;
+        void print_students() const;
+
+        void add_student(int studentCode, string studentName);
 
         bool equals(Class anime);
         bool operator<(Class c);

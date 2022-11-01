@@ -27,6 +27,10 @@ void UC::remove_class(string classCode){
     }
 }
 
+void UC::add_student(int studentCode, string studentName){
+    students_.insert({studentCode, studentName});
+}
+
 void UC::add_schedule(Schedule schedule){
     schedule_ = schedule;
 }
