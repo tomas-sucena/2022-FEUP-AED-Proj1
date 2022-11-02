@@ -59,6 +59,7 @@ b1: string s1, s2, s3;
     bool valid = false;
 
     cin >> s1; lowercase(s1);
+    cout << s1 << endl;
     if (s1 == "quit" || s1 == "no"){
         goto e1;
     }
@@ -150,6 +151,8 @@ void Helpy::guided_mode(){
     cout << endl << "Hello! How can I be of assistance?" << endl;
 b2: cout << endl;
     cout << "* Display" << endl;
+    cout << "* Add" << endl;
+    cout << "* Remove" << endl;
     cout << "* Quit" << endl;
     cout << endl;
 
@@ -162,6 +165,7 @@ b2: cout << endl;
     }
     else if (s1 == "display"){
         cout << endl;
+        cout << "* All" << endl;
         cout << "* Class" << endl;
         cout << "* Student" << endl;
         cout << "* UC" << endl;
@@ -181,16 +185,23 @@ b2: cout << endl;
     }
     else if (s2 == "student"){
         cout << endl;
-        cout << "* All" << endl;
-        cout << "* Class" << endl;
+        cout << "* Classes" << endl;
         cout << "* Schedule" << endl;
         cout << "* UCs" << endl;
         cout << endl;
     }
     else if (s2 == "uc"){
         cout << endl;
+        cout << "* Classes" << endl;
         cout << "* Students" << endl;
         cout << "* Schedule" << endl;
+        cout << endl;
+    }
+    else if (s2 == "all"){
+        cout << endl;
+        cout << "* Classes" << endl;
+        cout << "* Students" << endl;
+        cout << "* UCs" << endl;
         cout << endl;
     }
     else if (s2 == "quit"){
@@ -538,7 +549,7 @@ a11:cout << endl << "Please write the code (upXXXXXXXXX) of the desired student.
 }
 
 void Helpy::display_student_classes(bool& valid) const{
-    cout << endl << "Understood. Please write the code (upXXXXXXXXX) of the desired student." << endl;
+a12:cout << endl << "Understood. Please write the code (upXXXXXXXXX) of the desired student." << endl;
 
     string studentCode; cin >> studentCode;
 
@@ -556,12 +567,13 @@ void Helpy::display_student_classes(bool& valid) const{
 
     if (!valid){
         cout << endl << "I'm sorry, but that student code is not valid." << endl;
+        goto a12;
     }
 }
 
 void Helpy::display_all_students() const{
     // ordenação por código ou nome
-b3: cout << endl << "Would you like to order the students by code (upXXXXXXXXX) or by name?" << endl;
+a13:cout << endl << "How would you like to order the students? (Code/Name)" << endl;
     
     cin.ignore();
         
@@ -586,8 +598,14 @@ b3: cout << endl << "Would you like to order the students by code (upXXXXXXXXX) 
 
     if (by_code == 2){
         cout << "Invalid command. Please, try again." << endl;
-        goto b3;
+        goto a13;
     }
+
+    // buscar condição
+    cout << endl << "Would you like filter the students by the number of UCs they are in? (Yes/no)" << endl;
+
+    getline(cin, line);
+    lowercase(line);
 
     // imprimir todos os estudantes
     cout << endl << "Understood. These are all the students currently enrolled in LEIC:" << endl;
@@ -600,7 +618,7 @@ b3: cout << endl << "Would you like to order the students by code (upXXXXXXXXX) 
 }
 
 void Helpy::display_student_ucs(bool& valid) const{
-    cout <<endl << "Understood. Please write the code (upXXXXXXXXX) of the desired student." << endl;
+a14:cout <<endl << "Understood. Please write the code (upXXXXXXXXX) of the desired student." << endl;
     string studentCode; cin >> studentCode;
 
     for (Student s : all_students){
@@ -617,6 +635,7 @@ void Helpy::display_student_ucs(bool& valid) const{
 
     if (!valid){
         cout << endl << "I'm sorry, but that student code is not valid." << endl;
+        goto a14;
     }
 }
 
