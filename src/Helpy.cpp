@@ -59,7 +59,7 @@ b1: string s1, s2, s3;
     bool valid = false;
 
     cin >> s1; lowercase(s1);
-    cout << s1 << endl;
+
     if (s1 == "quit" || s1 == "no"){
         goto e1;
     }
@@ -603,23 +603,73 @@ a13:cout << endl << "How would you like to order the students? (Code/Name)" << e
     }
 
     // buscar condição
-    cout << endl << "Would you like filter the students by the number of UCs they are in? (Yes/no)" << endl;
+    int n = 0;
+
+    cout << endl << "Would you like to filter the students by the number of UCs they are in? (Yes/no)" 
+         << endl;
 
     getline(cin, line);
     lowercase(line);
 
+    line_.clear(); 
+    line_.str(line);
+
+    bool filter = false;
+    while (line_ >> temp){
+        if (temp == "yes" || temp == "y"){
+            filter = true;
+            break;
+        }
+    }
+
+    bool less = false;
+    if (filter){
+        cout << endl << "OK. Would you like to see if students have less or more than a number of UCs?"
+             << endl;
+
+        getline(cin, line);
+        lowercase(line);
+
+        line_.clear();
+        line_.str(line);
+
+        while (line_ >> temp){
+            if (temp == "less"){
+                less = true;
+                break;
+            }
+            else if (temp == "more"){
+                break;
+            }
+        }
+        
+        line_.clear();
+
+        cout << endl << "OK. Please type the number you want to use for filtering:"
+             << endl;
+
+        cin >> n;
+    }
+        
     // imprimir todos os estudantes
     cout << endl << "Understood. These are all the students currently enrolled in LEIC:" << endl;
 
     for (Student s : all_students){
-        (by_code) ? (cout << s.get_studentCode() << ' ' << s.get_studentName()) :
-                    (cout << s.get_studentName() << " (up" << s.get_studentCode() << ')');
-        cout << endl;
+        if (less && s.get_ucs().size() < n){
+            (by_code) ? (cout << s.get_studentCode() << ' ' << s.get_studentName()) :
+                        (cout << s.get_studentName() << " (up" << s.get_studentCode() << ')');
+            cout << endl;
+        }
+        else if (!less && s.get_ucs().size() > n){
+            (by_code) ? (cout << s.get_studentCode() << ' ' << s.get_studentName()) :
+                        (cout << s.get_studentName() << " (up" << s.get_studentCode() << ')');
+            cout << endl;
+        }
     }
 }
 
 void Helpy::display_student_ucs(bool& valid) const{
-a14:cout <<endl << "Understood. Please write the code (upXXXXXXXXX) of the desired student." << endl;
+a15:cout << endl << "Understood. Please write the code (upXXXXXXXXX) of the desired student." << endl;
     string studentCode; cin >> studentCode;
 
     for (Student s : all_students){
@@ -636,7 +686,7 @@ a14:cout <<endl << "Understood. Please write the code (upXXXXXXXXX) of the desir
 
     if (!valid){
         cout << endl << "I'm sorry, but that student code is not valid." << endl;
-        goto a14;
+        goto a15;
     }
 }
 
