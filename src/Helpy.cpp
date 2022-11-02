@@ -17,9 +17,7 @@ void lowercase(string& s, bool uppercase = false){
 Helpy::Helpy(set<Student>& students, vector<UC>& UCs, vector<Class>& classes): 
              all_students(students), all_UCs(UCs), all_classes(classes){}
 
-
 void Helpy::terminal(){
-
     cout << "Which mode would you prefer?" << endl << endl;
 a1: cout << "* Guided" << endl;
     cout << "* Advanced" << endl << endl;
@@ -30,18 +28,26 @@ a1: cout << "* Guided" << endl;
     istringstream line_(line);
     string temp;
 
-    while (line_ >> temp){      
+    bool valid = false;
+    while (line_ >> temp){  
         if (temp == "guided"){
             guided_mode();
+
+            valid = true;
+            break;
         }
         else if (temp == "advanced"){
             advanced_mode();
+
+            valid = true;
+            break;
         }
-        else{
-            cout << "Invalid command! Please choose one of the following:" << endl << endl;
-            goto a1;
-        }
-    }
+    }     
+
+    if (!valid){
+        cout << "Invalid command! Please choose one of the following:" << endl << endl;
+        goto a1;
+    }       
 }
 
                                 ///         ADVANCED MODE       ///
@@ -143,12 +149,12 @@ void Helpy::guided_mode(){
 
     /*-----LER COMANDOS-----*/
     cout << endl << "Hello! How can I be of assistance?" << endl;
-    cout << endl;
+b2: cout << endl;
     cout << "* Display" << endl;
     cout << "* Quit" << endl;
     cout << endl;
 
-b2: string s1, s2, s3; 
+    string s1, s2, s3, s4; 
     bool valid = false;
 
     cin >> s1; lowercase(s1);
@@ -235,8 +241,11 @@ b2: string s1, s2, s3;
         }
     }
 
-    cout << endl << "Anything else?" << endl;
-    goto b2;
+    cout << endl << "Anything else? (Yes/No)" << endl;
+    cin >> s4; lowercase(s4);
+    if (s4 == "yes" || s4 == "y"){
+        goto b2;
+    }
 
 e2: cout << endl << "See you next time!" << endl;
 }
@@ -580,17 +589,25 @@ void Helpy::display_student_ucs(bool& valid) const{
     }
 }
 
-
-void Helpy::update_file(){
+void Helpy::rewrite_file(){
     ofstream out("temp.csv");
 
     out << "StudentCode,StudentName,UcCode,ClassCode" << endl;
 
-    /*for (Student s : all_students){
-        for ()
-    }*/
-}
+    for (Student s : all_students){
+        string studentCode = s.get_studentCode();
+        string studentName = s.get_studentName();
 
+        for (pair<string, string> p : s.get_ucs()){
+            out << studentCode << ',' << studentName 
+                << p.first << ',' << p.second << '\r'
+                << '\n';
+        }
+    }
+
+    remove("../students_classes.csv");
+    rename("temp.csv", "../students_classes.csv");
+}
 
 void Helpy::processQueue(){
     while(!queuer.empty()){

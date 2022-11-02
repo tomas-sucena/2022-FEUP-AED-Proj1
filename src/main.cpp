@@ -116,11 +116,22 @@ int main(){
 
         student_info[{studentCode, studentName}]
                     [ucCode] = classCode;
+
+        // adicionar aluno à UC
+        int dec = ucCode[6] - '0',
+            unit = ucCode[7] - '0';
+
+        UC& u = all_UCs[dec * 5 + (unit - 1)];
+
+        u.add_student(stoi(studentCode), studentName);
     }
 
     set<Student> all_students;
     for (auto info : student_info){
-        Student s(info.first.first, info.first.second);
+        string studentCode = info.first.first;
+        string studentName = info.first.second;
+
+        Student s(studentCode, studentName);
 
         for (pair<string, string> p : info.second){
             string ucCode = p.first,
@@ -128,6 +139,14 @@ int main(){
 
             s.add_uc(ucCode, classCode);
             s.add_class(classCode);
+
+            // adicionar aluno à turma
+            int year = classCode[0] - '0';
+            int num = (classCode[5] - '0') * 10 + (classCode[6] - '0');
+
+            Class& c = all_classes[(year - 1) * 16 + (num - 1)];
+
+            c.add_student(stoi(studentCode), studentName);
         }
 
         all_students.insert(s);
