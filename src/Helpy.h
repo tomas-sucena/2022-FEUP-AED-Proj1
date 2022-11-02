@@ -15,8 +15,8 @@ class Helpy {
         vector<Class> all_classes;
 
         // informação do horário
-        map<string, list<Block>> uc_blocks, 
-                                 class_blocks;
+        map<string, list<Block>> class_blocks,
+                                 uc_blocks;
 
         // mapas usados para processar comandos
         static map<string, int> command, target, what;
