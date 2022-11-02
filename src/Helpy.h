@@ -14,15 +14,20 @@ class Helpy {
         vector<UC> all_UCs;
         vector<Class> all_classes;
 
+        // informação do horário
+        map<string, list<Block>> uc_blocks, 
+                                 class_blocks;
+
         // mapas usados para processar comandos
         static map<string, int> command, target, what;
 
         // fila para guardar pedidos
-        queue<Request> queuer;
-        
+        queue<Request> queuer; 
+               
     public:
         // constructor
-        Helpy(set<Student>& students, vector<UC>& UCs, vector<Class>& classes);
+        Helpy(set<Student>& students, vector<UC>& UCs, vector<Class>& classes,
+              map<string, list<Block>>& c_blocks, map<string, list<Block>>& u_blocks);
 
         // methods
         void terminal();

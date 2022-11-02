@@ -14,8 +14,10 @@ void lowercase(string& s, bool uppercase = false){
     }
 }
 
-Helpy::Helpy(set<Student>& students, vector<UC>& UCs, vector<Class>& classes): 
-             all_students(students), all_UCs(UCs), all_classes(classes){}
+Helpy::Helpy(set<Student>& students, vector<UC>& UCs, vector<Class>& classes, 
+             map<string, list<Block>>& c_blocks, map<string, list<Block>>& u_blocks) : 
+             all_students(students), all_UCs(UCs), all_classes(classes), 
+             class_blocks(c_blocks), uc_blocks(u_blocks) {}
 
 void Helpy::terminal(){
     cout << "Which mode would you prefer?" << endl << endl;

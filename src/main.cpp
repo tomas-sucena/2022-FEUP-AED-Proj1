@@ -165,6 +165,7 @@ int main(){
     }
 
     // handling terminal things
-    Helpy hi = Helpy(all_students, all_UCs, all_classes);
+    Helpy hi = Helpy(all_students, all_UCs, all_classes, 
+                     class_blocks, uc_blocks);
     hi.terminal();
 }
