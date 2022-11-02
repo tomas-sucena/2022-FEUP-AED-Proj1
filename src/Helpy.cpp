@@ -246,9 +246,9 @@ b2: cout << endl;
             break;
         }
         case(39) : { // remove student classes
-            cout << "Please type the code (upXXXXXXXXX) of the desired student"<<endl;
+            cout << "Please type the code (upXXXXXXXXX) of the desired student."<<endl;
             string st; cin >>st;
-            cout << "Please type the code of the class you want to remove" << endl;
+            cout << "Please type the code of the class you want to remove." << endl;
             string cl; cin >> cl;
             queuer.push(Request(s1,s2,s3,st,cl));
 
@@ -422,7 +422,7 @@ a6: cout << endl << "Please type the code (L.EICXXX) of the desired UC." << endl
 }
 
 void Helpy::display_class_schedule(bool& valid) const{
-a7: cout << endl << "Please select the desired class." << endl;
+a7: cout << endl << "Please type the code (XLEICXX) of the desired class." << endl;
 
     string classCode; cin >> classCode;
 
@@ -503,7 +503,7 @@ a9: cout << endl << "How would you like to sort them? (Ascending/Descending)" <<
     }
 
     // escolher a turma
-a10:cout << endl << "Please select the desired class." << endl;
+a10:cout << endl << "Please type the code (XLEICXX) of the desired class." << endl;
 
     string classCode; cin >> classCode;
     lowercase(classCode, true);
@@ -603,13 +603,13 @@ a13:cout << endl << "How would you like to order the students? (Code/Name)" << e
     }
 
     // buscar condição
-    cout << endl << "Would you like filter the students by the number of UCs they are in? (Yes/no)" << endl;
+    cout << endl << "Would you like filter the students by the number of UCs they are in? (Yes/No)" << endl;
 
     getline(cin, line);
     lowercase(line);
 
     // imprimir todos os estudantes
-    cout << endl << "Understood. These are all the students currently enrolled in LEIC:" << endl;
+    cout << endl << "These are all the students currently enrolled in LEIC:" << endl;
 
     for (Student s : all_students){
         (by_code) ? (cout << s.get_studentCode() << ' ' << s.get_studentName()) :
