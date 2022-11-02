@@ -43,7 +43,7 @@ class Helpy {
         void display_student_classes(bool& valid) const;
         void display_student_ucs(bool& valid) const;
         
-        void display_all_students(int n=0) const;
+        void display_all_students() const;
 
         void add(Request sub);
         void rem(Request sub);

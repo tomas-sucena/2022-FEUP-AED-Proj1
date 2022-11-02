@@ -560,7 +560,7 @@ void Helpy::display_student_classes(bool& valid) const{
     }
 }
 
-void Helpy::display_all_students(int n=0) const{
+void Helpy::display_all_students() const{
     // ordenação por código ou nome
 b3: cout << endl << "Would you like to order the students by code (upXXXXXXXXX) or by name?" << endl;
     
