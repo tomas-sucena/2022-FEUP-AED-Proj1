@@ -45,6 +45,10 @@ class Helpy {
         
         void display_all_students() const;
 
+        void add(Request sub);
+        void rem(Request sub);
+        void change(Request sub);
+
 ;
 };
 

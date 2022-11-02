@@ -631,5 +631,65 @@ void Helpy::rewrite_file(){
 void Helpy::processQueue(){
     while(!queuer.empty()){
         Request sub = queuer.front();
+        queuer.pop();
+        if(sub.get_type() == "add"){
+            add(sub);
+        } else if (sub.get_type() == "remove"){
+            rem(sub);
+        } else {
+            change(sub);
+        }
+    }
+}
+
+void Helpy::rem(Request sub){
+    bool valid = false;
+    if(sub.get_what() == "uc"){
+        for(Student s : all_students){
+            if(s.get_studentCode() == sub.get_stupid()){
+                valid = true;
+                map<string, string> a = s.get_ucs();
+                if(a.find(sub.get_name()) != a.end()){
+                    auto it = a.find(sub.get_name());
+                    a.erase(it);
+                    string uc_ = sub.get_name();
+                    lowercase(uc_,true);
+                    //falta remover o estudante da uc
+                    cout << "UC-" << uc_ << " has sucessfully been removed from " << sub.get_stupid();
+                } else {
+                    string uc_ = sub.get_name();
+                    lowercase(uc_,true);
+                    cout << "The selected student (" << sub.get_stupid() << ") does not have the selected UC (" << uc_ <<")" << endl;
+                    cout << "Aborting Request" << endl;  
+                }
+            }
+        }
+    } else if(sub.get_what() == "class"){
+        for(Student s: all_students){
+            if (s.get_studentCode() == sub.get_stupid())
+            {
+                valid = true;
+                set<string> cl = s.get_classes();
+                if(cl.find(sub.get_name()) != cl.end()){
+                  cl.erase(sub.get_name()); // isto remove a class do estudante
+                  map<string, string> a = s.get_ucs();
+                  for(auto i: a){
+                    if(i.second == sub.get_name()){
+                        a.erase(i.first);
+                    }
+                  }
+                  //falta remover o student da class
+                } else {
+                    string y = sub.get_name();
+                    lowercase(y,true);
+                    cout << "The selected student (" << sub.get_stupid() << ") is not in the selected class (" << y <<")" << endl;
+                    cout << "Aborting Request" << endl;  
+                }
+            }
+            
+        }
+    }
+    if(!valid){
+            cout << "The selected student (" << sub.get_stupid() << ") does not exist in this database" << endl;
     }
 }
