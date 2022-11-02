@@ -28,18 +28,26 @@ a1: cout << "* Guided" << endl;
     istringstream line_(line);
     string temp;
 
-    while (line_ >> temp){      
+    bool valid = false;
+    while (line_ >> temp){  
         if (temp == "guided"){
             guided_mode();
+
+            valid = true;
+            break;
         }
         else if (temp == "advanced"){
             advanced_mode();
+
+            valid = true;
+            break;
         }
-        else{
-            cout << "Invalid command! Please choose one of the following:" << endl << endl;
-            goto a1;
-        }
-    }
+    }     
+
+    if (!valid){
+        cout << "Invalid command! Please choose one of the following:" << endl << endl;
+        goto a1;
+    }       
 }
 
                                 ///         ADVANCED MODE       ///
