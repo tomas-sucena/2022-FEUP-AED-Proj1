@@ -3,9 +3,9 @@
 #include <sstream>
 
 map<string, int> Helpy::command = {{"display", 1}, {"print", 1}, {"show", 1}, 
-                                   {"remove", 2}, {"add",3}};
+                                   {"remove", 100}, {"add",200}};
 map<string, int> Helpy::target = {{"uc", 6}, {"class", 8}, {"student", 10}, {"all", 12}};
-map<string, int> Helpy::what = {{"schedule", 24}, {"classes", 27}, {"class", 27}, {"ucs", 30}, {"students", 33}};
+map<string, int> Helpy::what = {{"schedule", 24}, {"classes", 27}, {"class", 27}, {"ucs", 30}, {"uc", 30}, {"students", 33}};
 
 // função auxiliar usada para tratar dos comandos
 void lowercase(string& s, bool uppercase = false){
@@ -102,15 +102,6 @@ b1: string s1, s2, s3;
 
             break;
         }
-        case(39) : { // remove student classes
-            cout << "Please type the code (upXXXXXXXXX) of the desired student"<<endl;
-            string st; cin >>st;
-            cout << "Please type the code of the class you want to remove" << endl;
-            string cl; cin >> cl; lowercase(cl, true);
-            queuer.push(Request(s1,s2,s3,st,cl));
-
-            break;
-        }
         case(40) : {
             display_uc_students(valid);
 
@@ -128,6 +119,24 @@ b1: string s1, s2, s3;
         }
         case(46) : {
             display_all_students();
+
+            break;
+        }
+        case(137) : { // remove student classes
+            cout << "Please type the code (upXXXXXXXXX) of the desired student"<<endl;
+            string st; cin >>st;
+            cout << "Please type the code of the class you want to remove" << endl;
+            string cl; cin >> cl; lowercase(cl, true);
+            queuer.push(Request(s1,s2,s3,st,cl));
+
+            break;
+        }
+        case(140) : { // remove student uc
+            cout << "Please type the code (upXXXXXXXXX) of the desired student"<<endl;
+            string st; cin >>st;
+            cout << "Please type the code of the uc you want to remove" << endl;
+            string cl; cin >> cl; lowercase(cl, true);
+            queuer.push(Request(s1,s2,s3,st,cl));
 
             break;
         }
@@ -684,6 +693,13 @@ void Helpy::rem(Request sub){
                 if(a.find(sub.get_name()) != a.end()){
                     auto it = a.find(sub.get_name());
                     a.erase(it);
+                    for(auto a = s.get_schedule().get_blocks().begin(); a != s.get_schedule().get_blocks().end();){
+                        if(a->get_code() == sub.get_name()){
+                            a = s.get_schedule().get_blocks().erase(a);
+                        } else {
+                            a++;
+                        }
+                    }
                     string uc_ = sub.get_name();
                     lowercase(uc_,true);
                     //falta remover o estudante da uc
@@ -708,11 +724,13 @@ void Helpy::rem(Request sub){
                   for(auto i: a){
                     if(i.second == sub.get_name()){
                         a.erase(i.first); // isto remove a class do estudante
-                        cout << "Class has been deleted"
+                        cout << "Class has been deleted" << endl;
                     }
                   }
                   //falta remover o student da class
                 } else {
+                    string y = sub.get_name();
+                    lowercase(y,true);
                     cout << "The selected student (" << sub.get_stupid() << ") is not in the selected class (" << y <<")" << endl;
                     cout << "Aborting Request" << endl;  
                 }
