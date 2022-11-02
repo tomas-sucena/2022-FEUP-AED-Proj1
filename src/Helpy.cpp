@@ -163,21 +163,40 @@ b2: cout << endl;
     }
     else if (s1 == "display"){
         cout << endl;
-        cout << "* UC" << endl;
         cout << "* Class" << endl;
         cout << "* Student" << endl;
+        cout << "* UC" << endl;
         cout << endl;
     }
 
     cin >> s2; lowercase(s2);
 
-    cout << endl;
-    cout << "* Classes" << endl;
-    cout << "* Schedule" << endl;
-    cout << "* UCs" << endl;
-    cout << endl;
+    if(s2 == "class"){
+        cout << endl;
+        cout << "* Schedule" << endl;
+        cout << "* Students" << endl;
+        cout << endl;
+    }
+    else if (s2 == "student"){
+        cout << endl;
+        cout << "* All" << endl;
+        cout << "* Class" << endl;
+        cout << "* Schedule" << endl;
+        cout << "* UCs" << endl;
+        cout << endl;
+    }
+    else if (s2 == "uc"){
+        cout << endl;
+        cout << "* Students" << endl;
+        cout << "* Schedule" << endl;
+        cout << endl;
+    }
 
     cin >> s3; lowercase(s3);
+
+    if (s1 == "quit" || s2 == "quit" || s3 == "quit"){
+        goto e2;
+    }
 
     // processar o comando    
     switch (command[s1] + target[s2] + what[s3]){
@@ -236,7 +255,7 @@ b2: cout << endl;
             break;
         }
         default : {
-            cout << endl << "Invalid command! Please, type another command." << endl;
+            cout << endl << "Invalid command! Please, try again." << endl;
             goto b2;
         }
     }
@@ -275,7 +294,7 @@ void Helpy::display_uc_schedule(bool& valid) const{
 }
 
 void Helpy::display_uc_classes(bool& valid) const{
-    cout << endl << "Understood. Please select the desired UC." << endl;
+    cout << endl << "Understood. Please type the code (L.EICXXX) of the desired UC." << endl;
 
     string uc; cin >> uc;
     lowercase(uc, true);
@@ -300,11 +319,11 @@ void Helpy::display_uc_classes(bool& valid) const{
 void Helpy::display_uc_students(bool& valid) const{
 
     // ordenação por código ou nome
-    cout << endl << "Would you like to order the students by code (upXXXXXXXXX) or by name?" << endl;
+a1: cout << endl << "Would you like to order the students by code (upXXXXXXXXX) or by name?" << endl;
     
     cin.ignore();
         
-a1: string line; getline(cin, line);
+    string line; getline(cin, line);
     lowercase(line);
 
     istringstream line_(line);
@@ -326,8 +345,7 @@ a1: string line; getline(cin, line);
     }
 
     if (by_code == 2){
-        cout << endl << "Invalid command. Please, try again." << endl
-                << "Would you like to order the students by code (upXXXXXXXXX) or by name?" << endl;
+        cout << endl << "Invalid command. Please, try again." << endl;
         goto a1;
     }
 
@@ -358,7 +376,7 @@ a2: cout << endl << "And would you like to sort them in ascending or descending 
     }
 
     // escolher a UC
-    cout << endl << "Understood. Please select the desired UC." << endl;
+d4: cout << endl << "Please select the desired UC." << endl;
 
     string ucCode; cin >> ucCode;
     lowercase(ucCode, true);
@@ -366,7 +384,7 @@ a2: cout << endl << "And would you like to sort them in ascending or descending 
     for (UC u : all_UCs){
         if (u.get_UcCode() == ucCode){
             cout << endl << "The UC " << "\033[1m" << ucCode << 
-            "\033[0m" << " has the following students:" << endl;
+            "\033[0m" << " has the following students:" << endl << endl;
 
             u.print_students(by_code, descending);
 
@@ -377,6 +395,7 @@ a2: cout << endl << "And would you like to sort them in ascending or descending 
 
     if (!valid){
         cout << endl << "I'm sorry, but that UC does not exist." << endl;
+        goto d4;
     }
 }
 
