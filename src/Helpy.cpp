@@ -149,12 +149,12 @@ void Helpy::guided_mode(){
 
     /*-----LER COMANDOS-----*/
     cout << endl << "Hello! How can I be of assistance?" << endl;
-    cout << endl;
+b2: cout << endl;
     cout << "* Display" << endl;
     cout << "* Quit" << endl;
     cout << endl;
 
-b2: string s1, s2, s3; 
+    string s1, s2, s3, s4; 
     bool valid = false;
 
     cin >> s1; lowercase(s1);
@@ -241,8 +241,11 @@ b2: string s1, s2, s3;
         }
     }
 
-    cout << endl << "Anything else?" << endl;
-    goto b2;
+    cout << endl << "Anything else? (Yes/No)" << endl;
+    cin >> s4; lowercase(s4);
+    if (s4 == "yes" || s4 == "y"){
+        goto b2;
+    }
 
 e2: cout << endl << "See you next time!" << endl;
 }
