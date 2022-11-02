@@ -5,7 +5,7 @@
 map<string, int> Helpy::command = {{"display", 1}, {"print", 1}, {"show", 1}, 
                                    {"remove", 2}, {"add",3}};
 map<string, int> Helpy::target = {{"uc", 6}, {"class", 8}, {"student", 10}, {"all", 12}};
-map<string, int> Helpy::what = {{"schedule", 24}, {"classes", 27}, {"ucs", 30}, {"students", 33}};
+map<string, int> Helpy::what = {{"schedule", 24}, {"classes", 27}, {"class", 27}, {"ucs", 30}, {"students", 33}};
 
 // função auxiliar usada para tratar dos comandos
 void lowercase(string& s, bool uppercase = false){
@@ -69,7 +69,6 @@ b1: string s1, s2, s3;
     if(s1 == "process" && s2 == "queue"){
         processQueue();
         cout << "Queue has been processed" << endl;
-        goto b1;
     }
 
     cin >> s3;
@@ -106,7 +105,7 @@ b1: string s1, s2, s3;
             cout << "Please type the code (upXXXXXXXXX) of the desired student"<<endl;
             string st; cin >>st;
             cout << "Please type the code of the class you want to remove" << endl;
-            string cl; cin >> cl;
+            string cl; cin >> cl; lowercase(cl, true);
             queuer.push(Request(s1,s2,s3,st,cl));
 
             break;
@@ -560,7 +559,7 @@ void Helpy::display_student_classes(bool& valid) const{
     }
 }
 
-void Helpy::display_all_students(int n=0) const{
+void Helpy::display_all_students() const{
     // ordenação por código ou nome
 b3: cout << endl << "Would you like to order the students by code (upXXXXXXXXX) or by name?" << endl;
     
@@ -685,17 +684,16 @@ void Helpy::rem(Request sub){
                 valid = true;
                 set<string> cl = s.get_classes();
                 if(cl.find(sub.get_name()) != cl.end()){
-                  cl.erase(sub.get_name()); // isto remove a class do estudante
+                  cl.erase(sub.get_name());
                   map<string, string> a = s.get_ucs();
                   for(auto i: a){
                     if(i.second == sub.get_name()){
-                        a.erase(i.first);
+                        a.erase(i.first); // isto remove a class do estudante
+                        cout << "Class has been deleted"
                     }
                   }
                   //falta remover o student da class
                 } else {
-                    string y = sub.get_name();
-                    lowercase(y,true);
                     cout << "The selected student (" << sub.get_stupid() << ") is not in the selected class (" << y <<")" << endl;
                     cout << "Aborting Request" << endl;  
                 }
