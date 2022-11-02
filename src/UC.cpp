@@ -46,7 +46,7 @@ void UC::print_students(bool by_code, bool descending) const{
         }
 
         for (auto info : temp){
-            cout << "up" << info.first << "   " << info.second << "" << endl;
+            cout << "up" << info.first << "   " << info.second << endl;
         }
     }
     else{ // ordenar por nome
@@ -57,7 +57,7 @@ void UC::print_students(bool by_code, bool descending) const{
         }
 
         for (auto info : temp){
-            cout << "up" << info.first << "   " << info.second << "" << endl;
+            cout << "up" << info.first << "   " << info.second << endl;
         }
     }
 }

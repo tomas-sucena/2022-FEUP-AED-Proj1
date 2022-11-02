@@ -26,8 +26,7 @@ void Class::print_students(bool by_code, bool descending) const{
         }
 
         for (auto info : temp){
-            cout << info.first << " (" << info.second << 
-            ')' << endl;
+            cout << "up" << info.first << "   " << info.second << endl;
         }
     }
     else{ // ordenar por nome
@@ -38,8 +37,7 @@ void Class::print_students(bool by_code, bool descending) const{
         }
 
         for (auto info : temp){
-            cout << info.second << " up(" << info.first << 
-            ")" << endl;  
+            cout << "up" << info.first << "   " << info.second << endl;  
         }
     }
 }
