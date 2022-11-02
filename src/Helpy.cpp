@@ -59,6 +59,7 @@ b1: string s1, s2, s3;
     bool valid = false;
 
     cin >> s1; lowercase(s1);
+    cout << s1 << endl;
     if (s1 == "quit" || s1 == "no"){
         goto e1;
     }
@@ -600,6 +601,12 @@ a13:cout << endl << "How would you like to order the students? (Code/Name)" << e
         cout << "Invalid command. Please, try again." << endl;
         goto a13;
     }
+
+    // buscar condição
+    cout << endl << "Would you like filter the students by the number of UCs they are in? (Yes/no)" << endl;
+
+    getline(cin, line);
+    lowercase(line);
 
     // imprimir todos os estudantes
     cout << endl << "Understood. These are all the students currently enrolled in LEIC:" << endl;

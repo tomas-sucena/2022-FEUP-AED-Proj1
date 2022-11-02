@@ -117,7 +117,7 @@ int main(){
         student_info[{studentCode, studentName}]
                     [ucCode] = classCode;
 
-        // adicionar aluno à UC
+        // adicionar estudante à UC
         int dec = ucCode[6] - '0',
             unit = ucCode[7] - '0';
 
@@ -133,6 +133,9 @@ int main(){
 
         Student s(studentCode, studentName);
 
+        // criar o horário do estudante
+        list<Block> blocks;
+
         for (pair<string, string> p : info.second){
             string ucCode = p.first,
                    classCode = p.second;
@@ -140,14 +143,23 @@ int main(){
             s.add_uc(ucCode, classCode);
             s.add_class(classCode);
 
-            // adicionar aluno à turma
+            // adicionar estudante à turma
             int year = classCode[0] - '0';
             int num = (classCode[5] - '0') * 10 + (classCode[6] - '0');
 
             Class& c = all_classes[(year - 1) * 16 + (num - 1)];
 
             c.add_student(stoi(studentCode), studentName);
+
+            for (Block& b : c.get_schedule().get_blocks()){
+                if (b.get_code() == ucCode){
+                    blocks.push_back(b);
+                    break;
+                }
+            }
         }
+
+        s.set_Schedule(Schedule(blocks));
 
         all_students.insert(s);
     }
