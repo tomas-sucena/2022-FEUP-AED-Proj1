@@ -278,7 +278,7 @@ b2: cout << endl;
 e2: cout << endl << "See you next time!" << endl;
 }
 
-
+/*-----FUNÇÕES DE IMPRESSÃO-----*/
 void Helpy::display_uc_schedule(bool& valid) const{
 a2: cout << endl << "Please type the code (L.EICXXX) of the desired UC." << endl;
 
@@ -560,7 +560,7 @@ void Helpy::display_student_classes(bool& valid) const{
     }
 }
 
-void Helpy::display_all_students() const{
+void Helpy::display_all_students(int n=0) const{
     // ordenação por código ou nome
 b3: cout << endl << "Would you like to order the students by code (upXXXXXXXXX) or by name?" << endl;
     
@@ -621,6 +621,7 @@ void Helpy::display_student_ucs(bool& valid) const{
     }
 }
 
+/*-----FUNÇÕES DA FILA-----*/
 void Helpy::rewrite_file(){
     ofstream out("temp.csv");
 
@@ -706,3 +707,7 @@ void Helpy::rem(Request sub){
             cout << "The selected student (" << sub.get_stupid() << ") does not exist in this database" << endl;
     }
 }
+
+void Helpy::add(Request sub){}
+
+void Helpy::change(Request sub){}

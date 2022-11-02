@@ -13,7 +13,6 @@ private:
     string stupid;
     string name;
 
-    
 public:
     Request(string a, string b, string c, string d, string e);
     string get_type() const;
@@ -22,6 +21,5 @@ public:
     string get_stupid() const;
     string get_name() const;
 };
-
 
 #endif
