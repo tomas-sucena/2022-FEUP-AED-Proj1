@@ -14,8 +14,8 @@ void lowercase(string& s, bool uppercase = false){
     }
 }
 
-Helpy::Helpy(set<Student>& students, vector<UC>& UCs, vector<Class>& classes, 
-             map<string, list<Block>>& c_blocks, map<string, list<Block>>& u_blocks) : 
+Helpy::Helpy(vector<Student> students, vector<UC> UCs, vector<Class> classes, 
+             map<string, list<Block>> c_blocks, map<string, list<Block>> u_blocks) : 
              all_students(students), all_UCs(UCs), all_classes(classes), 
              class_blocks(c_blocks), uc_blocks(u_blocks) {}
 
@@ -62,7 +62,7 @@ b1: string s1, s2, s3;
 
     cin >> s1; lowercase(s1);
 
-    if (s1 == "quit" || s1 == "no"){
+    if (s1 == "quit" || s1 == "no"  || s1 == "die"){
         goto e1;
     }
 
@@ -739,12 +739,13 @@ void Helpy::processQueue(){
 void Helpy::rem(Request sub){
     bool valid = false;
     if(sub.get_what() == "uc"){
-        for(Student s : all_students){
+        for(Student& s : all_students){
             if(s.get_studentCode() == sub.get_stupid()){
                 valid = true;
                 map<string, string> a = s.get_ucs();
                 if(a.find(sub.get_name()) != a.end()){
                     auto it = a.find(sub.get_name());
+                    s.print_ucs();
                     a.erase(it);
                     s.set_ucs(a);
                     s.print_ucs();
@@ -761,7 +762,7 @@ void Helpy::rem(Request sub){
             }
         }
     } else if(sub.get_what() == "class"){
-        for(Student s: all_students){
+        for(Student& s: all_students){
             if (s.get_studentCode() == sub.get_stupid())
             {
                 valid = true;

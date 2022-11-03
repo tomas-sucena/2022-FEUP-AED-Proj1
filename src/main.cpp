@@ -126,7 +126,7 @@ int main(){
         u.add_student(stoi(studentCode), studentName);
     }
 
-    set<Student> all_students;
+    vector<Student> all_students;
     for (auto info : student_info){
         string studentCode = info.first.first;
         string studentName = info.first.second;
@@ -161,9 +161,9 @@ int main(){
 
         s.set_Schedule(Schedule(blocks));
 
-        all_students.insert(s);
+        all_students.push_back(s);
     }
-
+    sort(all_students.begin(), all_students.end());
     // handling terminal things
     Helpy hi = Helpy(all_students, all_UCs, all_classes, 
                      class_blocks, uc_blocks);
