@@ -1,5 +1,5 @@
-.vscode/
-.DS_Store
+*.vscode/
+*.DS_Store
 src/proj
 .idea
-build/
+*build/
