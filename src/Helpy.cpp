@@ -177,7 +177,7 @@ b1: string s1, s2, s3;
         }
     }
 
-    cout << endl << "Anything else?" << endl;
+    cout << endl << "Anything else? (Yes/No)" << endl;
     goto b1;
 
 e1: cout << endl << "See you next time!" << endl;
