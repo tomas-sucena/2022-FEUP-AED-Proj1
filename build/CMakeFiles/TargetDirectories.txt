@@ -1,3 +1,0 @@
-/mnt/c/Users/gjpin/Proj/build/CMakeFiles/rebuild_cache.dir
-/mnt/c/Users/gjpin/Proj/build/CMakeFiles/edit_cache.dir
-/mnt/c/Users/gjpin/Proj/build/CMakeFiles/AED_Schedule.dir
