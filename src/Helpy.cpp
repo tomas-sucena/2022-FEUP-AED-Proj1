@@ -755,13 +755,12 @@ void Helpy::rem(Request sub){
                 map<string, string> a = s.get_ucs();
                 if(a.find(sub.get_name()) != a.end()){
                     auto it = a.find(sub.get_name());
-                    s.print_ucs();
                     a.erase(it);
                     s.set_ucs(a);
-                    s.print_ucs();
+                    update_schedule(s);
                     string uc_ = sub.get_name();
                     lowercase(uc_,true);
-                    //falta remover o estudante da uc
+                    
                     cout << "UC-" << uc_ << " has sucessfully been removed from " << sub.get_stupid() << endl;
                 } else {
                     string uc_ = sub.get_name();
@@ -810,15 +809,16 @@ void Helpy::add(Request sub){}
 void Helpy::change(Request sub){}
 
 void Helpy::update_schedule(Student& s){
-    list<Block> hi;
+    cout<<"Entered";
+    list<Block> blocks;
     for(auto it = s.get_ucs().begin(); it != s.get_ucs().end(); it++){
-        for(Block& b : class_blocks[it->second]){
+        for(Block b : class_blocks[it->second]){
             if (b.get_code() == it->first)
             {
-                hi.push_back(b);
+                blocks.push_back(b);
             }
         }
     }
-    s.set_Schedule(Schedule(hi));
+    s.set_Schedule(Schedule(blocks));
 
 }
