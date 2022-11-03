@@ -932,8 +932,7 @@ void Helpy::rewrite_file(){
         }
     }
 
-    remove("../students_classes.csv");
-    rename("temp.csv", "../students_classes.csv");
+    out.close();
 }
 
 void Helpy::processQueue(){
