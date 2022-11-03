@@ -341,6 +341,7 @@ e2: cout << endl << "See you next time!" << endl;
 }
 
 /*-----FUNÇÕES DE IMPRESSÃO-----*/
+
 void Helpy::display_uc_schedule(bool& valid) const{
 a1: cout << endl << "Please type the code (L.EICXXX) of the desired UC." << endl;
 
