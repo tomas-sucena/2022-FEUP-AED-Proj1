@@ -753,11 +753,25 @@ void Helpy::rem(Request sub){
             if(s.get_studentCode() == sub.get_stupid()){
                 valid = true;
                 map<string, string> a = s.get_ucs();
-                if(a.find(sub.get_name()) != a.end()){
-                    auto it = a.find(sub.get_name());
+
+                auto it = a.find(sub.get_name());
+
+                if(it != a.end()){
                     a.erase(it);
                     s.set_ucs(a);
-                    update_schedule(s);
+
+                    cout<<"Entered";
+                    list<Block> blocks;
+                    for (auto it = s.get_ucs().begin(); it != s.get_ucs().end(); it++){
+                        for(Block b : class_blocks[it->second]){
+                            if (b.get_code() == it->first)
+                            {
+                                blocks.push_back(b);
+                            }
+                        }
+                    }
+                    s.set_Schedule(Schedule(blocks));
+
                     string uc_ = sub.get_name();
                     lowercase(uc_,true);
                     
@@ -811,7 +825,7 @@ void Helpy::change(Request sub){}
 void Helpy::update_schedule(Student& s){
     cout<<"Entered";
     list<Block> blocks;
-    for(auto it = s.get_ucs().begin(); it != s.get_ucs().end(); it++){
+    for (auto it = s.get_ucs().begin(); it != s.get_ucs().end(); it++){
         for(Block b : class_blocks[it->second]){
             if (b.get_code() == it->first)
             {
