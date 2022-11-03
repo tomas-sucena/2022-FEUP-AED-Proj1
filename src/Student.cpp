@@ -47,6 +47,10 @@ void Student::print_ucs() const{
     }
 }
 
+void Student::set_ucs(map<string,string> sub){
+    ucs_ = sub;
+}
+
 bool Student::operator<(const Student& s) const{
     return (studentName_ < s.get_studentName());
 }

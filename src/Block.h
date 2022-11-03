@@ -24,6 +24,7 @@ class Block{
         Block(string code, string weekday, string startHour, 
               string duration, string type);
 
+
         // methods
         string get_code() const;
         string get_weekday() const;

@@ -72,6 +72,7 @@ b1: string s1, s2, s3;
     if(s1 == "process" && s2 == "queue"){
         processQueue();
         cout << "Queue has been processed" << endl;
+        goto b1;
     }
 
     cin >> s3;
@@ -745,10 +746,11 @@ void Helpy::rem(Request sub){
                 if(a.find(sub.get_name()) != a.end()){
                     auto it = a.find(sub.get_name());
                     a.erase(it);
+                    s.set_ucs(a);
                     string uc_ = sub.get_name();
                     lowercase(uc_,true);
                     //falta remover o estudante da uc
-                    cout << "UC-" << uc_ << " has sucessfully been removed from " << sub.get_stupid();
+                    cout << "UC-" << uc_ << " has sucessfully been removed from " << sub.get_stupid() << endl;
                 } else {
                     string uc_ = sub.get_name();
                     lowercase(uc_,true);
@@ -769,10 +771,13 @@ void Helpy::rem(Request sub){
                   for(auto i: a){
                     if(i.second == sub.get_name()){
                         a.erase(i.first); // isto remove a class do estudante
-                        cout << "Class has been deleted" << endl;
                     }
-                  }
-                  //falta remover o student da class
+                }
+                int year = sub.get_name()[0] - '0';
+                int num = (sub.get_name()[5] - '0') * 10 + (sub.get_name()[6] - '0');
+                Class& c = all_classes[(year - 1) * 16 + (num - 1)];
+                c.remove_student(s.get_studentName()); // remover o estudante da class
+                cout << "The student has been removed from the selected class" << endl;
                 } else {
                     string y = sub.get_name();
                     lowercase(y,true);
@@ -795,10 +800,10 @@ void Helpy::change(Request sub){}
 void Helpy::update_schedule(Student& s){
     list<Block> hi;
     for(auto it = s.get_ucs().begin(); it != s.get_ucs().end(); it++){
-        for(auto i = class_blocks[it->second].begin(); i!=class_blocks[it->second].end(); i++){
-            if (i->get_code() == it->first)
+        for(Block& b : class_blocks[it->second]){
+            if (b.get_code() == it->first)
             {
-                hi.push_back(i*);
+                hi.push_back(b);
             }
         }
     }

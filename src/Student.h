@@ -32,6 +32,7 @@ class Student{
         void add_uc(string ucCode, string classCode);
         void add_class(string classCode);
         void set_Schedule(Schedule a);
+        void set_ucs(map<string,string> sub);
 
         void print_classes() const;
         void print_ucs() const;

@@ -31,7 +31,7 @@ class UC {
 
         void print_students(bool by_code, bool descending) const;
         void add_student(int studentCode, string studentName);
-        void remove_student(int studentCode, string studentName);
+        void remove_student(string studentName); //por implementar
 
         void add_schedule(Schedule schedule);
         Schedule get_schedule();

@@ -70,6 +70,15 @@ void Class::add_student(int studentCode, string studentName){
     sort(students_.begin(), students_.end());
 }
 
+void Class::remove_student(string studentName){
+    for(auto it = students_.begin(); it != students_.end(); it++){
+        if(it->second == studentName){
+            students_.erase(it);
+            break;
+        }
+    }
+}
+
 bool Class::equals(Class c){
     return (c.get_classCode() == classCode_);
 }
