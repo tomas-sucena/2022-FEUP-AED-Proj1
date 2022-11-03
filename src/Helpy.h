@@ -36,6 +36,7 @@ class Helpy {
 
         void processQueue();
         void rewrite_file();
+        void log(Request r, string s);
         
         void display_uc_schedule(bool& valid) const;
         void display_uc_classes(bool& valid) const;

@@ -1,6 +1,7 @@
 #include "Helpy.h"
 #include <fstream>
 #include <sstream>
+#include <iostream>
 
 map<string, int> Helpy::command = {{"display", 1}, {"print", 1}, {"show", 1}, 
                                    {"remove", 100}, {"add",200}};
@@ -24,26 +25,6 @@ Helpy::Helpy(vector<Student>& students, vector<UC>& UCs, vector<Class>& classes,
              map<string, list<Block>>& c_blocks, map<string, list<Block>>& u_blocks) : 
              all_students(students), all_UCs(UCs), all_classes(classes), 
              class_blocks(c_blocks), uc_blocks(u_blocks) {}
-
-
-string Helpy::is_valid(Student s, Class cl, string uc){
-    if(cl.size() >= 30){
-        return "Failed due to exceeding class limit";
-    }
-    Schedule st = s.get_schedule();
-    Schedule c = cl.get_schedule();
-    for(Block b: c.get_blocks()){
-        if((b.get_type() == "TP" || b.get_type() == "PL") && b.get_code() == uc){
-            for(Block su: st.get_blocks()){
-                if((su.get_type() == "TP" || su.get_type() == "PL") && ((su.get_startHour() >= b.get_startHour() && su.get_startHour() < b.get_endHour()) || (su.get_endHour() > b.get_startHour() && su.get_endHour() <= b.get_endHour()))){
-                    return "Failed due to Schedule overlap";
-                }
-            }
-        }
-    }
-    return "yes";
-}
-
 
 void Helpy::terminal(){
     cout << "Which mode would you prefer?" << endl << endl;
@@ -131,15 +112,6 @@ b1: string s1, s2, s3;
 
             break;
         }
-        case(39) : { // remove student classes
-            cout << "Please type the code (upXXXXXXXXX) of the desired student."<<endl;
-            string st; cin >>st;
-            cout << "Please type the code of the class you want to remove." << endl;
-            string cl; cin >> cl;
-            queuer.push(Request(s1,s2,s3,st,cl));
-
-            break;
-        }
         case(40) : {
             display_uc_students(valid);
 
@@ -176,6 +148,7 @@ b1: string s1, s2, s3;
             cout << "Please type the code of the class you want to remove" << endl;
             string cl; cin >> cl; lowercase(cl, true);
             queuer.push(Request(s1,s3,st,cl));
+            log(Request(s1,s3,st,cl), "Fuck this");
 
             break;
         }
@@ -186,6 +159,16 @@ b1: string s1, s2, s3;
             string cl; cin >> cl; lowercase(cl, true);
             queuer.push(Request(s1,s3,st,cl));
 
+            break;
+        }
+        case(240) : { //add uc to student
+            cout << "Please type the code (upXXXXXXXXX) of the desired student"<<endl;
+            string st; cin >>st;
+            cout << "Please type the code of the uc you want to add" << endl;
+            string cl; cin >> cl; lowercase(cl, true);
+            cout << "Please type the code of the class you want to add the uc to" << endl;
+            string f; cin >> f; lowercase(f, true);
+            queuer.push(Request(s1,s3,st,cl,f));
             break;
         }
         default : {
@@ -202,9 +185,11 @@ e1: cout << endl << "See you next time!" << endl;
 
                             ///             GUIDED MODE             ////
 
+
 void Helpy::guided_mode(){
 
     /*-----LER COMANDOS-----*/
+
     cout << endl << "Hello! How can I be of assistance?" << endl;
 b2: cout << endl;
     cout << "* Display" << endl;
@@ -340,7 +325,7 @@ b2: cout << endl;
 
             break;
         }
-    d1: default : {
+d1:     default : {
             cout << endl << "Invalid command! Please, try again." << endl;
             goto b2;
         }
@@ -357,7 +342,7 @@ e2: cout << endl << "See you next time!" << endl;
 
 /*-----FUNÇÕES DE IMPRESSÃO-----*/
 void Helpy::display_uc_schedule(bool& valid) const{
-a2: cout << endl << "Please type the code (L.EICXXX) of the desired UC." << endl;
+a1: cout << endl << "Please type the code (L.EICXXX) of the desired UC." << endl;
 
     string uc; cin >> uc;
     lowercase(uc, true);
@@ -376,12 +361,12 @@ a2: cout << endl << "Please type the code (L.EICXXX) of the desired UC." << endl
 
     if (!valid){
         cout << endl << "I'm sorry, but that UC does not exist." << endl;
-        goto a2;
+        goto a1;
     }
 }
 
 void Helpy::display_uc_classes(bool& valid) const{
-a3: cout << endl << "Please type the code (L.EICXXX) of the desired UC." << endl;
+a2: cout << endl << "Please type the code (L.EICXXX) of the desired UC." << endl;
 
     string uc; cin >> uc;
     lowercase(uc, true);
@@ -400,14 +385,14 @@ a3: cout << endl << "Please type the code (L.EICXXX) of the desired UC." << endl
 
     if (!valid){
         cout << endl << "I'm sorry, but that UC does not exist." << endl;
-        goto a3;
+        goto a2;
     }
 }
 
 void Helpy::display_uc_students(bool& valid) const{
 
     // ordenação por código ou nome
-a4: cout << endl << "How would you like to order the students? (Code/Name)" << endl;
+a3: cout << endl << "How would you like to order the students? (Code/Name)" << endl;
     
     cin.ignore();
         
@@ -431,14 +416,14 @@ a4: cout << endl << "How would you like to order the students? (Code/Name)" << e
             break;
         }
     }
-
+    
     if (by_code == 2){
         cout << endl << "Invalid command. Please, try again." << endl;
-        goto a4;
+        goto a3;
     }
 
     // ordenação ascendente ou descendente
-a5: cout << endl << "How would you like to sort them? (Ascending/Descending)" << endl;
+a4: cout << endl << "How would you like to sort them? (Ascending/Descending)" << endl;
 
     getline(cin, line);
     lowercase(line);
@@ -460,11 +445,11 @@ a5: cout << endl << "How would you like to sort them? (Ascending/Descending)" <<
 
     if (descending == 2){
         cout << "Invalid command. Please, try again." << endl;
-        goto a5;
+        goto a4;
     }
 
     // escolher a UC
-a6: cout << endl << "Please type the code (L.EICXXX) of the desired UC." << endl;
+a5: cout << endl << "Please type the code (L.EICXXX) of the desired UC." << endl;
 
     string ucCode; cin >> ucCode;
     lowercase(ucCode, true);
@@ -483,12 +468,12 @@ a6: cout << endl << "Please type the code (L.EICXXX) of the desired UC." << endl
 
     if (!valid){
         cout << endl << "I'm sorry, but that UC does not exist." << endl;
-        goto a6;
+        goto a5;
     }
 }
 
 void Helpy::display_class_schedule(bool& valid) const{
-a7: cout << endl << "Please type the code (XLEICXX) of the desired class." << endl;
+a6: cout << endl << "Please type the code (XLEICXX) of the desired class." << endl;
 
     string classCode; cin >> classCode;
 
@@ -506,13 +491,13 @@ a7: cout << endl << "Please type the code (XLEICXX) of the desired class." << en
 
     if (!valid){
         cout << endl << "I'm sorry, but that class does not exist." << endl;
-        goto a7;
+        goto a6;
     }
 }
 
 void Helpy::display_class_students(bool& valid) const{
     // ordenação por código ou nome
-a8: cout << endl << "How would you like to order the students? (Code/Name)" << endl;
+a7: cout << endl << "How would you like to order the students? (Code/Name)" << endl;
     
     cin.ignore();
         
@@ -539,11 +524,11 @@ a8: cout << endl << "How would you like to order the students? (Code/Name)" << e
 
     if (by_code == 2){
         cout << endl << "Invalid command. Please, try again." << endl;
-        goto a8;
+        goto a7;
     }
 
     // ordenação ascendente ou descendente
-a9: cout << endl << "How would you like to sort them? (Ascending/Descending)" << endl;
+a8: cout << endl << "How would you like to sort them? (Ascending/Descending)" << endl;
 
     getline(cin, line);
     lowercase(line);
@@ -564,12 +549,12 @@ a9: cout << endl << "How would you like to sort them? (Ascending/Descending)" <<
     }
 
     if (descending == 2){
-        cout << "Invalid command. Please, try again." << endl;
-        goto a9;
+        cout << endl << "Invalid command. Please, try again." << endl;
+        goto a8;
     }
 
     // escolher a turma
-a10:cout << endl << "Please type the code (XLEICXX) of the desired class." << endl;
+a9: cout << endl << "Please type the code (XLEICXX) of the desired class." << endl;
 
     string classCode; cin >> classCode;
     lowercase(classCode, true);
@@ -588,12 +573,12 @@ a10:cout << endl << "Please type the code (XLEICXX) of the desired class." << en
 
     if (!valid){
         cout << endl << "I'm sorry, but that class does not exist." << endl;
-        goto a10;
+        goto a9;
     }
 }
 
 void Helpy::display_student_schedule(bool& valid) const{
-a11:cout << endl << "Please write the code (upXXXXXXXXX) of the desired student." << endl;
+a10:cout << endl << "Please write the code (upXXXXXXXXX) of the desired student." << endl;
     
     string studentCode; cin >> studentCode;
 
@@ -611,12 +596,12 @@ a11:cout << endl << "Please write the code (upXXXXXXXXX) of the desired student.
 
     if (!valid){
         cout << endl << "I'm sorry, but that student code is not valid." << endl;
-        goto a11;
+        goto a10;
     }
 }
 
 void Helpy::display_student_classes(bool& valid) const{
-a12:cout << endl << "Understood. Please write the code (upXXXXXXXXX) of the desired student." << endl;
+a11:cout << endl << "Understood. Please write the code (upXXXXXXXXX) of the desired student." << endl;
 
     string studentCode; cin >> studentCode;
 
@@ -634,7 +619,7 @@ a12:cout << endl << "Understood. Please write the code (upXXXXXXXXX) of the desi
 
     if (!valid){
         cout << endl << "I'm sorry, but that student code is not valid." << endl;
-        goto a12;
+        goto a11;
     }
 }
 
@@ -645,14 +630,13 @@ void Helpy::display_all_classes() const{
         all_classes_set.insert(c.get_classCode());
     }
 
-a13:cout << endl << "What Classes would u like to see?" << endl << endl;
+a12:cout << endl << "What classes would u like to see?" << endl << endl;
     cout << "All" << endl;
-    cout << "First Year" << endl;
-    cout << "Second Year" << endl;
-    cout << "Third Year" << endl << endl;
+    cout << "First Year (first)" << endl;
+    cout << "Second Year (second)" << endl;
+    cout << "Third Year (third)" << endl << endl;
 
     string temp; cin >> temp; lowercase(temp);
-    cout << endl;
 
     if (temp == "all"){
         for (string class_code : all_classes_set){
@@ -681,8 +665,8 @@ a13:cout << endl << "What Classes would u like to see?" << endl << endl;
         }
     }
     else{
-        cout << "Invalid command. Please, try again." << endl;
-        goto a13;
+        cout << endl << "Invalid command. Please, try again." << endl;
+        goto a12;
     }
 }
 
@@ -693,11 +677,11 @@ void Helpy::display_all_ucs() const{
         all_ucs_set.insert(u.get_UcCode());
     }
 
-a14:cout << endl << "What UCs would u like to see?" << endl << endl;
+a13:cout << endl << "What UCs would you like to see?" << endl << endl;
     cout << "All" << endl;
-    cout << "First Year" << endl;
-    cout << "Second Year" << endl;
-    cout << "Third Year" << endl << endl;
+    cout << "First Year (first)" << endl;
+    cout << "Second Year (second)" << endl;
+    cout << "Third Year (third)" << endl << endl;
 
     string temp; cin >> temp; lowercase(temp);
 
@@ -728,14 +712,14 @@ a14:cout << endl << "What UCs would u like to see?" << endl << endl;
         }
     }
     else{
-        cout << "Invalid command. Please, try again." << endl;
-        goto a14;
+        cout << endl << "Invalid command. Please, try again." << endl;
+        goto a13;
     }
 }
 
 void Helpy::display_all_students() const{
     // ordenação por código ou nome
-a15:cout << endl << "How would you like to order the students? (Code/Name)" << endl;
+a14:cout << endl << "How would you like to order the students? (Code/Name)" << endl;
     
     cin.ignore();
         
@@ -759,12 +743,12 @@ a15:cout << endl << "How would you like to order the students? (Code/Name)" << e
     }
 
     if (by_code == 2){
-        cout << "Invalid command. Please, try again." << endl;
-        goto a15;
+        cout << endl << "Invalid command. Please, try again." << endl;
+        goto a14;
     }
 
     // ordenação ascendente ou descendente
-t:  cout << endl << "How would you like to sort them? (Ascending/Descending)" << endl;
+a15:cout << endl << "How would you like to sort them? (Ascending/Descending)" << endl;
 
     getline(cin, line);
     lowercase(line);
@@ -787,14 +771,13 @@ t:  cout << endl << "How would you like to sort them? (Ascending/Descending)" <<
 
     if (descending == 2){
         cout << "Invalid command. Please, try again." << endl;
-        goto t;
+        goto a15;
     }
 
     // buscar condição
     int n = 0;
 
-    cout << endl << "Would you like to filter the students by the number of UCs they are in? (Yes/no)" 
-         << endl;
+a16:cout << endl << "Would you like to filter the students by the number of UCs they are in? (Yes/No)" << endl;
 
     getline(cin, line);
     lowercase(line);
@@ -808,12 +791,18 @@ t:  cout << endl << "How would you like to sort them? (Ascending/Descending)" <<
             filter = true;
             break;
         }
+        else if(temp == "no" || temp == "n"){
+            break;
+        }
+        else{
+            cout << endl << "Invalid command. Please, try again." << endl;
+            goto a16;
+        }
     }
 
     short cond = 3;
     if (filter){
-t2:     cout << endl << "OK. Would you like to see if students have less, more or exactly a number of UCs?"
-             << " (Less/More/Equal)" << endl;
+a17:    cout << endl << "Would you like to see if students have less, more or exactly a number of UCs? (Less/More/Equal)" << endl;
 
         getline(cin, line);
         lowercase(line);
@@ -838,7 +827,7 @@ t2:     cout << endl << "OK. Would you like to see if students have less, more o
 
         if (cond == 3){
             cout << endl << "Invalid command! Please, try again." << endl;
-            goto t2;
+            goto a17;
         }
 
         cout << endl << "OK. Please type the number you want to use for filtering:"
@@ -904,7 +893,7 @@ t2:     cout << endl << "OK. Would you like to see if students have less, more o
 }
 
 void Helpy::display_student_ucs(bool& valid) const{
-a16:cout << endl << "Understood. Please write the code (upXXXXXXXXX) of the desired student." << endl;
+a19:cout << endl << "Understood. Please write the code (upXXXXXXXXX) of the desired student." << endl;
     string studentCode; cin >> studentCode;
 
     for (Student s : all_students){
@@ -921,31 +910,28 @@ a16:cout << endl << "Understood. Please write the code (upXXXXXXXXX) of the desi
 
     if (!valid){
         cout << endl << "I'm sorry, but that student code is not valid." << endl;
-        goto a16;
+        goto a19;
     }
 }
 
 /*-----FUNÇÕES DA FILA-----*/
 void Helpy::rewrite_file(){
-    ofstream out("temp.csv");
-
-    out << "StudentCode,StudentName,UcCode,ClassCode\r\n";
+    fstream out;
+    out.open("../students_classes.csv", ios::out);
+    out << "StudentCode,StudentName,UcCode,ClassCode" << endl;
 
     for (Student s : all_students){
         string studentCode = s.get_studentCode();
         string studentName = s.get_studentName();
 
         for (pair<string, string> p : s.get_ucs()){
-            out << studentCode << ',' << studentName
-                << ',' << p.first << ',' << p.second 
-                << '\r' << '\n';
+            out << studentCode << ',' << studentName << ','
+                << p.first << ',' << p.second << '\r'
+                << '\n';
         }
     }
 
     out.close();
-
-    remove("../students_classes.csv");
-    rename("temp.csv", "../students_classes.csv");
 }
 
 void Helpy::processQueue(){
@@ -1011,6 +997,9 @@ void Helpy::rem(Request sub){
                   map<string, string> a = s.get_ucs();
                   for(auto i: a){
                     if(i.second == sub.get_uc()){
+                        int num = (i.first[0] == 'L') ? (i.first[6] - '0') * 10 + (i.first[7] - '0') - 1 : all_UCs.size()-1;
+                        UC& u = all_UCs[num];
+                        u.add_student(stoi(s.get_studentCode()), s.get_studentName());
                         a.erase(i.first); // isto remove a class do estudante
                     }
                 }
@@ -1018,6 +1007,16 @@ void Helpy::rem(Request sub){
                 int num = (sub.get_uc()[5] - '0') * 10 + (sub.get_uc()[6] - '0');
                 Class& c = all_classes[(year - 1) * 16 + (num - 1)];
                 c.remove_student(s.get_studentName()); // remover o estudante da class
+                list<Block> blocks;
+                    for (auto it = s.get_ucs().begin(); it != s.get_ucs().end(); it++){
+                        for(Block b : class_blocks[it->second]){
+                            if (b.get_code() == it->first)
+                            {
+                                blocks.push_back(b);
+                            }
+                        }
+                    }
+                    s.set_Schedule(Schedule(blocks));
                 cout << "The student has been removed from the selected class" << endl;
                 } else {
                     string y = sub.get_uc();
@@ -1037,22 +1036,71 @@ void Helpy::rem(Request sub){
 void Helpy::add(Request sub){
     for(Student& s: all_students){
         if(s.get_studentCode() == sub.get_student()){
-            
             map<string, string> a = s.get_ucs();
-            a[sub.get_uc()] = sub.get_class();
-            list<Block> blocks;
-            for (auto it = s.get_ucs().begin(); it != s.get_ucs().end(); it++){
-                for(Block b : class_blocks[it->second]){
-                    if (b.get_code() == it->first)
-                    {
-                        blocks.push_back(b);
+            if(a.find(sub.get_uc()) != a.end()){
+                log(sub, "Failed because student already has selected uc");
+                return;
+            }
+            int year = sub.get_class()[0] - '0';
+            int num = (sub.get_class()[5] - '0') * 10 + (sub.get_class()[6] - '0');
+            Class& c = all_classes[(year - 1) * 16 + (num - 1)];
+            string conf = is_valid(s,c,sub.get_uc());
+            if(conf == "yes"){
+                if(s.get_classes().find(sub.get_class()) != s.get_classes().end()){
+                    s.add_class(sub.get_class());
+                    c.add_student(stoi(s.get_studentCode()), s.get_studentName());
+                }
+                a[sub.get_uc()] = sub.get_class();
+                int num = (sub.get_uc()[6] - '0') * 10 + (sub.get_class()[7] - '0') - 1;
+                UC& u = all_UCs[num];
+                u.add_student(stoi(s.get_studentCode()), s.get_studentName());
+                list<Block> blocks;
+                for (auto it = s.get_ucs().begin(); it != s.get_ucs().end(); it++){
+                    for(Block b : class_blocks[it->second]){
+                        if (b.get_code() == it->first)
+                        {
+                            blocks.push_back(b);
+                        }
                     }
                 }
+                s.set_Schedule(Schedule(blocks));
+                break;
+            } else {
+                log(sub, conf);
+                return;
             }
-            s.set_Schedule(Schedule(blocks));
         }
     }
 }
 
 void Helpy::change(Request sub){}
+
+string Helpy::is_valid(Student s, Class cl, string uc){
+    if(cl.size() >= 30){
+        return "Failed due to exceeding class limit";
+    }
+    Schedule st = s.get_schedule();
+    Schedule c = cl.get_schedule();
+    for(Block b: c.get_blocks()){
+        if((b.get_type() == "TP" || b.get_type() == "PL") && b.get_code() == uc){
+            for(Block su: st.get_blocks()){
+                if((su.get_type() == "TP" || su.get_type() == "PL") && ((su.get_startHour() >= b.get_startHour() && su.get_startHour() < b.get_endHour()) || (su.get_endHour() > b.get_startHour() && su.get_endHour() <= b.get_endHour()))){
+                    return "Failed due to Schedule overlap";
+                }
+            }
+        }
+    }
+    return "yes";
+}
+
+void Helpy::log(Request r, string s){
+    fstream f;
+    f.open("../Logs.txt", ios::app);
+    if(r.get_type() == "remove"){
+        f<<"Failed to " << r.get_type() <<' ' << r.get_uc() <<  " from student " << r.get_student() << ":" << s << endl;
+    } else {
+        f<<"Failed to " << r.get_type() << ' ' << r.get_uc() << "to class " << r.get_class() << " on student " << r.get_student() <<':' << s << endl;
+    }
+    f.close();
+}
 

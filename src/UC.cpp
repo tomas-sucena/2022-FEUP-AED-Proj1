@@ -27,12 +27,12 @@ set<string> UC::get_classes() const{
 }
 
 void UC::remove_class(string classCode){
-    for(auto kanna = classes_.begin(); kanna != classes_.end();){
-        if (*kanna == classCode){
-            kanna = classes_.erase(kanna);
+    for(auto power = classes_.begin(); power != classes_.end();){
+        if (*power == classCode){
+            power = classes_.erase(power);
         }
         else{
-            kanna++;
+            power++;
         }
     }
 }
