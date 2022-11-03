@@ -14,8 +14,14 @@ void lowercase(string& s, bool uppercase = false){
     }
 }
 
-Helpy::Helpy(vector<Student> students, vector<UC> UCs, vector<Class> classes, 
-             map<string, list<Block>> c_blocks, map<string, list<Block>> u_blocks) : 
+// função auxiliar usada para ordenar os estudantes por código
+bool order_bycode(const Student s1, const Student s2){
+    return (s1.get_studentCode() < s2.get_studentCode());
+}
+
+
+Helpy::Helpy(vector<Student>& students, vector<UC>& UCs, vector<Class>& classes, 
+             map<string, list<Block>>& c_blocks, map<string, list<Block>>& u_blocks) : 
              all_students(students), all_UCs(UCs), all_classes(classes), 
              class_blocks(c_blocks), uc_blocks(u_blocks) {}
 
@@ -763,11 +769,12 @@ t:  cout << endl << "How would you like to sort them? (Ascending/Descending)" <<
     getline(cin, line);
     lowercase(line);
 
-    istringstream line2_(line);
+    line_.clear();
+    line_.str(line);
 
     short descending = 2;
 
-    while (line2_ >> temp){ 
+    while (line_ >> temp){ 
         if (temp == "descending"){
             descending = 1; 
             break;
@@ -823,7 +830,7 @@ t2:     cout << endl << "OK. Would you like to see if students have less, more o
                 cond = 0;
                 break;
             }
-            else if (temp == "equal"){
+            else if (temp == "equal" || temp == "exactly"){
                 cond = 2;
                 break;
             }
@@ -833,45 +840,67 @@ t2:     cout << endl << "OK. Would you like to see if students have less, more o
             cout << endl << "Invalid command! Please, try again." << endl;
             goto t2;
         }
-        
-        line_.clear();
 
         cout << endl << "OK. Please type the number you want to use for filtering:"
              << endl;
 
         cin >> n;
     }
+
+    // ordenar o all_students por código, se preciso
+    if (by_code){
+        sort(all_students.begin(), all_students.end(), order_bycode);
+    }
         
     // imprimir todos os estudantes
-    /*
+    (filter) ? (cout << endl << "These are all the students that meet your criteria:") :
+               (cout << endl << "These are all the students currently enrolled in LEIC:");
+    cout << endl;
+
     if (descending){
-        reverse(all_students.begin(), all_students.end());
-    }*/
+        for (int i = (int) all_students.size() - 1; i >= 0; i--){
+            Student s = all_students[i];
 
-    cout << endl << "These are all the students currently enrolled in LEIC:" << endl;
+            int uc_num = (int) s.get_ucs().size();
 
-    for (Student s : all_students){
-        int uc_num = (int) s.get_ucs().size();
-
-        if (filter && cond == 0 && uc_num > n){
-            cout << s.get_studentCode() << "  " << s.get_studentName() << endl;
-            continue;
+            if (filter && cond == 0 && uc_num > n){
+                cout << s.get_studentCode() << "  " << s.get_studentName() << endl;
+                continue;
+            }
+            else if (filter && cond == 1 && uc_num < n){
+                cout << s.get_studentCode() << "  " << s.get_studentName() << endl;
+                continue;
+            }
+            else if (filter && cond == 2 && uc_num == n){
+                cout << s.get_studentCode() << "  " << s.get_studentName() << endl;
+                continue;
+            }
+            else if (!filter){
+                cout << s.get_studentCode() << "  " << s.get_studentName() << endl; 
+            }  
         }
-        else if (filter && cond == 1 && uc_num < n){
-            cout << s.get_studentCode() << "  " << s.get_studentName() << endl;
-            continue;
-        }
-        else if (filter && cond == 2 && uc_num == n){
-            cout << s.get_studentCode() << "  " << s.get_studentName() << endl;
-            continue;
-        }
-
-        cout << s.get_studentCode() << "  " << s.get_studentName() << endl;   
     }
-    /*
-    if (descending){
-        reverse(all_students.begin(), all_students.end());
-    }*/
+    else{
+        for (Student s : all_students){
+            int uc_num = (int) s.get_ucs().size();
+
+            if (filter && cond == 0 && uc_num > n){
+                cout << s.get_studentCode() << "  " << s.get_studentName() << endl;
+                continue;
+            }
+            else if (filter && cond == 1 && uc_num < n){
+                cout << s.get_studentCode() << "  " << s.get_studentName() << endl;
+                continue;
+            }
+            else if (filter && cond == 2 && uc_num == n){
+                cout << s.get_studentCode() << "  " << s.get_studentName() << endl;
+                continue;
+            }
+            else if (!filter){
+                cout << s.get_studentCode() << "  " << s.get_studentName() << endl;   
+            }
+        }
+    }
 }
 
 void Helpy::display_student_ucs(bool& valid) const{

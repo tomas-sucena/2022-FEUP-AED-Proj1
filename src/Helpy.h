@@ -10,13 +10,13 @@
 
 class Helpy {
     private:
-        vector<Student> all_students;
-        vector<UC> all_UCs;
-        vector<Class> all_classes;
+        vector<Student>& all_students;
+        vector<UC>& all_UCs;
+        vector<Class>& all_classes;
 
         // informação do horário
-        map<string, list<Block>> class_blocks,
-                                 uc_blocks;
+        map<string, list<Block>>& class_blocks,
+                                  uc_blocks;
 
         // mapas usados para processar comandos
         static map<string, int> command, target, what;
@@ -26,8 +26,8 @@ class Helpy {
                
     public:
         // constructor
-        Helpy(vector<Student> students, vector<UC> UCs, vector<Class> classes,
-              map<string, list<Block>> c_blocks, map<string, list<Block>> u_blocks);
+        Helpy(vector<Student>& students, vector<UC>& UCs, vector<Class>& classes,
+              map<string, list<Block>>& c_blocks, map<string, list<Block>>& u_blocks);
 
         // methods
         void terminal();
