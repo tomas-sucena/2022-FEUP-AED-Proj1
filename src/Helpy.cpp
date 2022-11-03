@@ -105,7 +105,7 @@ b1: string s1, s2, s3;
 
     cin >> s3;
     lowercase(s3);
-
+  
     // processar o comando    
     switch (command[s1] + target[s2] + what[s3]){
         case(31) : {
@@ -133,6 +133,15 @@ b1: string s1, s2, s3;
 
             break;
         }
+        case(39) : { // remove student classes
+            cout << "Please type the code (upXXXXXXXXX) of the desired student."<<endl;
+            string st; cin >>st;
+            cout << "Please type the code of the class you want to remove." << endl;
+            string cl; cin >> cl;
+            queuer.push(Request(s1,s2,s3,st,cl));
+
+            break;
+        }
         case(40) : {
             display_uc_students(valid);
 
@@ -148,7 +157,17 @@ b1: string s1, s2, s3;
 
             break;
         }
-        case(46) : {
+        case(50) : {
+            display_all_classes();
+
+            break;
+        }
+        case(53) : {
+            display_all_ucs();
+
+            break;
+        }
+        case(56) : {
             display_all_students();
 
             break;
@@ -757,6 +776,32 @@ a15:cout << endl << "How would you like to order the students? (Code/Name)" << e
         goto a15;
     }
 
+    // ordenação ascendente ou descendente
+t:  cout << endl << "How would you like to sort them? (Ascending/Descending)" << endl;
+
+    getline(cin, line);
+    lowercase(line);
+
+    istringstream line2_(line);
+
+    short descending = 2;
+
+    while (line2_ >> temp){ 
+        if (temp == "descending"){
+            descending = 1; 
+            break;
+        }
+        else if (temp == "ascending"){
+            descending = 0;
+            break;
+        }
+    }
+
+    if (descending == 2){
+        cout << "Invalid command. Please, try again." << endl;
+        goto t;
+    }
+
     // buscar condição
     int n = 0;
 
@@ -777,10 +822,10 @@ a15:cout << endl << "How would you like to order the students? (Code/Name)" << e
         }
     }
 
-    bool less = false;
+    short cond = 3;
     if (filter){
-        cout << endl << "OK. Would you like to see if students have less or more than a number of UCs?"
-             << endl;
+t2:     cout << endl << "OK. Would you like to see if students have less, more or exactly a number of UCs?"
+             << " (Less/More/Equal)" << endl;
 
         getline(cin, line);
         lowercase(line);
@@ -790,12 +835,22 @@ a15:cout << endl << "How would you like to order the students? (Code/Name)" << e
 
         while (line_ >> temp){
             if (temp == "less"){
-                less = true;
+                cond = 1;
                 break;
             }
             else if (temp == "more"){
+                cond = 0;
                 break;
             }
+            else if (temp == "equal"){
+                cond = 2;
+                break;
+            }
+        }
+
+        if (cond == 3){
+            cout << endl << "Invalid command! Please, try again." << endl;
+            goto t2;
         }
         
         line_.clear();
@@ -807,20 +862,35 @@ a15:cout << endl << "How would you like to order the students? (Code/Name)" << e
     }
         
     // imprimir todos os estudantes
+    /*
+    if (descending){
+        reverse(all_students.begin(), all_students.end());
+    }*/
+
     cout << endl << "These are all the students currently enrolled in LEIC:" << endl;
 
     for (Student s : all_students){
-        if (less && (int) s.get_ucs().size() < n){
-            (by_code) ? (cout << s.get_studentCode() << "   " << s.get_studentName()) :
-                        (cout << s.get_studentCode() << "   " << s.get_studentName());
-            cout << endl;
+        int uc_num = (int) s.get_ucs().size();
+
+        if (filter && cond == 0 && uc_num > n){
+            cout << s.get_studentCode() << "  " << s.get_studentName() << endl;
+            continue;
         }
-        else if (!less && (int) s.get_ucs().size() > n){
-            (by_code) ? (cout << s.get_studentCode() << ' ' << s.get_studentName()) :
-                        (cout << s.get_studentCode() << "   " << s.get_studentName());
-            cout << endl;
+        else if (filter && cond == 1 && uc_num < n){
+            cout << s.get_studentCode() << "  " << s.get_studentName() << endl;
+            continue;
         }
+        else if (filter && cond == 2 && uc_num == n){
+            cout << s.get_studentCode() << "  " << s.get_studentName() << endl;
+            continue;
+        }
+
+        cout << s.get_studentCode() << "  " << s.get_studentName() << endl;   
     }
+    /*
+    if (descending){
+        reverse(all_students.begin(), all_students.end());
+    }*/
 }
 
 void Helpy::display_student_ucs(bool& valid) const{
@@ -862,7 +932,8 @@ void Helpy::rewrite_file(){
         }
     }
 
-    out.close();
+    remove("../students_classes.csv");
+    rename("temp.csv", "../students_classes.csv");
 }
 
 void Helpy::processQueue(){
@@ -877,6 +948,8 @@ void Helpy::processQueue(){
             change(sub);
         }
     }
+
+    rewrite_file();
 }
 
 void Helpy::rem(Request sub){
