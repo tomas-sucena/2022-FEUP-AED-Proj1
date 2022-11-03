@@ -6,10 +6,6 @@
 
 #IncludeRegexTransform: 
 
-/mnt/c/Users/gjpin/Proj/src/Block.cpp
-Block.h
-/mnt/c/Users/gjpin/Proj/src/Block.h
-
 /mnt/c/Users/gjpin/Proj/src/Block.h
 iostream
 -
@@ -19,10 +15,6 @@ map
 -
 sstream
 -
-
-/mnt/c/Users/gjpin/Proj/src/Class.cpp
-Class.h
-/mnt/c/Users/gjpin/Proj/src/Class.h
 
 /mnt/c/Users/gjpin/Proj/src/Class.h
 iostream
@@ -60,17 +52,9 @@ Request.h
 queue
 -
 
-/mnt/c/Users/gjpin/Proj/src/Request.cpp
-Request.h
-/mnt/c/Users/gjpin/Proj/src/Request.h
-
 /mnt/c/Users/gjpin/Proj/src/Request.h
 string
 -
-
-/mnt/c/Users/gjpin/Proj/src/Schedule.cpp
-Schedule.h
-/mnt/c/Users/gjpin/Proj/src/Schedule.h
 
 /mnt/c/Users/gjpin/Proj/src/Schedule.h
 iostream
@@ -81,10 +65,6 @@ vector
 -
 Block.h
 /mnt/c/Users/gjpin/Proj/src/Block.h
-
-/mnt/c/Users/gjpin/Proj/src/Student.cpp
-Student.h
-/mnt/c/Users/gjpin/Proj/src/Student.h
 
 /mnt/c/Users/gjpin/Proj/src/Student.h
 iostream
@@ -99,10 +79,6 @@ set
 -
 Schedule.h
 /mnt/c/Users/gjpin/Proj/src/Schedule.h
-
-/mnt/c/Users/gjpin/Proj/src/UC.cpp
-UC.h
-/mnt/c/Users/gjpin/Proj/src/UC.h
 
 /mnt/c/Users/gjpin/Proj/src/UC.h
 iostream
@@ -115,28 +91,4 @@ algorithm
 -
 Schedule.h
 /mnt/c/Users/gjpin/Proj/src/Schedule.h
-
-/mnt/c/Users/gjpin/Proj/src/main.cpp
-iostream
--
-fstream
--
-sstream
--
-vector
--
-string
--
-map
--
-set
--
-UC.h
-/mnt/c/Users/gjpin/Proj/src/UC.h
-Class.h
-/mnt/c/Users/gjpin/Proj/src/Class.h
-Student.h
-/mnt/c/Users/gjpin/Proj/src/Student.h
-Helpy.h
-/mnt/c/Users/gjpin/Proj/src/Helpy.h
 
