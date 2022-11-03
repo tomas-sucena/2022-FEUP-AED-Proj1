@@ -4,8 +4,8 @@
 
 map<string, int> Helpy::command = {{"display", 1}, {"print", 1}, {"show", 1}, 
                                    {"remove", 100}, {"add",200}};
-map<string, int> Helpy::target = {{"uc", 6}, {"class", 8}, {"student", 10}, {"all", 12}};
-map<string, int> Helpy::what = {{"schedule", 24}, {"classes", 27}, {"class", 27}, {"ucs", 30}, {"uc", 30}, {"students", 33}};
+map<string, int> Helpy::target = {{"uc", 6}, {"class", 8}, {"student", 10}, {"all", 22}};
+map<string, int> Helpy::what = {{"schedule", 24}, {"classes", 27}, {"class", 27}, {"ucs", 30}, {"uc", 30}, {"students", 33},{"student", 33}};
 
 // função auxiliar usada para tratar dos comandos
 void lowercase(string& s, bool uppercase = false){
@@ -280,7 +280,17 @@ b2: cout << endl;
 
             break;
         }
-        case(46) : {
+        case(50) : {
+            //display_all_classes();
+
+            break;
+        }
+        case(53) : {
+            //display_all_ucs();
+
+            break;
+        }
+        case(56) : {
             display_all_students();
 
             break;
