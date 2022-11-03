@@ -384,10 +384,7 @@ a1: cout << endl << "Please type the code (L.EICXXX) of the desired UC." << endl
         } 
     }
 
-    if (uc == "quit"){
-        goto e2;
-    }
-    else if (!valid){
+    if (!valid){
         cout << endl << "I'm sorry, but that UC does not exist." << endl;
         goto a1;
     }
@@ -410,10 +407,8 @@ a2: cout << endl << "Please type the code (L.EICXXX) of the desired UC." << endl
             break;
         } 
     }
-    if (uc == quit){
-        goto e2;
-    }
-    else if (!valid){
+
+    if (!valid){
         cout << endl << "I'm sorry, but that UC does not exist." << endl;
         goto a2;
     }
@@ -446,9 +441,7 @@ a3: cout << endl << "How would you like to order the students? (Code/Name)" << e
             break;
         }
     }
-    if (line == "quit"){
-        goto e2;
-    }
+    
     if (by_code == 2){
         cout << endl << "Invalid command. Please, try again." << endl;
         goto a3;
@@ -581,7 +574,7 @@ a8: cout << endl << "How would you like to sort them? (Ascending/Descending)" <<
     }
 
     if (descending == 2){
-        cout << "Invalid command. Please, try again." << endl;
+        cout << endl << "Invalid command. Please, try again." << endl;
         goto a8;
     }
 
@@ -669,7 +662,6 @@ a12:cout << endl << "What classes would u like to see?" << endl << endl;
     cout << "Third Year (third)" << endl << endl;
 
     string temp; cin >> temp; lowercase(temp);
-    cout << endl;
 
     if (temp == "all"){
         for (string class_code : all_classes_set){
@@ -698,7 +690,7 @@ a12:cout << endl << "What classes would u like to see?" << endl << endl;
         }
     }
     else{
-        cout << "Invalid command. Please, try again." << endl;
+        cout << endl << "Invalid command. Please, try again." << endl;
         goto a12;
     }
 }
@@ -745,7 +737,7 @@ a13:cout << endl << "What UCs would you like to see?" << endl << endl;
         }
     }
     else{
-        cout << "Invalid command. Please, try again." << endl;
+        cout << endl << "Invalid command. Please, try again." << endl;
         goto a13;
     }
 }
@@ -776,7 +768,7 @@ a14:cout << endl << "How would you like to order the students? (Code/Name)" << e
     }
 
     if (by_code == 2){
-        cout << "Invalid command. Please, try again." << endl;
+        cout << endl << "Invalid command. Please, try again." << endl;
         goto a14;
     }
 
@@ -828,7 +820,7 @@ a16:cout << endl << "Would you like to filter the students by the number of UCs 
             break;
         }
         else{
-            cout << "Invalid command. Please, try again." << endl;
+            cout << endl << "Invalid command. Please, try again." << endl;
             goto a16;
         }
     }
