@@ -730,6 +730,8 @@ void Helpy::rewrite_file(){
 
     remove("../students_classes.csv");
     rename("temp.csv", "../students_classes.csv");
+
+    out.close();
 }
 
 void Helpy::processQueue(){
@@ -744,6 +746,8 @@ void Helpy::processQueue(){
             change(sub);
         }
     }
+
+    rewrite_file();
 }
 
 void Helpy::rem(Request sub){
@@ -834,5 +838,4 @@ void Helpy::update_schedule(Student& s){
         }
     }
     s.set_Schedule(Schedule(blocks));
-
 }
