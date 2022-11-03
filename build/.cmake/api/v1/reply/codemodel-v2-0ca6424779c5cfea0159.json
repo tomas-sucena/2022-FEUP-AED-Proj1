@@ -6,6 +6,7 @@
 			[
 				{
 					"build" : ".",
+					"jsonFile" : "directory-.-Debug-f5ebdc15457944623624.json",
 					"minimumCMakeVersion" : 
 					{
 						"string" : "3.16"
@@ -38,7 +39,7 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "AED_Schedule::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-AED_Schedule-Debug-fc5629bcbd1d3552a286.json",
+					"jsonFile" : "target-AED_Schedule-Debug-3e6b6032253d2efd4d5e.json",
 					"name" : "AED_Schedule",
 					"projectIndex" : 0
 				}
@@ -48,12 +49,12 @@
 	"kind" : "codemodel",
 	"paths" : 
 	{
-		"build" : "/home/sucena/AED_Schedule/build",
-		"source" : "/home/sucena/AED_Schedule"
+		"build" : "/Users/BrunoDrumond/Desktop/AED_proj_drumond/build",
+		"source" : "/Users/BrunoDrumond/Desktop/AED_proj_drumond"
 	},
 	"version" : 
 	{
 		"major" : 2,
-		"minor" : 0
+		"minor" : 4
 	}
 }

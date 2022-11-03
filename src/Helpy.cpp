@@ -779,7 +779,7 @@ a14:cout << endl << "How would you like to order the students? (Code/Name)" << e
     }
 
     // ordenação ascendente ou descendente
-t:  cout << endl << "How would you like to sort them? (Ascending/Descending)" << endl;
+a15:cout << endl << "How would you like to sort them? (Ascending/Descending)" << endl;
 
     getline(cin, line);
     lowercase(line);
@@ -801,41 +801,14 @@ t:  cout << endl << "How would you like to sort them? (Ascending/Descending)" <<
 
     if (descending == 2){
         cout << "Invalid command. Please, try again." << endl;
-        goto t;
-    }
-
-    // ordenação ascendente ou descendente
-t:  cout << endl << "How would you like to sort them? (Ascending/Descending)" << endl;
-
-    getline(cin, line);
-    lowercase(line);
-
-    istringstream line2_(line);
-
-    short descending = 2;
-
-    while (line2_ >> temp){ 
-        if (temp == "descending"){
-            descending = 1; 
-            break;
-        }
-        else if (temp == "ascending"){
-            descending = 0;
-            break;
-        }
-    }
-
-    if (descending == 2){
-        cout << "Invalid command. Please, try again." << endl;
-        goto t;
+        goto a15;
     }
 
     // buscar condição
     int number = 0;
     char number_text[1];
 
-a15:cout << endl << "Would you like to filter the students by the number of UCs they are in? (Yes/No)" 
-         << endl;
+a16:cout << endl << "Would you like to filter the students by the number of UCs they are in? (Yes/No)" << endl;
 
     getline(cin, line);
     lowercase(line);
@@ -854,14 +827,13 @@ a15:cout << endl << "Would you like to filter the students by the number of UCs 
         }
         else{
             cout << "Invalid command. Please, try again." << endl;
-            goto a15;
+            goto a16;
         }
     }
 
     short cond = 3;
     if (filter){
-t2:     cout << endl << "OK. Would you like to see if students have less, more or exactly a number of UCs?"
-             << " (Less/More/Equal)" << endl;
+a17:    cout << endl << "Would you like to see if students have less, more or exactly a number of UCs? (Less/More/Equal)" << endl;
 
         getline(cin, line);
         lowercase(line);
@@ -882,69 +854,61 @@ t2:     cout << endl << "OK. Would you like to see if students have less, more o
                 cond = 2;
                 break;
             }
-            else{
-                cout << "Invalid command. Please, try again." << endl;
-                goto a16;
-            }
         }
 
         if (cond == 3){
             cout << endl << "Invalid command! Please, try again." << endl;
-            goto t2;
-        }
-
-        if (cond == 3){
-            cout << endl << "Invalid command! Please, try again." << endl;
-            goto t2;
+            goto a17;
         }
         
         line_.clear();
 
-a17:    cout << endl << "Please type the number you want to use for filtering:" << endl;
+a18:    cout << endl << "Please type the number you want to use for filtering:" << endl;
         
         try{
             cin >> number_text;
             number = stoi(number_text);
         }
         catch(const invalid_argument ia){
-            cout << "That was invalid." << endl << endl;
-            goto a17;
+            cout << endl << "That was invalid." << endl << endl;
+            goto a18;
         }
         
-    // imprimir todos os estudantes
-    /*
-    if (descending){
-        reverse(all_students.begin(), all_students.end());
-    }*/
+        // imprimir todos os estudantes
+        /*
+        if (descending){
+            reverse(all_students.begin(), all_students.end());
+        }*/
 
-    cout << endl << "These are all the students currently enrolled in LEIC:" << endl;
+        cout << endl << "These are all the students currently enrolled in LEIC:" << endl;
 
-    for (Student s : all_students){
-        int uc_num = (int) s.get_ucs().size();
+        for (Student s : all_students){
+            int uc_num = (int) s.get_ucs().size();
 
-        if (filter && cond == 0 && uc_num > n){
-            cout << s.get_studentCode() << "  " << s.get_studentName() << endl;
-            continue;
+            if (filter && cond == 0 && uc_num > number){
+                cout << s.get_studentCode() << "  " << s.get_studentName() << endl;
+                continue;
+            }
+            else if (filter && cond == 1 && uc_num < number){
+                cout << s.get_studentCode() << "  " << s.get_studentName() << endl;
+                continue;
+            }
+            else if (filter && cond == 2 && uc_num == number){
+                cout << s.get_studentCode() << "  " << s.get_studentName() << endl;
+                continue;
+            }
+
+            cout << s.get_studentCode() << "  " << s.get_studentName() << endl;   
         }
-        else if (filter && cond == 1 && uc_num < n){
-            cout << s.get_studentCode() << "  " << s.get_studentName() << endl;
-            continue;
-        }
-        else if (filter && cond == 2 && uc_num == n){
-            cout << s.get_studentCode() << "  " << s.get_studentName() << endl;
-            continue;
-        }
-
-        cout << s.get_studentCode() << "  " << s.get_studentName() << endl;   
+        /*
+        if (descending){
+            reverse(all_students.begin(), all_students.end());
+        }*/
     }
-    /*
-    if (descending){
-        reverse(all_students.begin(), all_students.end());
-    }*/
 }
 
 void Helpy::display_student_ucs(bool& valid) const{
-a18:cout << endl << "Understood. Please write the code (upXXXXXXXXX) of the desired student." << endl;
+a19:cout << endl << "Understood. Please write the code (upXXXXXXXXX) of the desired student." << endl;
     string studentCode; cin >> studentCode;
 
     for (Student s : all_students){
@@ -961,7 +925,7 @@ a18:cout << endl << "Understood. Please write the code (upXXXXXXXXX) of the desi
 
     if (!valid){
         cout << endl << "I'm sorry, but that student code is not valid." << endl;
-        goto a18;
+        goto a19;
     }
 }
 

@@ -1,42 +1,42 @@
 [
 {
-  "directory": "/home/sucena/AED_Schedule/build",
-  "command": "/usr/bin/g++   -I/home/sucena/AED_Schedule/src  -g   -std=gnu++14 -o CMakeFiles/AED_Schedule.dir/src/Block.cpp.o -c /home/sucena/AED_Schedule/src/Block.cpp",
-  "file": "/home/sucena/AED_Schedule/src/Block.cpp"
+  "directory": "/Users/BrunoDrumond/Desktop/AED_proj_drumond/build",
+  "command": "/usr/bin/clang++  -I/Users/BrunoDrumond/Desktop/AED_proj_drumond/src -g -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX12.1.sdk -mmacosx-version-min=11.6 -std=gnu++14 -o CMakeFiles/AED_Schedule.dir/src/Block.cpp.o -c /Users/BrunoDrumond/Desktop/AED_proj_drumond/src/Block.cpp",
+  "file": "/Users/BrunoDrumond/Desktop/AED_proj_drumond/src/Block.cpp"
 },
 {
-  "directory": "/home/sucena/AED_Schedule/build",
-  "command": "/usr/bin/g++   -I/home/sucena/AED_Schedule/src  -g   -std=gnu++14 -o CMakeFiles/AED_Schedule.dir/src/Class.cpp.o -c /home/sucena/AED_Schedule/src/Class.cpp",
-  "file": "/home/sucena/AED_Schedule/src/Class.cpp"
+  "directory": "/Users/BrunoDrumond/Desktop/AED_proj_drumond/build",
+  "command": "/usr/bin/clang++  -I/Users/BrunoDrumond/Desktop/AED_proj_drumond/src -g -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX12.1.sdk -mmacosx-version-min=11.6 -std=gnu++14 -o CMakeFiles/AED_Schedule.dir/src/Class.cpp.o -c /Users/BrunoDrumond/Desktop/AED_proj_drumond/src/Class.cpp",
+  "file": "/Users/BrunoDrumond/Desktop/AED_proj_drumond/src/Class.cpp"
 },
 {
-  "directory": "/home/sucena/AED_Schedule/build",
-  "command": "/usr/bin/g++   -I/home/sucena/AED_Schedule/src  -g   -std=gnu++14 -o CMakeFiles/AED_Schedule.dir/src/Helpy.cpp.o -c /home/sucena/AED_Schedule/src/Helpy.cpp",
-  "file": "/home/sucena/AED_Schedule/src/Helpy.cpp"
+  "directory": "/Users/BrunoDrumond/Desktop/AED_proj_drumond/build",
+  "command": "/usr/bin/clang++  -I/Users/BrunoDrumond/Desktop/AED_proj_drumond/src -g -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX12.1.sdk -mmacosx-version-min=11.6 -std=gnu++14 -o CMakeFiles/AED_Schedule.dir/src/Helpy.cpp.o -c /Users/BrunoDrumond/Desktop/AED_proj_drumond/src/Helpy.cpp",
+  "file": "/Users/BrunoDrumond/Desktop/AED_proj_drumond/src/Helpy.cpp"
 },
 {
-  "directory": "/home/sucena/AED_Schedule/build",
-  "command": "/usr/bin/g++   -I/home/sucena/AED_Schedule/src  -g   -std=gnu++14 -o CMakeFiles/AED_Schedule.dir/src/main.cpp.o -c /home/sucena/AED_Schedule/src/main.cpp",
-  "file": "/home/sucena/AED_Schedule/src/main.cpp"
+  "directory": "/Users/BrunoDrumond/Desktop/AED_proj_drumond/build",
+  "command": "/usr/bin/clang++  -I/Users/BrunoDrumond/Desktop/AED_proj_drumond/src -g -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX12.1.sdk -mmacosx-version-min=11.6 -std=gnu++14 -o CMakeFiles/AED_Schedule.dir/src/main.cpp.o -c /Users/BrunoDrumond/Desktop/AED_proj_drumond/src/main.cpp",
+  "file": "/Users/BrunoDrumond/Desktop/AED_proj_drumond/src/main.cpp"
 },
 {
-  "directory": "/home/sucena/AED_Schedule/build",
-  "command": "/usr/bin/g++   -I/home/sucena/AED_Schedule/src  -g   -std=gnu++14 -o CMakeFiles/AED_Schedule.dir/src/Request.cpp.o -c /home/sucena/AED_Schedule/src/Request.cpp",
-  "file": "/home/sucena/AED_Schedule/src/Request.cpp"
+  "directory": "/Users/BrunoDrumond/Desktop/AED_proj_drumond/build",
+  "command": "/usr/bin/clang++  -I/Users/BrunoDrumond/Desktop/AED_proj_drumond/src -g -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX12.1.sdk -mmacosx-version-min=11.6 -std=gnu++14 -o CMakeFiles/AED_Schedule.dir/src/Request.cpp.o -c /Users/BrunoDrumond/Desktop/AED_proj_drumond/src/Request.cpp",
+  "file": "/Users/BrunoDrumond/Desktop/AED_proj_drumond/src/Request.cpp"
 },
 {
-  "directory": "/home/sucena/AED_Schedule/build",
-  "command": "/usr/bin/g++   -I/home/sucena/AED_Schedule/src  -g   -std=gnu++14 -o CMakeFiles/AED_Schedule.dir/src/Schedule.cpp.o -c /home/sucena/AED_Schedule/src/Schedule.cpp",
-  "file": "/home/sucena/AED_Schedule/src/Schedule.cpp"
+  "directory": "/Users/BrunoDrumond/Desktop/AED_proj_drumond/build",
+  "command": "/usr/bin/clang++  -I/Users/BrunoDrumond/Desktop/AED_proj_drumond/src -g -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX12.1.sdk -mmacosx-version-min=11.6 -std=gnu++14 -o CMakeFiles/AED_Schedule.dir/src/Schedule.cpp.o -c /Users/BrunoDrumond/Desktop/AED_proj_drumond/src/Schedule.cpp",
+  "file": "/Users/BrunoDrumond/Desktop/AED_proj_drumond/src/Schedule.cpp"
 },
 {
-  "directory": "/home/sucena/AED_Schedule/build",
-  "command": "/usr/bin/g++   -I/home/sucena/AED_Schedule/src  -g   -std=gnu++14 -o CMakeFiles/AED_Schedule.dir/src/Student.cpp.o -c /home/sucena/AED_Schedule/src/Student.cpp",
-  "file": "/home/sucena/AED_Schedule/src/Student.cpp"
+  "directory": "/Users/BrunoDrumond/Desktop/AED_proj_drumond/build",
+  "command": "/usr/bin/clang++  -I/Users/BrunoDrumond/Desktop/AED_proj_drumond/src -g -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX12.1.sdk -mmacosx-version-min=11.6 -std=gnu++14 -o CMakeFiles/AED_Schedule.dir/src/Student.cpp.o -c /Users/BrunoDrumond/Desktop/AED_proj_drumond/src/Student.cpp",
+  "file": "/Users/BrunoDrumond/Desktop/AED_proj_drumond/src/Student.cpp"
 },
 {
-  "directory": "/home/sucena/AED_Schedule/build",
-  "command": "/usr/bin/g++   -I/home/sucena/AED_Schedule/src  -g   -std=gnu++14 -o CMakeFiles/AED_Schedule.dir/src/UC.cpp.o -c /home/sucena/AED_Schedule/src/UC.cpp",
-  "file": "/home/sucena/AED_Schedule/src/UC.cpp"
+  "directory": "/Users/BrunoDrumond/Desktop/AED_proj_drumond/build",
+  "command": "/usr/bin/clang++  -I/Users/BrunoDrumond/Desktop/AED_proj_drumond/src -g -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX12.1.sdk -mmacosx-version-min=11.6 -std=gnu++14 -o CMakeFiles/AED_Schedule.dir/src/UC.cpp.o -c /Users/BrunoDrumond/Desktop/AED_proj_drumond/src/UC.cpp",
+  "file": "/Users/BrunoDrumond/Desktop/AED_proj_drumond/src/UC.cpp"
 }
 ]

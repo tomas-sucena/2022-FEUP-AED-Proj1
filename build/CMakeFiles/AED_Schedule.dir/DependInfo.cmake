@@ -1,23 +1,21 @@
+
+# Consider dependencies only in project.
+set(CMAKE_DEPENDS_IN_PROJECT_ONLY OFF)
+
 # The set of languages for which implicit dependencies are needed:
 set(CMAKE_DEPENDS_LANGUAGES
-  "CXX"
   )
-# The set of files for implicit dependencies of each language:
-set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/sucena/AED_Schedule/src/Block.cpp" "/home/sucena/AED_Schedule/build/CMakeFiles/AED_Schedule.dir/src/Block.cpp.o"
-  "/home/sucena/AED_Schedule/src/Class.cpp" "/home/sucena/AED_Schedule/build/CMakeFiles/AED_Schedule.dir/src/Class.cpp.o"
-  "/home/sucena/AED_Schedule/src/Helpy.cpp" "/home/sucena/AED_Schedule/build/CMakeFiles/AED_Schedule.dir/src/Helpy.cpp.o"
-  "/home/sucena/AED_Schedule/src/Request.cpp" "/home/sucena/AED_Schedule/build/CMakeFiles/AED_Schedule.dir/src/Request.cpp.o"
-  "/home/sucena/AED_Schedule/src/Schedule.cpp" "/home/sucena/AED_Schedule/build/CMakeFiles/AED_Schedule.dir/src/Schedule.cpp.o"
-  "/home/sucena/AED_Schedule/src/Student.cpp" "/home/sucena/AED_Schedule/build/CMakeFiles/AED_Schedule.dir/src/Student.cpp.o"
-  "/home/sucena/AED_Schedule/src/UC.cpp" "/home/sucena/AED_Schedule/build/CMakeFiles/AED_Schedule.dir/src/UC.cpp.o"
-  "/home/sucena/AED_Schedule/src/main.cpp" "/home/sucena/AED_Schedule/build/CMakeFiles/AED_Schedule.dir/src/main.cpp.o"
-  )
-set(CMAKE_CXX_COMPILER_ID "GNU")
 
-# The include file search paths:
-set(CMAKE_CXX_TARGET_INCLUDE_PATH
-  "../src"
+# The set of dependency files which are needed:
+set(CMAKE_DEPENDS_DEPENDENCY_FILES
+  "/Users/BrunoDrumond/Desktop/AED_proj_drumond/src/Block.cpp" "CMakeFiles/AED_Schedule.dir/src/Block.cpp.o" "gcc" "CMakeFiles/AED_Schedule.dir/src/Block.cpp.o.d"
+  "/Users/BrunoDrumond/Desktop/AED_proj_drumond/src/Class.cpp" "CMakeFiles/AED_Schedule.dir/src/Class.cpp.o" "gcc" "CMakeFiles/AED_Schedule.dir/src/Class.cpp.o.d"
+  "/Users/BrunoDrumond/Desktop/AED_proj_drumond/src/Helpy.cpp" "CMakeFiles/AED_Schedule.dir/src/Helpy.cpp.o" "gcc" "CMakeFiles/AED_Schedule.dir/src/Helpy.cpp.o.d"
+  "/Users/BrunoDrumond/Desktop/AED_proj_drumond/src/Request.cpp" "CMakeFiles/AED_Schedule.dir/src/Request.cpp.o" "gcc" "CMakeFiles/AED_Schedule.dir/src/Request.cpp.o.d"
+  "/Users/BrunoDrumond/Desktop/AED_proj_drumond/src/Schedule.cpp" "CMakeFiles/AED_Schedule.dir/src/Schedule.cpp.o" "gcc" "CMakeFiles/AED_Schedule.dir/src/Schedule.cpp.o.d"
+  "/Users/BrunoDrumond/Desktop/AED_proj_drumond/src/Student.cpp" "CMakeFiles/AED_Schedule.dir/src/Student.cpp.o" "gcc" "CMakeFiles/AED_Schedule.dir/src/Student.cpp.o.d"
+  "/Users/BrunoDrumond/Desktop/AED_proj_drumond/src/UC.cpp" "CMakeFiles/AED_Schedule.dir/src/UC.cpp.o" "gcc" "CMakeFiles/AED_Schedule.dir/src/UC.cpp.o.d"
+  "/Users/BrunoDrumond/Desktop/AED_proj_drumond/src/main.cpp" "CMakeFiles/AED_Schedule.dir/src/main.cpp.o" "gcc" "CMakeFiles/AED_Schedule.dir/src/main.cpp.o.d"
   )
 
 # Targets to which this target links.
