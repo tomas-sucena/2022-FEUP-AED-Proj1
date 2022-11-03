@@ -3,3 +3,4 @@ DS_Store
 src/proj
 .idea
 cmake-build-debug
+build/
