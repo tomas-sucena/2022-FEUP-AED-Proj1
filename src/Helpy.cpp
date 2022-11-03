@@ -177,9 +177,11 @@ e1: cout << endl << "See you next time!" << endl;
 
                             ///             GUIDED MODE             ////
 
+
 void Helpy::guided_mode(){
 
     /*-----LER COMANDOS-----*/
+
     cout << endl << "Hello! How can I be of assistance?" << endl;
 b2: cout << endl;
     cout << "* Display" << endl;
@@ -315,7 +317,7 @@ b2: cout << endl;
 
             break;
         }
-    d1: default : {
+d1:     default : {
             cout << endl << "Invalid command! Please, try again." << endl;
             goto b2;
         }
@@ -332,7 +334,7 @@ e2: cout << endl << "See you next time!" << endl;
 
 /*-----FUNÇÕES DE IMPRESSÃO-----*/
 void Helpy::display_uc_schedule(bool& valid) const{
-a2: cout << endl << "Please type the code (L.EICXXX) of the desired UC." << endl;
+a1: cout << endl << "Please type the code (L.EICXXX) of the desired UC." << endl;
 
     string uc; cin >> uc;
     lowercase(uc, true);
@@ -351,12 +353,12 @@ a2: cout << endl << "Please type the code (L.EICXXX) of the desired UC." << endl
 
     if (!valid){
         cout << endl << "I'm sorry, but that UC does not exist." << endl;
-        goto a2;
+        goto a1;
     }
 }
 
 void Helpy::display_uc_classes(bool& valid) const{
-a3: cout << endl << "Please type the code (L.EICXXX) of the desired UC." << endl;
+a2: cout << endl << "Please type the code (L.EICXXX) of the desired UC." << endl;
 
     string uc; cin >> uc;
     lowercase(uc, true);
@@ -375,14 +377,14 @@ a3: cout << endl << "Please type the code (L.EICXXX) of the desired UC." << endl
 
     if (!valid){
         cout << endl << "I'm sorry, but that UC does not exist." << endl;
-        goto a3;
+        goto a2;
     }
 }
 
 void Helpy::display_uc_students(bool& valid) const{
 
     // ordenação por código ou nome
-a4: cout << endl << "How would you like to order the students? (Code/Name)" << endl;
+a3: cout << endl << "How would you like to order the students? (Code/Name)" << endl;
     
     cin.ignore();
         
@@ -409,11 +411,11 @@ a4: cout << endl << "How would you like to order the students? (Code/Name)" << e
 
     if (by_code == 2){
         cout << endl << "Invalid command. Please, try again." << endl;
-        goto a4;
+        goto a3;
     }
 
     // ordenação ascendente ou descendente
-a5: cout << endl << "How would you like to sort them? (Ascending/Descending)" << endl;
+a4: cout << endl << "How would you like to sort them? (Ascending/Descending)" << endl;
 
     getline(cin, line);
     lowercase(line);
@@ -435,11 +437,11 @@ a5: cout << endl << "How would you like to sort them? (Ascending/Descending)" <<
 
     if (descending == 2){
         cout << "Invalid command. Please, try again." << endl;
-        goto a5;
+        goto a4;
     }
 
     // escolher a UC
-a6: cout << endl << "Please type the code (L.EICXXX) of the desired UC." << endl;
+a5: cout << endl << "Please type the code (L.EICXXX) of the desired UC." << endl;
 
     string ucCode; cin >> ucCode;
     lowercase(ucCode, true);
@@ -458,12 +460,12 @@ a6: cout << endl << "Please type the code (L.EICXXX) of the desired UC." << endl
 
     if (!valid){
         cout << endl << "I'm sorry, but that UC does not exist." << endl;
-        goto a6;
+        goto a5;
     }
 }
 
 void Helpy::display_class_schedule(bool& valid) const{
-a7: cout << endl << "Please type the code (XLEICXX) of the desired class." << endl;
+a6: cout << endl << "Please type the code (XLEICXX) of the desired class." << endl;
 
     string classCode; cin >> classCode;
 
@@ -481,13 +483,13 @@ a7: cout << endl << "Please type the code (XLEICXX) of the desired class." << en
 
     if (!valid){
         cout << endl << "I'm sorry, but that class does not exist." << endl;
-        goto a7;
+        goto a6;
     }
 }
 
 void Helpy::display_class_students(bool& valid) const{
     // ordenação por código ou nome
-a8: cout << endl << "How would you like to order the students? (Code/Name)" << endl;
+a7: cout << endl << "How would you like to order the students? (Code/Name)" << endl;
     
     cin.ignore();
         
@@ -514,11 +516,11 @@ a8: cout << endl << "How would you like to order the students? (Code/Name)" << e
 
     if (by_code == 2){
         cout << endl << "Invalid command. Please, try again." << endl;
-        goto a8;
+        goto a7;
     }
 
     // ordenação ascendente ou descendente
-a9: cout << endl << "How would you like to sort them? (Ascending/Descending)" << endl;
+a8: cout << endl << "How would you like to sort them? (Ascending/Descending)" << endl;
 
     getline(cin, line);
     lowercase(line);
@@ -540,11 +542,11 @@ a9: cout << endl << "How would you like to sort them? (Ascending/Descending)" <<
 
     if (descending == 2){
         cout << "Invalid command. Please, try again." << endl;
-        goto a9;
+        goto a8;
     }
 
     // escolher a turma
-a10:cout << endl << "Please type the code (XLEICXX) of the desired class." << endl;
+a9: cout << endl << "Please type the code (XLEICXX) of the desired class." << endl;
 
     string classCode; cin >> classCode;
     lowercase(classCode, true);
@@ -563,12 +565,12 @@ a10:cout << endl << "Please type the code (XLEICXX) of the desired class." << en
 
     if (!valid){
         cout << endl << "I'm sorry, but that class does not exist." << endl;
-        goto a10;
+        goto a9;
     }
 }
 
 void Helpy::display_student_schedule(bool& valid) const{
-a11:cout << endl << "Please write the code (upXXXXXXXXX) of the desired student." << endl;
+a10:cout << endl << "Please write the code (upXXXXXXXXX) of the desired student." << endl;
     
     string studentCode; cin >> studentCode;
 
@@ -586,12 +588,12 @@ a11:cout << endl << "Please write the code (upXXXXXXXXX) of the desired student.
 
     if (!valid){
         cout << endl << "I'm sorry, but that student code is not valid." << endl;
-        goto a11;
+        goto a10;
     }
 }
 
 void Helpy::display_student_classes(bool& valid) const{
-a12:cout << endl << "Understood. Please write the code (upXXXXXXXXX) of the desired student." << endl;
+a11:cout << endl << "Understood. Please write the code (upXXXXXXXXX) of the desired student." << endl;
 
     string studentCode; cin >> studentCode;
 
@@ -609,7 +611,7 @@ a12:cout << endl << "Understood. Please write the code (upXXXXXXXXX) of the desi
 
     if (!valid){
         cout << endl << "I'm sorry, but that student code is not valid." << endl;
-        goto a12;
+        goto a11;
     }
 }
 
@@ -620,11 +622,11 @@ void Helpy::display_all_classes() const{
         all_classes_set.insert(c.get_classCode());
     }
 
-a13:cout << endl << "What Classes would u like to see?" << endl << endl;
+a12:cout << endl << "What classes would u like to see?" << endl << endl;
     cout << "All" << endl;
-    cout << "First Year" << endl;
-    cout << "Second Year" << endl;
-    cout << "Third Year" << endl << endl;
+    cout << "First Year (first)" << endl;
+    cout << "Second Year (second)" << endl;
+    cout << "Third Year (third)" << endl << endl;
 
     string temp; cin >> temp; lowercase(temp);
     cout << endl;
@@ -657,7 +659,7 @@ a13:cout << endl << "What Classes would u like to see?" << endl << endl;
     }
     else{
         cout << "Invalid command. Please, try again." << endl;
-        goto a13;
+        goto a12;
     }
 }
 
@@ -668,11 +670,11 @@ void Helpy::display_all_ucs() const{
         all_ucs_set.insert(u.get_UcCode());
     }
 
-a14:cout << endl << "What UCs would u like to see?" << endl << endl;
+a13:cout << endl << "What UCs would you like to see?" << endl << endl;
     cout << "All" << endl;
-    cout << "First Year" << endl;
-    cout << "Second Year" << endl;
-    cout << "Third Year" << endl << endl;
+    cout << "First Year (first)" << endl;
+    cout << "Second Year (second)" << endl;
+    cout << "Third Year (third)" << endl << endl;
 
     string temp; cin >> temp; lowercase(temp);
 
@@ -704,13 +706,13 @@ a14:cout << endl << "What UCs would u like to see?" << endl << endl;
     }
     else{
         cout << "Invalid command. Please, try again." << endl;
-        goto a14;
+        goto a13;
     }
 }
 
 void Helpy::display_all_students() const{
     // ordenação por código ou nome
-a15:cout << endl << "How would you like to order the students? (Code/Name)" << endl;
+a14:cout << endl << "How would you like to order the students? (Code/Name)" << endl;
     
     cin.ignore();
         
@@ -735,13 +737,14 @@ a15:cout << endl << "How would you like to order the students? (Code/Name)" << e
 
     if (by_code == 2){
         cout << "Invalid command. Please, try again." << endl;
-        goto a15;
+        goto a14;
     }
 
     // buscar condição
-    int n = 0;
+    int number = 0;
+    char number_text[1];
 
-    cout << endl << "Would you like to filter the students by the number of UCs they are in? (Yes/no)" 
+a15:cout << endl << "Would you like to filter the students by the number of UCs they are in? (Yes/No)" 
          << endl;
 
     getline(cin, line);
@@ -756,12 +759,18 @@ a15:cout << endl << "How would you like to order the students? (Code/Name)" << e
             filter = true;
             break;
         }
+        else if(temp == "no" || temp == "n"){
+            break;
+        }
+        else{
+            cout << "Invalid command. Please, try again." << endl;
+            goto a15;
+        }
     }
 
     bool less = false;
     if (filter){
-        cout << endl << "OK. Would you like to see if students have less or more than a number of UCs?"
-             << endl;
+a16:    cout << endl << "Would you like to see if students have less or more than a number of UCs? (Less/More)" << endl;
 
         getline(cin, line);
         lowercase(line);
@@ -777,35 +786,45 @@ a15:cout << endl << "How would you like to order the students? (Code/Name)" << e
             else if (temp == "more"){
                 break;
             }
+            else{
+                cout << "Invalid command. Please, try again." << endl;
+                goto a16;
+            }
         }
         
         line_.clear();
 
-        cout << endl << "OK. Please type the number you want to use for filtering:"
-             << endl;
-
-        cin >> n;
-    }
+a17:    cout << endl << "Please type the number you want to use for filtering:" << endl;
         
-    // imprimir todos os estudantes
-    cout << endl << "These are all the students currently enrolled in LEIC:" << endl;
-
-    for (Student s : all_students){
-        if (less && (int) s.get_ucs().size() < n){
-            (by_code) ? (cout << s.get_studentCode() << "   " << s.get_studentName()) :
-                        (cout << s.get_studentCode() << "   " << s.get_studentName());
-            cout << endl;
+        try{
+            cin >> number_text;
+            number = stoi(number_text);
         }
-        else if (!less && (int) s.get_ucs().size() > n){
-            (by_code) ? (cout << s.get_studentCode() << ' ' << s.get_studentName()) :
-                        (cout << s.get_studentCode() << "   " << s.get_studentName());
-            cout << endl;
+        catch(const invalid_argument ia){
+            cout << "That was invalid." << endl << endl;
+            goto a17;
+        }
+        
+        // imprimir todos os estudantes
+        cout << endl << "These are all the students currently enrolled in LEIC:" << endl;
+
+        for (Student s : all_students){
+            if (less && (int) s.get_ucs().size() < number){
+                (by_code) ? (cout << s.get_studentCode() << "   " << s.get_studentName()) :
+                            (cout << s.get_studentCode() << "   " << s.get_studentName());
+                cout << endl;
+            }
+            else if (!less && (int) s.get_ucs().size() > number){
+                (by_code) ? (cout << s.get_studentCode() << "   " << s.get_studentName()) :
+                            (cout << s.get_studentCode() << "   " << s.get_studentName());
+                cout << endl;
+            }
         }
     }
 }
 
 void Helpy::display_student_ucs(bool& valid) const{
-a16:cout << endl << "Understood. Please write the code (upXXXXXXXXX) of the desired student." << endl;
+a18:cout << endl << "Understood. Please write the code (upXXXXXXXXX) of the desired student." << endl;
     string studentCode; cin >> studentCode;
 
     for (Student s : all_students){
@@ -822,7 +841,7 @@ a16:cout << endl << "Understood. Please write the code (upXXXXXXXXX) of the desi
 
     if (!valid){
         cout << endl << "I'm sorry, but that student code is not valid." << endl;
-        goto a16;
+        goto a18;
     }
 }
 
