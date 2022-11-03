@@ -130,7 +130,7 @@ b1: string s1, s2, s3;
             string st; cin >>st;
             cout << "Please type the code of the class you want to remove" << endl;
             string cl; cin >> cl; lowercase(cl, true);
-            queuer.push(Request(s1,s2,s3,st,cl));
+            queuer.push(Request(s1,s3,st,cl));
 
             break;
         }
@@ -139,7 +139,7 @@ b1: string s1, s2, s3;
             string st; cin >>st;
             cout << "Please type the code of the uc you want to remove" << endl;
             string cl; cin >> cl; lowercase(cl, true);
-            queuer.push(Request(s1,s2,s3,st,cl));
+            queuer.push(Request(s1,s3,st,cl));
 
             break;
         }
@@ -281,12 +281,12 @@ b2: cout << endl;
             break;
         }
         case(50) : {
-            //display_all_classes();
+            display_all_classes();
 
             break;
         }
         case(53) : {
-            //display_all_ucs();
+            display_all_ucs();
 
             break;
         }
@@ -593,9 +593,104 @@ a12:cout << endl << "Understood. Please write the code (upXXXXXXXXX) of the desi
     }
 }
 
+void Helpy::display_all_classes() const{
+    set<string> all_classes_set;
+
+    for (Class c : all_classes){
+        all_classes_set.insert(c.get_classCode());
+    }
+
+a13:cout << endl << "What Classes would u like to see?" << endl << endl;
+    cout << "All" << endl;
+    cout << "First Year" << endl;
+    cout << "Second Year" << endl;
+    cout << "Third Year" << endl << endl;
+
+    string temp; cin >> temp; lowercase(temp);
+    cout << endl;
+
+    if (temp == "all"){
+        for (string class_code : all_classes_set){
+            cout << class_code << endl;
+        }
+    }
+    else if (temp == "first"){
+        for (string class_code : all_classes_set){
+            if (class_code[0] == '1'){
+                cout << class_code << endl;
+            }
+        }
+    }
+    else if (temp == "second"){
+        for (string class_code : all_classes_set){
+            if (class_code[0] == '2'){
+                cout << class_code << endl;
+            }
+        }
+    }
+    else if (temp == "third"){
+        for (string class_code : all_classes_set){
+            if (class_code[0] == '3'){
+                cout << class_code << endl;
+            }
+        }
+    }
+    else{
+        cout << "Invalid command. Please, try again." << endl;
+        goto a13;
+    }
+}
+
+void Helpy::display_all_ucs() const{
+    set<string> all_ucs_set;
+
+    for (UC u : all_UCs){
+        all_ucs_set.insert(u.get_UcCode());
+    }
+
+a14:cout << endl << "What UCs would u like to see?" << endl << endl;
+    cout << "All" << endl;
+    cout << "First Year" << endl;
+    cout << "Second Year" << endl;
+    cout << "Third Year" << endl << endl;
+
+    string temp; cin >> temp; lowercase(temp);
+
+    if (temp == "all"){
+        for (string uc_code : all_ucs_set){
+            cout << uc_code << endl;
+        }
+    }
+    else if (temp == "first"){
+        for (string uc_code : all_ucs_set){
+            if (int(uc_code[6]) == '0'){
+                cout << uc_code << endl;
+            }
+        }
+    }
+    else if (temp == "second"){
+        for (string uc_code : all_ucs_set){
+            if (int(uc_code[6]) == '1'){
+                cout << uc_code << endl;
+            }
+        }
+    }
+    else if (temp == "third"){
+        for (string uc_code : all_ucs_set){
+            if (int(uc_code[6]) == '2'){
+                cout << uc_code << endl;
+            }
+        }
+    }
+    else{
+        cout << "Invalid command. Please, try again." << endl;
+        goto a14;
+    }
+}
+
 void Helpy::display_all_students() const{
     // ordenação por código ou nome
-a13:cout << endl << "How would you like to order the students? (Code/Name)" << endl;
+a15:cout << endl << "How would you like to order the students? (Code/Name)" << endl;
     
     cin.ignore();
         
@@ -620,7 +715,7 @@ a13:cout << endl << "How would you like to order the students? (Code/Name)" << e
 
     if (by_code == 2){
         cout << "Invalid command. Please, try again." << endl;
-        goto a13;
+        goto a15;
     }
 
     // buscar condição
@@ -677,20 +772,20 @@ a13:cout << endl << "How would you like to order the students? (Code/Name)" << e
 
     for (Student s : all_students){
         if (less && (int) s.get_ucs().size() < n){
-            (by_code) ? (cout << s.get_studentCode() << ' ' << s.get_studentName()) :
-                        (cout << s.get_studentName() << " (up" << s.get_studentCode() << ')');
+            (by_code) ? (cout << s.get_studentCode() << "   " << s.get_studentName()) :
+                        (cout << s.get_studentCode() << "   " << s.get_studentName());
             cout << endl;
         }
         else if (!less && (int) s.get_ucs().size() > n){
             (by_code) ? (cout << s.get_studentCode() << ' ' << s.get_studentName()) :
-                        (cout << s.get_studentName() << " (up" << s.get_studentCode() << ')');
+                        (cout << s.get_studentCode() << "   " << s.get_studentName());
             cout << endl;
         }
     }
 }
 
 void Helpy::display_student_ucs(bool& valid) const{
-a15:cout << endl << "Understood. Please write the code (upXXXXXXXXX) of the desired student." << endl;
+a16:cout << endl << "Understood. Please write the code (upXXXXXXXXX) of the desired student." << endl;
     string studentCode; cin >> studentCode;
 
     for (Student s : all_students){
@@ -707,7 +802,7 @@ a15:cout << endl << "Understood. Please write the code (upXXXXXXXXX) of the desi
 
     if (!valid){
         cout << endl << "I'm sorry, but that student code is not valid." << endl;
-        goto a15;
+        goto a16;
     }
 }
 
@@ -715,23 +810,23 @@ a15:cout << endl << "Understood. Please write the code (upXXXXXXXXX) of the desi
 void Helpy::rewrite_file(){
     ofstream out("temp.csv");
 
-    out << "StudentCode,StudentName,UcCode,ClassCode" << endl;
+    out << "StudentCode,StudentName,UcCode,ClassCode\r\n";
 
     for (Student s : all_students){
         string studentCode = s.get_studentCode();
         string studentName = s.get_studentName();
 
         for (pair<string, string> p : s.get_ucs()){
-            out << studentCode << ',' << studentName 
-                << p.first << ',' << p.second << '\r'
-                << '\n';
+            out << studentCode << ',' << studentName
+                << ',' << p.first << ',' << p.second 
+                << '\r' << '\n';
         }
     }
 
+    out.close();
+
     remove("../students_classes.csv");
     rename("temp.csv", "../students_classes.csv");
-
-    out.close();
 }
 
 void Helpy::processQueue(){
@@ -752,19 +847,17 @@ void Helpy::processQueue(){
 
 void Helpy::rem(Request sub){
     bool valid = false;
-    if(sub.get_what() == "uc"){
+    if(sub.get_target() == "uc"){
         for(Student& s : all_students){
-            if(s.get_studentCode() == sub.get_stupid()){
+            if(s.get_studentCode() == sub.get_student()){
                 valid = true;
                 map<string, string> a = s.get_ucs();
 
-                auto it = a.find(sub.get_name());
+                auto it = a.find(sub.get_uc());
 
                 if(it != a.end()){
                     a.erase(it);
                     s.set_ucs(a);
-
-                    cout<<"Entered";
                     list<Block> blocks;
                     for (auto it = s.get_ucs().begin(); it != s.get_ucs().end(); it++){
                         for(Block b : class_blocks[it->second]){
@@ -776,41 +869,41 @@ void Helpy::rem(Request sub){
                     }
                     s.set_Schedule(Schedule(blocks));
 
-                    string uc_ = sub.get_name();
+                    string uc_ = sub.get_uc();
                     lowercase(uc_,true);
                     
-                    cout << "UC-" << uc_ << " has sucessfully been removed from " << sub.get_stupid() << endl;
+                    cout << "UC-" << uc_ << " has sucessfully been removed from " << sub.get_student() << endl;
                 } else {
-                    string uc_ = sub.get_name();
+                    string uc_ = sub.get_uc();
                     lowercase(uc_,true);
-                    cout << "The selected student (" << sub.get_stupid() << ") does not have the selected UC (" << uc_ <<")" << endl;
+                    cout << "The selected student (" << sub.get_student() << ") does not have the selected UC (" << uc_ <<")" << endl;
                     cout << "Aborting Request" << endl;  
                 }
             }
         }
-    } else if(sub.get_what() == "class"){
+    } else if(sub.get_target() == "class"){
         for(Student& s: all_students){
-            if (s.get_studentCode() == sub.get_stupid())
+            if (s.get_studentCode() == sub.get_student())
             {
                 valid = true;
                 set<string> cl = s.get_classes();
-                if(cl.find(sub.get_name()) != cl.end()){
-                  cl.erase(sub.get_name());
+                if(cl.find(sub.get_uc()) != cl.end()){
+                  cl.erase(sub.get_uc());
                   map<string, string> a = s.get_ucs();
                   for(auto i: a){
-                    if(i.second == sub.get_name()){
+                    if(i.second == sub.get_uc()){
                         a.erase(i.first); // isto remove a class do estudante
                     }
                 }
-                int year = sub.get_name()[0] - '0';
-                int num = (sub.get_name()[5] - '0') * 10 + (sub.get_name()[6] - '0');
+                int year = sub.get_uc()[0] - '0';
+                int num = (sub.get_uc()[5] - '0') * 10 + (sub.get_uc()[6] - '0');
                 Class& c = all_classes[(year - 1) * 16 + (num - 1)];
                 c.remove_student(s.get_studentName()); // remover o estudante da class
                 cout << "The student has been removed from the selected class" << endl;
                 } else {
-                    string y = sub.get_name();
+                    string y = sub.get_uc();
                     lowercase(y,true);
-                    cout << "The selected student (" << sub.get_stupid() << ") is not in the selected class (" << y <<")" << endl;
+                    cout << "The selected student (" << sub.get_student() << ") is not in the selected class (" << y <<")" << endl;
                     cout << "Aborting Request" << endl;  
                 }
             }
@@ -818,24 +911,13 @@ void Helpy::rem(Request sub){
         }
     }
     if(!valid){
-            cout << "The selected student (" << sub.get_stupid() << ") does not exist in this database" << endl;
+            cout << "The selected student (" << sub.get_student() << ") does not exist in this database" << endl;
     }
 }
 
-void Helpy::add(Request sub){}
+void Helpy::add(Request sub){
+
+}
 
 void Helpy::change(Request sub){}
 
-void Helpy::update_schedule(Student& s){
-    cout<<"Entered";
-    list<Block> blocks;
-    for (auto it = s.get_ucs().begin(); it != s.get_ucs().end(); it++){
-        for(Block b : class_blocks[it->second]){
-            if (b.get_code() == it->first)
-            {
-                blocks.push_back(b);
-            }
-        }
-    }
-    s.set_Schedule(Schedule(blocks));
-}

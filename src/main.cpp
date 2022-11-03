@@ -163,7 +163,9 @@ int main(){
 
         all_students.push_back(s);
     }
+    
     sort(all_students.begin(), all_students.end());
+
     // handling terminal things
     Helpy hi = Helpy(all_students, all_UCs, all_classes, 
                      class_blocks, uc_blocks);
