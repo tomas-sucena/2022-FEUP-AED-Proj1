@@ -301,12 +301,12 @@ b2: cout << endl;
             break;
         }
         case(50) : {
-            //display_all_classes();
+            display_all_classes();
 
             break;
         }
         case(53) : {
-            //display_all_ucs();
+            display_all_ucs();
 
             break;
         }
@@ -613,9 +613,104 @@ a12:cout << endl << "Understood. Please write the code (upXXXXXXXXX) of the desi
     }
 }
 
+void Helpy::display_all_classes() const{
+    set<string> all_classes_set;
+
+    for (Class c : all_classes){
+        all_classes_set.insert(c.get_classCode());
+    }
+
+a13:cout << endl << "What Classes would u like to see?" << endl << endl;
+    cout << "All" << endl;
+    cout << "First Year" << endl;
+    cout << "Second Year" << endl;
+    cout << "Third Year" << endl << endl;
+
+    string temp; cin >> temp; lowercase(temp);
+    cout << endl;
+
+    if (temp == "all"){
+        for (string class_code : all_classes_set){
+            cout << class_code << endl;
+        }
+    }
+    else if (temp == "first"){
+        for (string class_code : all_classes_set){
+            if (class_code[0] == '1'){
+                cout << class_code << endl;
+            }
+        }
+    }
+    else if (temp == "second"){
+        for (string class_code : all_classes_set){
+            if (class_code[0] == '2'){
+                cout << class_code << endl;
+            }
+        }
+    }
+    else if (temp == "third"){
+        for (string class_code : all_classes_set){
+            if (class_code[0] == '3'){
+                cout << class_code << endl;
+            }
+        }
+    }
+    else{
+        cout << "Invalid command. Please, try again." << endl;
+        goto a13;
+    }
+}
+
+void Helpy::display_all_ucs() const{
+    set<string> all_ucs_set;
+
+    for (UC u : all_UCs){
+        all_ucs_set.insert(u.get_UcCode());
+    }
+
+a14:cout << endl << "What UCs would u like to see?" << endl << endl;
+    cout << "All" << endl;
+    cout << "First Year" << endl;
+    cout << "Second Year" << endl;
+    cout << "Third Year" << endl << endl;
+
+    string temp; cin >> temp; lowercase(temp);
+
+    if (temp == "all"){
+        for (string uc_code : all_ucs_set){
+            cout << uc_code << endl;
+        }
+    }
+    else if (temp == "first"){
+        for (string uc_code : all_ucs_set){
+            if (int(uc_code[6]) == '0'){
+                cout << uc_code << endl;
+            }
+        }
+    }
+    else if (temp == "second"){
+        for (string uc_code : all_ucs_set){
+            if (int(uc_code[6]) == '1'){
+                cout << uc_code << endl;
+            }
+        }
+    }
+    else if (temp == "third"){
+        for (string uc_code : all_ucs_set){
+            if (int(uc_code[6]) == '2'){
+                cout << uc_code << endl;
+            }
+        }
+    }
+    else{
+        cout << "Invalid command. Please, try again." << endl;
+        goto a14;
+    }
+}
+
 void Helpy::display_all_students() const{
     // ordenação por código ou nome
-a13:cout << endl << "How would you like to order the students? (Code/Name)" << endl;
+a15:cout << endl << "How would you like to order the students? (Code/Name)" << endl;
     
     cin.ignore();
         
@@ -640,7 +735,7 @@ a13:cout << endl << "How would you like to order the students? (Code/Name)" << e
 
     if (by_code == 2){
         cout << "Invalid command. Please, try again." << endl;
-        goto a13;
+        goto a15;
     }
 
     // buscar condição
@@ -697,20 +792,20 @@ a13:cout << endl << "How would you like to order the students? (Code/Name)" << e
 
     for (Student s : all_students){
         if (less && (int) s.get_ucs().size() < n){
-            (by_code) ? (cout << s.get_studentCode() << ' ' << s.get_studentName()) :
-                        (cout << s.get_studentName() << " (up" << s.get_studentCode() << ')');
+            (by_code) ? (cout << s.get_studentCode() << "   " << s.get_studentName()) :
+                        (cout << s.get_studentCode() << "   " << s.get_studentName());
             cout << endl;
         }
         else if (!less && (int) s.get_ucs().size() > n){
             (by_code) ? (cout << s.get_studentCode() << ' ' << s.get_studentName()) :
-                        (cout << s.get_studentName() << " (up" << s.get_studentCode() << ')');
+                        (cout << s.get_studentCode() << "   " << s.get_studentName());
             cout << endl;
         }
     }
 }
 
 void Helpy::display_student_ucs(bool& valid) const{
-a15:cout << endl << "Understood. Please write the code (upXXXXXXXXX) of the desired student." << endl;
+a16:cout << endl << "Understood. Please write the code (upXXXXXXXXX) of the desired student." << endl;
     string studentCode; cin >> studentCode;
 
     for (Student s : all_students){
@@ -727,7 +822,7 @@ a15:cout << endl << "Understood. Please write the code (upXXXXXXXXX) of the desi
 
     if (!valid){
         cout << endl << "I'm sorry, but that student code is not valid." << endl;
-        goto a15;
+        goto a16;
     }
 }
 

@@ -48,6 +48,8 @@ class Helpy {
         void display_student_classes(bool& valid) const;
         void display_student_ucs(bool& valid) const;
         
+        void display_all_classes() const;
+        void display_all_ucs() const;
         void display_all_students() const;
 
         void add(Request sub);
