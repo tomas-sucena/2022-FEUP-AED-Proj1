@@ -390,11 +390,10 @@ a2: cout << endl << "Please type the code (L.EICXXX) of the desired UC." << endl
 }
 
 void Helpy::display_uc_students(bool& valid) const{
+    cin.ignore();
 
     // ordenação por código ou nome
 a3: cout << endl << "How would you like to order the students? (Code/Name)" << endl;
-    
-    cin.ignore();
         
     string line; getline(cin, line);
     lowercase(line);
@@ -496,10 +495,10 @@ a6: cout << endl << "Please type the code (XLEICXX) of the desired class." << en
 }
 
 void Helpy::display_class_students(bool& valid) const{
+    cin.ignore();
+
     // ordenação por código ou nome
 a7: cout << endl << "How would you like to order the students? (Code/Name)" << endl;
-    
-    cin.ignore();
         
     string line; getline(cin, line);
     lowercase(line);
@@ -578,14 +577,20 @@ a9: cout << endl << "Please type the code (XLEICXX) of the desired class." << en
 }
 
 void Helpy::display_student_schedule(bool& valid) const{
-a10:cout << endl << "Please write the code (upXXXXXXXXX) of the desired student." << endl;
-    
-    string studentCode; cin >> studentCode;
+    cin.ignore();
+
+a10:cout << endl << "Please write the code (upXXXXXXXXX) or the name of the desired student." << endl;
+
+    string inp; getline(cin, inp);
+    lowercase(inp);
 
     for (Student s : all_students){
-        if (s.get_studentCode() == studentCode){
+        string smol = s.get_studentName();
+        lowercase(smol);
+
+        if (s.get_studentCode() == inp || smol == inp){
             cout << endl << "The student " << "\033[1m" << s.get_studentName() << "\033[0m" 
-            << " (up" << studentCode << ')' << " has the following schedule:" << endl;
+            << " (up" << s.get_studentCode() << ')' << " has the following schedule:" << endl;
 
             s.get_schedule().print();
 
@@ -601,14 +606,20 @@ a10:cout << endl << "Please write the code (upXXXXXXXXX) of the desired student.
 }
 
 void Helpy::display_student_classes(bool& valid) const{
+    cin.ignore();
+
 a11:cout << endl << "Understood. Please write the code (upXXXXXXXXX) of the desired student." << endl;
 
-    string studentCode; cin >> studentCode;
+    string inp; getline(cin, inp);
+    lowercase(inp);
 
     for (Student s : all_students){
-        if (s.get_studentCode() == studentCode){
+        string smol = s.get_studentName();
+        lowercase(smol);
+
+        if (s.get_studentCode() == inp || smol == inp){
             cout << endl << "The student " << "\033[1m" << s.get_studentName() << "\033[0m" 
-            << " (up" << studentCode << ')' << " belongs to the following classes:" << endl;
+            << " (up" << s.get_studentCode() << ')' << " belongs to the following classes:" << endl;
 
             s.print_classes();
 
@@ -718,10 +729,10 @@ a13:cout << endl << "What UCs would you like to see?" << endl << endl;
 }
 
 void Helpy::display_all_students() const{
+    cin.ignore();
+
     // ordenação por código ou nome
 a14:cout << endl << "How would you like to order the students? (Code/Name)" << endl;
-    
-    cin.ignore();
         
     string line; getline(cin, line);
     lowercase(line);
@@ -893,13 +904,20 @@ a17:    cout << endl << "Would you like to see if students have less, more or ex
 }
 
 void Helpy::display_student_ucs(bool& valid) const{
-a19:cout << endl << "Understood. Please write the code (upXXXXXXXXX) of the desired student." << endl;
-    string studentCode; cin >> studentCode;
+    cin.ignore();
+
+a19:cout << endl << "Understood. Please write the code (upXXXXXXXXX) or the name of the desired student." << endl;
+    
+    string inp; getline(cin, inp);
+    lowercase(inp);
 
     for (Student s : all_students){
-        if (s.get_studentCode() == studentCode){
+        string smol = s.get_studentName();
+        lowercase(smol);
+
+        if (s.get_studentCode() == inp || smol == inp){
             cout << endl << "The student " << "\033[1m" << s.get_studentName() << "\033[0m" 
-            << " (up" << studentCode << ')' << " has the following UCs:" << endl;
+            << " (up" << s.get_studentCode() << ')' << " has the following UCs:" << endl;
 
             s.print_ucs();
 

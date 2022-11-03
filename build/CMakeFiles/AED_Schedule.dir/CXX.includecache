@@ -6,10 +6,6 @@
 
 #IncludeRegexTransform: 
 
-/home/sucena/AED_Schedule/src/Block.cpp
-Block.h
-/home/sucena/AED_Schedule/src/Block.h
-
 /home/sucena/AED_Schedule/src/Block.h
 iostream
 -
@@ -19,10 +15,6 @@ map
 -
 sstream
 -
-
-/home/sucena/AED_Schedule/src/Class.cpp
-Class.h
-/home/sucena/AED_Schedule/src/Class.h
 
 /home/sucena/AED_Schedule/src/Class.h
 iostream
@@ -60,17 +52,9 @@ Request.h
 queue
 -
 
-/home/sucena/AED_Schedule/src/Request.cpp
-Request.h
-/home/sucena/AED_Schedule/src/Request.h
-
 /home/sucena/AED_Schedule/src/Request.h
 string
 -
-
-/home/sucena/AED_Schedule/src/Schedule.cpp
-Schedule.h
-/home/sucena/AED_Schedule/src/Schedule.h
 
 /home/sucena/AED_Schedule/src/Schedule.h
 iostream
@@ -81,10 +65,6 @@ vector
 -
 Block.h
 /home/sucena/AED_Schedule/src/Block.h
-
-/home/sucena/AED_Schedule/src/Student.cpp
-Student.h
-/home/sucena/AED_Schedule/src/Student.h
 
 /home/sucena/AED_Schedule/src/Student.h
 iostream
@@ -99,10 +79,6 @@ set
 -
 Schedule.h
 /home/sucena/AED_Schedule/src/Schedule.h
-
-/home/sucena/AED_Schedule/src/UC.cpp
-UC.h
-/home/sucena/AED_Schedule/src/UC.h
 
 /home/sucena/AED_Schedule/src/UC.h
 iostream
@@ -115,28 +91,4 @@ algorithm
 -
 Schedule.h
 /home/sucena/AED_Schedule/src/Schedule.h
-
-/home/sucena/AED_Schedule/src/main.cpp
-iostream
--
-fstream
--
-sstream
--
-vector
--
-string
--
-map
--
-set
--
-UC.h
-/home/sucena/AED_Schedule/src/UC.h
-Class.h
-/home/sucena/AED_Schedule/src/Class.h
-Student.h
-/home/sucena/AED_Schedule/src/Student.h
-Helpy.h
-/home/sucena/AED_Schedule/src/Helpy.h
 
