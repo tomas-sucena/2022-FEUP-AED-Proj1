@@ -15,41 +15,16 @@ void lowercase(string& s, bool uppercase = false){
     }
 }
 
-Helpy::Helpy(vector<Student> students, vector<UC> UCs, vector<Class> classes, 
-             map<string, list<Block>> c_blocks, map<string, list<Block>> u_blocks) : 
+// função auxiliar usada para ordenar os estudantes por código
+bool order_bycode(const Student s1, const Student s2){
+    return (s1.get_studentCode() < s2.get_studentCode());
+}
+
+
+Helpy::Helpy(vector<Student>& students, vector<UC>& UCs, vector<Class>& classes, 
+             map<string, list<Block>>& c_blocks, map<string, list<Block>>& u_blocks) : 
              all_students(students), all_UCs(UCs), all_classes(classes), 
              class_blocks(c_blocks), uc_blocks(u_blocks) {}
-
-
-string Helpy::is_valid(Student s, Class cl, string uc){
-    if(cl.size() >= 30){
-        return "Failed due to exceeding class limit";
-    }
-    Schedule st = s.get_schedule();
-    Schedule c = cl.get_schedule();
-    for(Block b: c.get_blocks()){
-        if((b.get_type() == "TP" || b.get_type() == "PL") && b.get_code() == uc){
-            for(Block su: st.get_blocks()){
-                if((su.get_type() == "TP" || su.get_type() == "PL") && ((su.get_startHour() >= b.get_startHour() && su.get_startHour() < b.get_endHour()) || (su.get_endHour() > b.get_startHour() && su.get_endHour() <= b.get_endHour()))){
-                    return "Failed due to Schedule overlap";
-                }
-            }
-        }
-    }
-    return "yes";
-}
-
-
-void Helpy::log(Request r, string s){
-    fstream f;
-    f.open("../Logs.txt", ios::app);
-    if(r.get_type() == "remove"){
-        f<<"Failed to " << r.get_type() <<' ' << r.get_uc() <<  " from student " << r.get_student() << ":" << s << endl;
-    } else {
-        f<<"Failed to " << r.get_type() << ' ' << r.get_uc() << "to class " << r.get_class() << " on student " << r.get_student() <<':' << s << endl;
-    }
-    f.close();
-}
 
 void Helpy::terminal(){
     cout << "Which mode would you prefer?" << endl << endl;
@@ -779,11 +754,12 @@ a15:cout << endl << "How would you like to sort them? (Ascending/Descending)" <<
     getline(cin, line);
     lowercase(line);
 
-    istringstream line2_(line);
+    line_.clear();
+    line_.str(line);
 
     short descending = 2;
 
-    while (line2_ >> temp){ 
+    while (line_ >> temp){ 
         if (temp == "descending"){
             descending = 1; 
             break;
@@ -800,8 +776,7 @@ a15:cout << endl << "How would you like to sort them? (Ascending/Descending)" <<
     }
 
     // buscar condição
-    int number = 0;
-    char number_text[1];
+    int n = 0;
 
 a16:cout << endl << "Would you like to filter the students by the number of UCs they are in? (Yes/No)" << endl;
 
@@ -845,7 +820,7 @@ a17:    cout << endl << "Would you like to see if students have less, more or ex
                 cond = 0;
                 break;
             }
-            else if (temp == "equal"){
+            else if (temp == "equal" || temp == "exactly"){
                 cond = 2;
                 break;
             }
@@ -855,50 +830,66 @@ a17:    cout << endl << "Would you like to see if students have less, more or ex
             cout << endl << "Invalid command! Please, try again." << endl;
             goto a17;
         }
-        
-        line_.clear();
 
-a18:    cout << endl << "Please type the number you want to use for filtering:" << endl;
+        cout << endl << "OK. Please type the number you want to use for filtering:"
+             << endl;
+
+        cin >> n;
+    }
+
+    // ordenar o all_students por código, se preciso
+    if (by_code){
+        sort(all_students.begin(), all_students.end(), order_bycode);
+    }
         
-        try{
-            cin >> number_text;
-            number = stoi(number_text);
+    // imprimir todos os estudantes
+    (filter) ? (cout << endl << "These are all the students that meet your criteria:") :
+               (cout << endl << "These are all the students currently enrolled in LEIC:");
+    cout << endl;
+
+    if (descending){
+        for (int i = (int) all_students.size() - 1; i >= 0; i--){
+            Student s = all_students[i];
+
+            int uc_num = (int) s.get_ucs().size();
+
+            if (filter && cond == 0 && uc_num > n){
+                cout << s.get_studentCode() << "  " << s.get_studentName() << endl;
+                continue;
+            }
+            else if (filter && cond == 1 && uc_num < n){
+                cout << s.get_studentCode() << "  " << s.get_studentName() << endl;
+                continue;
+            }
+            else if (filter && cond == 2 && uc_num == n){
+                cout << s.get_studentCode() << "  " << s.get_studentName() << endl;
+                continue;
+            }
+            else if (!filter){
+                cout << s.get_studentCode() << "  " << s.get_studentName() << endl; 
+            }  
         }
-        catch(const invalid_argument ia){
-            cout << endl << "That was invalid." << endl << endl;
-            goto a18;
-        }
-        
-        // imprimir todos os estudantes
-        /*
-        if (descending){
-            reverse(all_students.begin(), all_students.end());
-        }*/
-
-        cout << endl << "These are all the students currently enrolled in LEIC:" << endl;
-
+    }
+    else{
         for (Student s : all_students){
             int uc_num = (int) s.get_ucs().size();
 
-            if (filter && cond == 0 && uc_num > number){
+            if (filter && cond == 0 && uc_num > n){
                 cout << s.get_studentCode() << "  " << s.get_studentName() << endl;
                 continue;
             }
-            else if (filter && cond == 1 && uc_num < number){
+            else if (filter && cond == 1 && uc_num < n){
                 cout << s.get_studentCode() << "  " << s.get_studentName() << endl;
                 continue;
             }
-            else if (filter && cond == 2 && uc_num == number){
+            else if (filter && cond == 2 && uc_num == n){
                 cout << s.get_studentCode() << "  " << s.get_studentName() << endl;
                 continue;
             }
-
-            cout << s.get_studentCode() << "  " << s.get_studentName() << endl;   
+            else if (!filter){
+                cout << s.get_studentCode() << "  " << s.get_studentName() << endl;   
+            }
         }
-        /*
-        if (descending){
-            reverse(all_students.begin(), all_students.end());
-        }*/
     }
 }
 
@@ -1084,4 +1075,33 @@ void Helpy::add(Request sub){
 }
 
 void Helpy::change(Request sub){}
+
+string Helpy::is_valid(Student s, Class cl, string uc){
+    if(cl.size() >= 30){
+        return "Failed due to exceeding class limit";
+    }
+    Schedule st = s.get_schedule();
+    Schedule c = cl.get_schedule();
+    for(Block b: c.get_blocks()){
+        if((b.get_type() == "TP" || b.get_type() == "PL") && b.get_code() == uc){
+            for(Block su: st.get_blocks()){
+                if((su.get_type() == "TP" || su.get_type() == "PL") && ((su.get_startHour() >= b.get_startHour() && su.get_startHour() < b.get_endHour()) || (su.get_endHour() > b.get_startHour() && su.get_endHour() <= b.get_endHour()))){
+                    return "Failed due to Schedule overlap";
+                }
+            }
+        }
+    }
+    return "yes";
+}
+
+void Helpy::log(Request r, string s){
+    fstream f;
+    f.open("../Logs.txt", ios::app);
+    if(r.get_type() == "remove"){
+        f<<"Failed to " << r.get_type() <<' ' << r.get_uc() <<  " from student " << r.get_student() << ":" << s << endl;
+    } else {
+        f<<"Failed to " << r.get_type() << ' ' << r.get_uc() << "to class " << r.get_class() << " on student " << r.get_student() <<':' << s << endl;
+    }
+    f.close();
+}
 

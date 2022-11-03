@@ -1,6 +1,6 @@
+*.json
 .vscode/
 .DS_Store
 src/proj
 .idea
-cmake-build-debug
-*build/
+build/
