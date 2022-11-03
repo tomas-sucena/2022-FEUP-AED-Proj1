@@ -14,8 +14,8 @@ void lowercase(string& s, bool uppercase = false){
     }
 }
 
-Helpy::Helpy(set<Student>& students, vector<UC>& UCs, vector<Class>& classes, 
-             map<string, list<Block>>& c_blocks, map<string, list<Block>>& u_blocks) : 
+Helpy::Helpy(vector<Student> students, vector<UC> UCs, vector<Class> classes, 
+             map<string, list<Block>> c_blocks, map<string, list<Block>> u_blocks) : 
              all_students(students), all_UCs(UCs), all_classes(classes), 
              class_blocks(c_blocks), uc_blocks(u_blocks) {}
 
@@ -62,7 +62,7 @@ b1: string s1, s2, s3;
 
     cin >> s1; lowercase(s1);
 
-    if (s1 == "quit" || s1 == "no"){
+    if (s1 == "quit" || s1 == "no"  || s1 == "die"){
         goto e1;
     }
 
@@ -130,7 +130,7 @@ b1: string s1, s2, s3;
             string st; cin >>st;
             cout << "Please type the code of the class you want to remove" << endl;
             string cl; cin >> cl; lowercase(cl, true);
-            queuer.push(Request(s1,s2,s3,st,cl));
+            queuer.push(Request(s1,s3,st,cl));
 
             break;
         }
@@ -139,7 +139,7 @@ b1: string s1, s2, s3;
             string st; cin >>st;
             cout << "Please type the code of the uc you want to remove" << endl;
             string cl; cin >> cl; lowercase(cl, true);
-            queuer.push(Request(s1,s2,s3,st,cl));
+            queuer.push(Request(s1,s3,st,cl));
 
             break;
         }
@@ -843,51 +843,63 @@ void Helpy::processQueue(){
 
 void Helpy::rem(Request sub){
     bool valid = false;
-    if(sub.get_what() == "uc"){
-        for(Student s : all_students){
-            if(s.get_studentCode() == sub.get_stupid()){
+    if(sub.get_target() == "uc"){
+        for(Student& s : all_students){
+            if(s.get_studentCode() == sub.get_student()){
                 valid = true;
                 map<string, string> a = s.get_ucs();
-                if(a.find(sub.get_name()) != a.end()){
-                    auto it = a.find(sub.get_name());
+
+                auto it = a.find(sub.get_uc());
+
+                if(it != a.end()){
                     a.erase(it);
                     s.set_ucs(a);
-                    s.print_ucs();
-                    string uc_ = sub.get_name();
+                    list<Block> blocks;
+                    for (auto it = s.get_ucs().begin(); it != s.get_ucs().end(); it++){
+                        for(Block b : class_blocks[it->second]){
+                            if (b.get_code() == it->first)
+                            {
+                                blocks.push_back(b);
+                            }
+                        }
+                    }
+                    s.set_Schedule(Schedule(blocks));
+
+                    string uc_ = sub.get_uc();
                     lowercase(uc_,true);
-                    //falta remover o estudante da uc
-                    cout << "UC-" << uc_ << " has sucessfully been removed from " << sub.get_stupid() << endl;
+                    
+                    cout << "UC-" << uc_ << " has sucessfully been removed from " << sub.get_student() << endl;
                 } else {
-                    string uc_ = sub.get_name();
+                    string uc_ = sub.get_uc();
                     lowercase(uc_,true);
-                    cout << "The selected student (" << sub.get_stupid() << ") does not have the selected UC (" << uc_ <<")" << endl;
+                    cout << "The selected student (" << sub.get_student() << ") does not have the selected UC (" << uc_ <<")" << endl;
                     cout << "Aborting Request" << endl;  
                 }
             }
         }
-    } else if(sub.get_what() == "class"){
-        for(Student s: all_students){
-            if (s.get_studentCode() == sub.get_stupid())
+    } else if(sub.get_target() == "class"){
+        for(Student& s: all_students){
+            if (s.get_studentCode() == sub.get_student())
             {
                 valid = true;
                 set<string> cl = s.get_classes();
-                if(cl.find(sub.get_name()) != cl.end()){
-                  cl.erase(sub.get_name());
+                if(cl.find(sub.get_uc()) != cl.end()){
+                  cl.erase(sub.get_uc());
                   map<string, string> a = s.get_ucs();
                   for(auto i: a){
-                    if(i.second == sub.get_name()){
+                    if(i.second == sub.get_uc()){
                         a.erase(i.first); // isto remove a class do estudante
                     }
                 }
-                int year = sub.get_name()[0] - '0';
-                int num = (sub.get_name()[5] - '0') * 10 + (sub.get_name()[6] - '0');
+                int year = sub.get_uc()[0] - '0';
+                int num = (sub.get_uc()[5] - '0') * 10 + (sub.get_uc()[6] - '0');
                 Class& c = all_classes[(year - 1) * 16 + (num - 1)];
                 c.remove_student(s.get_studentName()); // remover o estudante da class
                 cout << "The student has been removed from the selected class" << endl;
                 } else {
-                    string y = sub.get_name();
+                    string y = sub.get_uc();
                     lowercase(y,true);
-                    cout << "The selected student (" << sub.get_stupid() << ") is not in the selected class (" << y <<")" << endl;
+                    cout << "The selected student (" << sub.get_student() << ") is not in the selected class (" << y <<")" << endl;
                     cout << "Aborting Request" << endl;  
                 }
             }
@@ -895,24 +907,13 @@ void Helpy::rem(Request sub){
         }
     }
     if(!valid){
-            cout << "The selected student (" << sub.get_stupid() << ") does not exist in this database" << endl;
+            cout << "The selected student (" << sub.get_student() << ") does not exist in this database" << endl;
     }
 }
 
-void Helpy::add(Request sub){}
+void Helpy::add(Request sub){
+
+}
 
 void Helpy::change(Request sub){}
 
-void Helpy::update_schedule(Student& s){
-    list<Block> hi;
-    for(auto it = s.get_ucs().begin(); it != s.get_ucs().end(); it++){
-        for(Block& b : class_blocks[it->second]){
-            if (b.get_code() == it->first)
-            {
-                hi.push_back(b);
-            }
-        }
-    }
-    s.set_Schedule(Schedule(hi));
-
-}

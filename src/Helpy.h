@@ -10,7 +10,7 @@
 
 class Helpy {
     private:
-        set<Student> all_students;
+        vector<Student> all_students;
         vector<UC> all_UCs;
         vector<Class> all_classes;
 
@@ -26,8 +26,8 @@ class Helpy {
                
     public:
         // constructor
-        Helpy(set<Student>& students, vector<UC>& UCs, vector<Class>& classes,
-              map<string, list<Block>>& c_blocks, map<string, list<Block>>& u_blocks);
+        Helpy(vector<Student> students, vector<UC> UCs, vector<Class> classes,
+              map<string, list<Block>> c_blocks, map<string, list<Block>> u_blocks);
 
         // methods
         void terminal();
@@ -56,7 +56,6 @@ class Helpy {
         void rem(Request sub);
         void change(Request sub);
 
-        void update_schedule(Student& s);
 };
 
 #endif
