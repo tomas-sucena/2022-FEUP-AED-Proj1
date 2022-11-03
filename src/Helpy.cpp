@@ -757,6 +757,32 @@ a15:cout << endl << "How would you like to order the students? (Code/Name)" << e
         goto a15;
     }
 
+    // ordenação ascendente ou descendente
+t:  cout << endl << "How would you like to sort them? (Ascending/Descending)" << endl;
+
+    getline(cin, line);
+    lowercase(line);
+
+    istringstream line2_(line);
+
+    short descending = 2;
+
+    while (line2_ >> temp){ 
+        if (temp == "descending"){
+            descending = 1; 
+            break;
+        }
+        else if (temp == "ascending"){
+            descending = 0;
+            break;
+        }
+    }
+
+    if (descending == 2){
+        cout << "Invalid command. Please, try again." << endl;
+        goto t;
+    }
+
     // buscar condição
     int n = 0;
 
@@ -779,7 +805,7 @@ a15:cout << endl << "How would you like to order the students? (Code/Name)" << e
 
     short cond = 3;
     if (filter){
-t:      cout << endl << "OK. Would you like to see if students have less, more or exactly a number of UCs?"
+t2:     cout << endl << "OK. Would you like to see if students have less, more or exactly a number of UCs?"
              << " (Less/More/Equal)" << endl;
 
         getline(cin, line);
@@ -805,7 +831,7 @@ t:      cout << endl << "OK. Would you like to see if students have less, more o
 
         if (cond == 3){
             cout << endl << "Invalid command! Please, try again." << endl;
-            goto t;
+            goto t2;
         }
         
         line_.clear();
@@ -817,20 +843,33 @@ t:      cout << endl << "OK. Would you like to see if students have less, more o
     }
         
     // imprimir todos os estudantes
+    if (descending){
+        reverse(all_students.begin(), all_students.end());
+    }
+
     cout << endl << "These are all the students currently enrolled in LEIC:" << endl;
 
     for (Student s : all_students){
         int uc_num = (int) s.get_ucs().size();
 
-        if (cond == 0 && uc_num > n){
+        if (filter && cond == 0 && uc_num > n){
             cout << s.get_studentCode() << "  " << s.get_studentName() << endl;
+            continue;
         }
-        else if (cond == 1 && uc_num < n){
+        else if (filter && cond == 1 && uc_num < n){
             cout << s.get_studentCode() << "  " << s.get_studentName() << endl;
+            continue;
         }
-        else if (cond == 2 && uc_num == n){
+        else if (filter && cond == 2 && uc_num == n){
             cout << s.get_studentCode() << "  " << s.get_studentName() << endl;
+            continue;
         }
+
+        cout << s.get_studentCode() << "  " << s.get_studentName() << endl;   
+    }
+
+    if (descending){
+        reverse(all_students.begin(), all_students.end());
     }
 }
 
