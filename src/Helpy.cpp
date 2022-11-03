@@ -745,13 +745,6 @@ void Helpy::rem(Request sub){
                 if(a.find(sub.get_name()) != a.end()){
                     auto it = a.find(sub.get_name());
                     a.erase(it);
-                    for(auto a = s.get_schedule().get_blocks().begin(); a != s.get_schedule().get_blocks().end();){
-                        if(a->get_code() == sub.get_name()){
-                            a = s.get_schedule().get_blocks().erase(a);
-                        } else {
-                            a++;
-                        }
-                    }
                     string uc_ = sub.get_name();
                     lowercase(uc_,true);
                     //falta remover o estudante da uc
