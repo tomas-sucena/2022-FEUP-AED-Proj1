@@ -384,7 +384,10 @@ a1: cout << endl << "Please type the code (L.EICXXX) of the desired UC." << endl
         } 
     }
 
-    if (!valid){
+    if (uc == "quit"){
+        goto e2;
+    }
+    else if (!valid){
         cout << endl << "I'm sorry, but that UC does not exist." << endl;
         goto a1;
     }
@@ -407,8 +410,10 @@ a2: cout << endl << "Please type the code (L.EICXXX) of the desired UC." << endl
             break;
         } 
     }
-
-    if (!valid){
+    if (uc == quit){
+        goto e2;
+    }
+    else if (!valid){
         cout << endl << "I'm sorry, but that UC does not exist." << endl;
         goto a2;
     }
@@ -441,7 +446,9 @@ a3: cout << endl << "How would you like to order the students? (Code/Name)" << e
             break;
         }
     }
-
+    if (line == "quit"){
+        goto e2;
+    }
     if (by_code == 2){
         cout << endl << "Invalid command. Please, try again." << endl;
         goto a3;
