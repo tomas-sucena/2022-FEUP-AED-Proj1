@@ -3,4 +3,4 @@
 src/proj
 .idea
 cmake-build-debug
-build/
+*build/
