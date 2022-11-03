@@ -19,6 +19,26 @@ Helpy::Helpy(vector<Student> students, vector<UC> UCs, vector<Class> classes,
              all_students(students), all_UCs(UCs), all_classes(classes), 
              class_blocks(c_blocks), uc_blocks(u_blocks) {}
 
+
+string Helpy::is_valid(Student s, Class cl, string uc){
+    if(cl.size() >= 30){
+        return "Failed due to exceeding class limit";
+    }
+    Schedule st = s.get_schedule();
+    Schedule c = cl.get_schedule();
+    for(Block b: c.get_blocks()){
+        if((b.get_type() == "TP" || b.get_type() == "PL") && b.get_code() == uc){
+            for(Block su: st.get_blocks()){
+                if((su.get_type() == "TP" || su.get_type() == "PL") && ((su.get_startHour() >= b.get_startHour() && su.get_startHour() < b.get_endHour()) || (su.get_endHour() > b.get_startHour() && su.get_endHour() <= b.get_endHour()))){
+                    return "Failed due to Schedule overlap";
+                }
+            }
+        }
+    }
+    return "yes";
+}
+
+
 void Helpy::terminal(){
     cout << "Which mode would you prefer?" << endl << endl;
 a0: cout << "* Guided" << endl;
@@ -817,7 +837,23 @@ void Helpy::rem(Request sub){
 }
 
 void Helpy::add(Request sub){
-
+    for(Student& s: all_students){
+        if(s.get_studentCode() == sub.get_student()){
+            
+            map<string, string> a = s.get_ucs();
+            a[sub.get_uc()] = sub.get_class();
+            list<Block> blocks;
+            for (auto it = s.get_ucs().begin(); it != s.get_ucs().end(); it++){
+                for(Block b : class_blocks[it->second]){
+                    if (b.get_code() == it->first)
+                    {
+                        blocks.push_back(b);
+                    }
+                }
+            }
+            s.set_Schedule(Schedule(blocks));
+        }
+    }
 }
 
 void Helpy::change(Request sub){}
