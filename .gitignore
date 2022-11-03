@@ -1,5 +1,6 @@
 .vscode/
-DS_Store
+.DS_Store
 src/proj
 .idea
 cmake-build-debug
+*build

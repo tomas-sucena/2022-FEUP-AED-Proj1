@@ -43,7 +43,11 @@ string Helpy::is_valid(Student s, Class cl, string uc){
 void Helpy::log(Request r, string s){
     fstream f;
     f.open("../Logs.txt", ios::app);
-    f<<"Failed to " << r.get_type() << "from student" << r.get_student() << ":" << s;
+    if(r.get_type() == "remove"){
+        f<<"Failed to " << r.get_type() <<' ' << r.get_uc() <<  " from student " << r.get_student() << ":" << s << endl;
+    } else {
+        f<<"Failed to " << r.get_type() << ' ' << r.get_uc() << "to class " << r.get_class() << " on student " << r.get_student() <<':' << s << endl;
+    }
     f.close();
 }
 
@@ -133,15 +137,6 @@ b1: string s1, s2, s3;
 
             break;
         }
-        case(39) : { // remove student classes
-            cout << "Please type the code (upXXXXXXXXX) of the desired student."<<endl;
-            string st; cin >>st;
-            cout << "Please type the code of the class you want to remove." << endl;
-            string cl; cin >> cl;
-            queuer.push(Request(s1,s2,s3,st,cl));
-
-            break;
-        }
         case(40) : {
             display_uc_students(valid);
 
@@ -179,7 +174,6 @@ b1: string s1, s2, s3;
             string cl; cin >> cl; lowercase(cl, true);
             queuer.push(Request(s1,s3,st,cl));
             log(Request(s1,s3,st,cl), "Fuck this");
-            rewrite_file();
 
             break;
         }
@@ -192,7 +186,7 @@ b1: string s1, s2, s3;
 
             break;
         }
-        case(240) : {
+        case(240) : { //add uc to student
             cout << "Please type the code (upXXXXXXXXX) of the desired student"<<endl;
             string st; cin >>st;
             cout << "Please type the code of the uc you want to add" << endl;
@@ -200,6 +194,7 @@ b1: string s1, s2, s3;
             cout << "Please type the code of the class you want to add the uc to" << endl;
             string f; cin >> f; lowercase(f, true);
             queuer.push(Request(s1,s3,st,cl,f));
+            break;
         }
         default : {
             cout << endl << "Invalid command! Please, type another command." << endl;
@@ -1012,6 +1007,9 @@ void Helpy::rem(Request sub){
                   map<string, string> a = s.get_ucs();
                   for(auto i: a){
                     if(i.second == sub.get_uc()){
+                        int num = (i.first[0] == 'L') ? (i.first[6] - '0') * 10 + (i.first[7] - '0') - 1 : all_UCs.size()-1;
+                        UC& u = all_UCs[num];
+                        u.add_student(stoi(s.get_studentCode()), s.get_studentName());
                         a.erase(i.first); // isto remove a class do estudante
                     }
                 }
@@ -1019,6 +1017,16 @@ void Helpy::rem(Request sub){
                 int num = (sub.get_uc()[5] - '0') * 10 + (sub.get_uc()[6] - '0');
                 Class& c = all_classes[(year - 1) * 16 + (num - 1)];
                 c.remove_student(s.get_studentName()); // remover o estudante da class
+                list<Block> blocks;
+                    for (auto it = s.get_ucs().begin(); it != s.get_ucs().end(); it++){
+                        for(Block b : class_blocks[it->second]){
+                            if (b.get_code() == it->first)
+                            {
+                                blocks.push_back(b);
+                            }
+                        }
+                    }
+                    s.set_Schedule(Schedule(blocks));
                 cout << "The student has been removed from the selected class" << endl;
                 } else {
                     string y = sub.get_uc();
@@ -1040,7 +1048,7 @@ void Helpy::add(Request sub){
         if(s.get_studentCode() == sub.get_student()){
             map<string, string> a = s.get_ucs();
             if(a.find(sub.get_uc()) != a.end()){
-                //função por implementar
+                log(sub, "Failed because student already has selected uc");
                 return;
             }
             int year = sub.get_class()[0] - '0';
@@ -1068,7 +1076,7 @@ void Helpy::add(Request sub){
                 s.set_Schedule(Schedule(blocks));
                 break;
             } else {
-                //função para escrever logs noutro ficheiro
+                log(sub, conf);
                 return;
             }
         }

@@ -1,3 +1,0 @@
-/Users/BrunoDrumond/Desktop/AED_proj_drumond/build/CMakeFiles/AED_Schedule.dir
-/Users/BrunoDrumond/Desktop/AED_proj_drumond/build/CMakeFiles/edit_cache.dir
-/Users/BrunoDrumond/Desktop/AED_proj_drumond/build/CMakeFiles/rebuild_cache.dir
