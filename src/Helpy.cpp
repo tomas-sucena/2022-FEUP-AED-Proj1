@@ -1,6 +1,7 @@
 #include "Helpy.h"
 #include <fstream>
 #include <sstream>
+#include <iostream>
 
 map<string, int> Helpy::command = {{"display", 1}, {"print", 1}, {"show", 1}, 
                                    {"remove", 100}, {"add",200}};
@@ -38,6 +39,13 @@ string Helpy::is_valid(Student s, Class cl, string uc){
     return "yes";
 }
 
+
+void Helpy::log(Request r, string s){
+    fstream f;
+    f.open("../Logs.txt", ios::app);
+    f<<"Failed to " << r.get_type() << "from student" << r.get_student() << ":" << s;
+    f.close();
+}
 
 void Helpy::terminal(){
     cout << "Which mode would you prefer?" << endl << endl;
@@ -97,7 +105,7 @@ b1: string s1, s2, s3;
 
     cin >> s3;
     lowercase(s3);
-
+  
     // processar o comando    
     switch (command[s1] + target[s2] + what[s3]){
         case(31) : {
@@ -125,6 +133,15 @@ b1: string s1, s2, s3;
 
             break;
         }
+        case(39) : { // remove student classes
+            cout << "Please type the code (upXXXXXXXXX) of the desired student."<<endl;
+            string st; cin >>st;
+            cout << "Please type the code of the class you want to remove." << endl;
+            string cl; cin >> cl;
+            queuer.push(Request(s1,s2,s3,st,cl));
+
+            break;
+        }
         case(40) : {
             display_uc_students(valid);
 
@@ -140,7 +157,17 @@ b1: string s1, s2, s3;
 
             break;
         }
-        case(46) : {
+        case(50) : {
+            display_all_classes();
+
+            break;
+        }
+        case(53) : {
+            display_all_ucs();
+
+            break;
+        }
+        case(56) : {
             display_all_students();
 
             break;
@@ -151,6 +178,8 @@ b1: string s1, s2, s3;
             cout << "Please type the code of the class you want to remove" << endl;
             string cl; cin >> cl; lowercase(cl, true);
             queuer.push(Request(s1,s3,st,cl));
+            log(Request(s1,s3,st,cl), "Fuck this");
+            rewrite_file();
 
             break;
         }
@@ -162,6 +191,15 @@ b1: string s1, s2, s3;
             queuer.push(Request(s1,s3,st,cl));
 
             break;
+        }
+        case(240) : {
+            cout << "Please type the code (upXXXXXXXXX) of the desired student"<<endl;
+            string st; cin >>st;
+            cout << "Please type the code of the uc you want to add" << endl;
+            string cl; cin >> cl; lowercase(cl, true);
+            cout << "Please type the code of the class you want to add the uc to" << endl;
+            string f; cin >> f; lowercase(f, true);
+            queuer.push(Request(s1,s3,st,cl,f));
         }
         default : {
             cout << endl << "Invalid command! Please, type another command." << endl;
@@ -740,6 +778,58 @@ a14:cout << endl << "How would you like to order the students? (Code/Name)" << e
         goto a14;
     }
 
+    // ordenação ascendente ou descendente
+t:  cout << endl << "How would you like to sort them? (Ascending/Descending)" << endl;
+
+    getline(cin, line);
+    lowercase(line);
+
+    istringstream line2_(line);
+
+    short descending = 2;
+
+    while (line2_ >> temp){ 
+        if (temp == "descending"){
+            descending = 1; 
+            break;
+        }
+        else if (temp == "ascending"){
+            descending = 0;
+            break;
+        }
+    }
+
+    if (descending == 2){
+        cout << "Invalid command. Please, try again." << endl;
+        goto t;
+    }
+
+    // ordenação ascendente ou descendente
+t:  cout << endl << "How would you like to sort them? (Ascending/Descending)" << endl;
+
+    getline(cin, line);
+    lowercase(line);
+
+    istringstream line2_(line);
+
+    short descending = 2;
+
+    while (line2_ >> temp){ 
+        if (temp == "descending"){
+            descending = 1; 
+            break;
+        }
+        else if (temp == "ascending"){
+            descending = 0;
+            break;
+        }
+    }
+
+    if (descending == 2){
+        cout << "Invalid command. Please, try again." << endl;
+        goto t;
+    }
+
     // buscar condição
     int number = 0;
     char number_text[1];
@@ -768,9 +858,10 @@ a15:cout << endl << "Would you like to filter the students by the number of UCs 
         }
     }
 
-    bool less = false;
+    short cond = 3;
     if (filter){
-a16:    cout << endl << "Would you like to see if students have less or more than a number of UCs? (Less/More)" << endl;
+t2:     cout << endl << "OK. Would you like to see if students have less, more or exactly a number of UCs?"
+             << " (Less/More/Equal)" << endl;
 
         getline(cin, line);
         lowercase(line);
@@ -780,16 +871,31 @@ a16:    cout << endl << "Would you like to see if students have less or more tha
 
         while (line_ >> temp){
             if (temp == "less"){
-                less = true;
+                cond = 1;
                 break;
             }
             else if (temp == "more"){
+                cond = 0;
+                break;
+            }
+            else if (temp == "equal"){
+                cond = 2;
                 break;
             }
             else{
                 cout << "Invalid command. Please, try again." << endl;
                 goto a16;
             }
+        }
+
+        if (cond == 3){
+            cout << endl << "Invalid command! Please, try again." << endl;
+            goto t2;
+        }
+
+        if (cond == 3){
+            cout << endl << "Invalid command! Please, try again." << endl;
+            goto t2;
         }
         
         line_.clear();
@@ -805,22 +911,36 @@ a17:    cout << endl << "Please type the number you want to use for filtering:" 
             goto a17;
         }
         
-        // imprimir todos os estudantes
-        cout << endl << "These are all the students currently enrolled in LEIC:" << endl;
+    // imprimir todos os estudantes
+    /*
+    if (descending){
+        reverse(all_students.begin(), all_students.end());
+    }*/
 
-        for (Student s : all_students){
-            if (less && (int) s.get_ucs().size() < number){
-                (by_code) ? (cout << s.get_studentCode() << "   " << s.get_studentName()) :
-                            (cout << s.get_studentCode() << "   " << s.get_studentName());
-                cout << endl;
-            }
-            else if (!less && (int) s.get_ucs().size() > number){
-                (by_code) ? (cout << s.get_studentCode() << "   " << s.get_studentName()) :
-                            (cout << s.get_studentCode() << "   " << s.get_studentName());
-                cout << endl;
-            }
+    cout << endl << "These are all the students currently enrolled in LEIC:" << endl;
+
+    for (Student s : all_students){
+        int uc_num = (int) s.get_ucs().size();
+
+        if (filter && cond == 0 && uc_num > n){
+            cout << s.get_studentCode() << "  " << s.get_studentName() << endl;
+            continue;
         }
+        else if (filter && cond == 1 && uc_num < n){
+            cout << s.get_studentCode() << "  " << s.get_studentName() << endl;
+            continue;
+        }
+        else if (filter && cond == 2 && uc_num == n){
+            cout << s.get_studentCode() << "  " << s.get_studentName() << endl;
+            continue;
+        }
+
+        cout << s.get_studentCode() << "  " << s.get_studentName() << endl;   
     }
+    /*
+    if (descending){
+        reverse(all_students.begin(), all_students.end());
+    }*/
 }
 
 void Helpy::display_student_ucs(bool& valid) const{
@@ -847,8 +967,8 @@ a18:cout << endl << "Understood. Please write the code (upXXXXXXXXX) of the desi
 
 /*-----FUNÇÕES DA FILA-----*/
 void Helpy::rewrite_file(){
-    ofstream out("temp.csv");
-
+    fstream out;
+    out.open("../students_classes.csv", ios::out);
     out << "StudentCode,StudentName,UcCode,ClassCode" << endl;
 
     for (Student s : all_students){
@@ -856,14 +976,13 @@ void Helpy::rewrite_file(){
         string studentName = s.get_studentName();
 
         for (pair<string, string> p : s.get_ucs()){
-            out << studentCode << ',' << studentName 
+            out << studentCode << ',' << studentName << ','
                 << p.first << ',' << p.second << '\r'
                 << '\n';
         }
     }
 
-    remove("../students_classes.csv");
-    rename("temp.csv", "../students_classes.csv");
+    out.close();
 }
 
 void Helpy::processQueue(){
@@ -878,6 +997,8 @@ void Helpy::processQueue(){
             change(sub);
         }
     }
+
+    rewrite_file();
 }
 
 void Helpy::rem(Request sub){
@@ -953,19 +1074,39 @@ void Helpy::rem(Request sub){
 void Helpy::add(Request sub){
     for(Student& s: all_students){
         if(s.get_studentCode() == sub.get_student()){
-            
             map<string, string> a = s.get_ucs();
-            a[sub.get_uc()] = sub.get_class();
-            list<Block> blocks;
-            for (auto it = s.get_ucs().begin(); it != s.get_ucs().end(); it++){
-                for(Block b : class_blocks[it->second]){
-                    if (b.get_code() == it->first)
-                    {
-                        blocks.push_back(b);
+            if(a.find(sub.get_uc()) != a.end()){
+                //função por implementar
+                return;
+            }
+            int year = sub.get_class()[0] - '0';
+            int num = (sub.get_class()[5] - '0') * 10 + (sub.get_class()[6] - '0');
+            Class& c = all_classes[(year - 1) * 16 + (num - 1)];
+            string conf = is_valid(s,c,sub.get_uc());
+            if(conf == "yes"){
+                if(s.get_classes().find(sub.get_class()) != s.get_classes().end()){
+                    s.add_class(sub.get_class());
+                    c.add_student(stoi(s.get_studentCode()), s.get_studentName());
+                }
+                a[sub.get_uc()] = sub.get_class();
+                int num = (sub.get_uc()[6] - '0') * 10 + (sub.get_class()[7] - '0') - 1;
+                UC& u = all_UCs[num];
+                u.add_student(stoi(s.get_studentCode()), s.get_studentName());
+                list<Block> blocks;
+                for (auto it = s.get_ucs().begin(); it != s.get_ucs().end(); it++){
+                    for(Block b : class_blocks[it->second]){
+                        if (b.get_code() == it->first)
+                        {
+                            blocks.push_back(b);
+                        }
                     }
                 }
+                s.set_Schedule(Schedule(blocks));
+                break;
+            } else {
+                //função para escrever logs noutro ficheiro
+                return;
             }
-            s.set_Schedule(Schedule(blocks));
         }
     }
 }
