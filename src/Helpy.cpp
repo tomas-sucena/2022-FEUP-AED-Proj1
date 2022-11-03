@@ -843,9 +843,10 @@ t2:     cout << endl << "OK. Would you like to see if students have less, more o
     }
         
     // imprimir todos os estudantes
+    /*
     if (descending){
         reverse(all_students.begin(), all_students.end());
-    }
+    }*/
 
     cout << endl << "These are all the students currently enrolled in LEIC:" << endl;
 
@@ -867,10 +868,10 @@ t2:     cout << endl << "OK. Would you like to see if students have less, more o
 
         cout << s.get_studentCode() << "  " << s.get_studentName() << endl;   
     }
-
+    /*
     if (descending){
         reverse(all_students.begin(), all_students.end());
-    }
+    }*/
 }
 
 void Helpy::display_student_ucs(bool& valid) const{
