@@ -747,6 +747,7 @@ void Helpy::rem(Request sub){
                     auto it = a.find(sub.get_name());
                     a.erase(it);
                     s.set_ucs(a);
+                    s.print_ucs();
                     string uc_ = sub.get_name();
                     lowercase(uc_,true);
                     //falta remover o estudante da uc
