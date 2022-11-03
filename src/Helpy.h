@@ -53,6 +53,8 @@ class Helpy {
         void add(Request sub);
         void rem(Request sub);
         void change(Request sub);
+
+        void update_schedule(Student& s);
 };
 
 #endif

@@ -791,3 +791,17 @@ void Helpy::rem(Request sub){
 void Helpy::add(Request sub){}
 
 void Helpy::change(Request sub){}
+
+void Helpy::update_schedule(Student& s){
+    list<Block> hi;
+    for(auto it = s.get_ucs().begin(); it != s.get_ucs().end(); it++){
+        for(auto i = class_blocks[it->second].begin(); i!=class_blocks[it->second].end(); i++){
+            if (i->get_code() == it->first)
+            {
+                hi.push_back(i*);
+            }
+        }
+    }
+    s.set_Schedule(Schedule(hi));
+
+}
