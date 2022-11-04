@@ -413,6 +413,10 @@ a1: cout << endl << YELLOW << BREAK << RESET << endl << endl;
     }
 }
 
+/**
+ * @brief displays the classes of a determined UC
+ * complexity = n^3
+ */
 void Helpy::display_uc_classes() const{
 a2: cout << endl << YELLOW << BREAK << RESET << endl << endl;
     cout << "Please type the code (L.EICXXX) of the desired UC." << endl;
@@ -441,6 +445,10 @@ a2: cout << endl << YELLOW << BREAK << RESET << endl << endl;
     }
 }
 
+/**
+ * @brief displays the students of a determined UC
+ * complexity = n^3*log(n)
+ */
 void Helpy::display_uc_students() const{
     cin.ignore();
 
