@@ -1208,13 +1208,8 @@ void Helpy::add(Request sub){
 void Helpy::change(Request sub){
     for(Student& s: all_students){
         if(s.get_studentCode() == sub.get_student()){
-            set<string> student_uc;
+            set<string> student_uc = s.get_uc();
             map<string,string> a = s.get_ucs();
-            for(auto i : a){
-                if(i.second == sub.get_uc()){
-                    student_uc.insert(i.first);
-                }
-            }
             for(string ucs : student_uc){
                 int num = (ucs[0] == 'L') ? (ucs[6] - '0') * 10 + (ucs[7] - '0') - 1 : all_UCs.size()-1;
                 UC& u = all_UCs[num];
@@ -1296,12 +1291,12 @@ string Helpy::is_valid(Student s, Class& cl, string uc){
             year = (*pain)[0] - '0';
             nu = ((*pain)[5] - '0') * 10 + ((*pain)[6] - '0');
             Class& o = all_classes[(year - 1) * 16 + (nu - 1)];
-            dif = (&g == &cl) ? abs(g.size() - o.size()) + 1 : abs(g.size() - o.size());
+            dif = (&g == &cl) ? abs(g.get_ocupation()[uc] - o.get_ocupation()[uc]) + 1 : abs(g.get_ocupation()[uc] - o.get_ocupation()[uc]);
             if(&g == &cl){
                 cout << "Same" << endl;
             }
-            cout << g.size() << endl;
-            cout << o.size() << endl;
+            cout << g.get_ocupation()[uc] << endl;
+            cout << o.get_ocupation()[uc] << endl;
             if(dif > max){
                 max = dif;
             }
@@ -1328,36 +1323,36 @@ string Helpy::is_valid_change(Student s, Schedule schedule_, Class& c, set<strin
         }
     }
     for(string uc: ucs){
-    int num = (uc[0] == 'L') ? (uc[6] - '0') * 10 + (uc[7] - '0') - 1 : all_UCs.size() - 1;
-    UC& u = all_UCs[num];
-    set<string> sub = u.get_classes();
-    int dif = 0;
-    for(auto cla = sub.begin() ; cla != sub.end(); cla++){
-        int year = (*cla)[0] - '0';
-        int nu = ((*cla)[5] - '0') * 10 + ((*cla)[6] - '0');
-        int max = INT32_MIN;
-        Class& g = all_classes[(year - 1) * 16 + (nu - 1)];
-        for(auto pain = sub.begin(); pain != sub.end(); pain++){
-            if(pain == cla){
-                continue;
+        int num = (uc[0] == 'L') ? (uc[6] - '0') * 10 + (uc[7] - '0') - 1 : all_UCs.size() - 1;
+        UC& u = all_UCs[num];
+        set<string> sub = u.get_classes();
+        int dif = 0;
+        for(auto cla = sub.begin() ; cla != sub.end(); cla++){
+            int year = (*cla)[0] - '0';
+            int nu = ((*cla)[5] - '0') * 10 + ((*cla)[6] - '0');
+            int max = INT32_MIN;
+            Class& g = all_classes[(year - 1) * 16 + (nu - 1)];
+            for(auto pain = sub.begin(); pain != sub.end(); pain++){
+                if(pain == cla){
+                    continue;
+                }
+                year = (*pain)[0] - '0';
+                nu = ((*pain)[5] - '0') * 10 + ((*pain)[6] - '0');
+                Class& o = all_classes[(year - 1) * 16 + (nu - 1)];
+                dif = (&g == &c) ? abs(g.get_ocupation()[uc] - o.get_ocupation()[uc]) + 1 : abs(g.get_ocupation()[uc] - o.get_ocupation()[uc]);
+                if(&g == &c){
+                    cout << "Same" << endl;
+                }
+                cout << g.get_ocupation()[uc] << endl;
+                cout << o.get_ocupation()[uc] << endl;
+                if(dif > max){
+                    max = dif;
+                }
             }
-            year = (*pain)[0] - '0';
-            nu = ((*pain)[5] - '0') * 10 + ((*pain)[6] - '0');
-            Class& o = all_classes[(year - 1) * 16 + (nu - 1)];
-            dif = (&g == &c) ? abs(g.size() - o.size()) + 1 : abs(g.size() - o.size());
-            if(&g == &c){
-                cout << "Same" << endl;
-            }
-            cout << g.size() << endl;
-            cout << o.size() << endl;
-            if(dif > max){
-                max = dif;
+            if(max >= 4){
+                return "Failed due to class desiquilibrium";
             }
         }
-        if(max >= 4){
-            return "Failed due to class desiquilibrium";
-        }
-    }
     }
 
     return "yes";

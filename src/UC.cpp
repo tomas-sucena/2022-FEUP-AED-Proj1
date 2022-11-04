@@ -51,19 +51,25 @@ set<string> UC::get_classes() const{
 /**
  * @brief removes a determined class from the UC
  * complexity = n
- * @param classCode code (XLEICXX) of the class
+ * @param classCode code (XLEICXX) of the class that will be removed from the UC
  */
 void UC::remove_class(string classCode){
-    for(auto power = classes_.begin(); power != classes_.end();){
-        if (*power == classCode){
-            power = classes_.erase(power);
+    for(auto iter = classes_.begin(); iter != classes_.end();){
+        if (*iter == classCode){
+            iter = classes_.erase(iter);
         }
         else{
-            power++;
+            iter++;
         }
     }
 }
 
+/**
+ * @brief prints all the students enrolled in the UC
+ * complexity = n*log(n)
+ * @param by_code true if ordered by student code; false if ordered by student name
+ * @param descending true if in descending order; false if in ascending order
+ */
 void UC::print_students(bool by_code, bool descending) const{
     vector<pair<int, string>> temp = students_;
 
@@ -89,11 +95,22 @@ void UC::print_students(bool by_code, bool descending) const{
     }
 }
 
+/**
+ * @brief adds a student to the UC
+ * complexity = n*log(n)
+ * @param studentCode code of the student
+ * @param studentName name of the student
+ */
 void UC::add_student(int studentCode, string studentName){
     students_.push_back({studentCode, studentName});
     sort(students_.begin(), students_.end());
 }
 
+/**
+ * @brief removes a student from the UC
+ * complexity = n
+ * @param studentName name of the student
+ */
 void UC::remove_student(string studentName){
     for(auto it = students_.begin(); it != students_.end(); it++){
         if(it->second == studentName){
@@ -103,10 +120,17 @@ void UC::remove_student(string studentName){
     }
 }
 
-void UC::add_schedule(Schedule schedule){
+/**
+ * @brief sets the schedule of the UC
+ * @param schedule schedule of the UC
+ */
+void UC::set_schedule(Schedule schedule){
     schedule_ = schedule;
 }
 
+/**
+ * @return schedule of the UC
+ */
 Schedule UC::get_schedule(){
     return schedule_;
 }

@@ -33,7 +33,7 @@ class UC {
         void add_student(int studentCode, string studentName);
         void remove_student(string studentName); //por implementar
 
-        void add_schedule(Schedule schedule);
+        void set_schedule(Schedule schedule);
         Schedule get_schedule();
 };
 

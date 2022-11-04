@@ -17,6 +17,17 @@ Schedule Class::get_schedule() const{
     return schedule_;
 }
 
+map<string,int> Class::get_ocupation() const{
+    return ocupation;
+}
+
+void Class::set_ocupation(map<string,int> a){
+    ocupation = a;
+}
+
+vector<pair<int, string>> Class::get_students() const{
+    return students_;
+}
 void Class::print_students(bool by_code, bool descending) const{
     vector<pair<int, string>> temp = students_;
 
