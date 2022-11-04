@@ -642,7 +642,6 @@ a9: cout << endl << YELLOW << BREAK << RESET << endl << endl;
 }
 
 void Helpy::display_student_schedule() const{
-
     cin.ignore();
 
 a10:cout << endl << "Please write the code (upXXXXXXXXX) or the name of the desired student." << endl;
@@ -1027,8 +1026,8 @@ a19:cout << endl << YELLOW << BREAK << RESET << endl << endl;
 
 /*-----FUNÇÕES DA FILA-----*/
 void Helpy::rewrite_file(){
-    fstream out;
-    out.open("../students_classes.csv", ios::out);
+    ofstream out("temp.csv");
+    
     out << "StudentCode,StudentName,UcCode,ClassCode" << endl;
 
     for (Student s : all_students){
@@ -1043,6 +1042,9 @@ void Helpy::rewrite_file(){
     }
 
     out.close();
+
+    remove("../students_classes.csv");
+    rename("temp.csv", "../students_classes.csv");
 }
 
 void Helpy::processQueue(){
