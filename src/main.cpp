@@ -158,13 +158,32 @@ int main(){
                 }
             }
         }
-
+        s.set_uc();
         s.set_Schedule(Schedule(blocks));
 
         all_students.push_back(s);
     }
     
     sort(all_students.begin(), all_students.end());
+
+    map<string, int> oc;
+    for(Class& c: all_classes){
+        oc.clear();
+        vector<pair<int,string>> sub = c.get_students();
+        for(auto i: sub){
+            for(Student& s: all_students){
+                if(i.second == s.get_studentName()){
+                    for(auto i: s.get_ucs()){
+                        if(i.second == c.get_classCode()){
+                            oc[i.first]++;
+                        }
+                    }
+                    break;
+                }
+            }
+        }
+        c.set_ocupation(oc);
+    }
 
     // handling terminal things
     Helpy hi = Helpy(all_students, all_UCs, all_classes, 

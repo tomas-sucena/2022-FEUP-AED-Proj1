@@ -51,6 +51,16 @@ void Student::set_ucs(map<string,string> sub){
     ucs_ = sub;
 }
 
+void Student::set_uc(){
+    for(auto it : ucs_){
+        uc_.insert(it.first);
+    }
+}
+
+set<string> Student::get_uc() const{
+    return uc_;
+}
+
 bool Student::operator<(const Student& s) const{
     return (studentName_ < s.get_studentName());
 }
