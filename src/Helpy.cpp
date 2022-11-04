@@ -1349,7 +1349,7 @@ string Helpy::is_valid_change(Student s, Schedule schedule_, Class& c, set<strin
                 }
             }
             if(max >= 4){
-                return "Failed due to class desiquilibrium";
+                return "Failed due to class disequilibrium";
             }
         }
     }
