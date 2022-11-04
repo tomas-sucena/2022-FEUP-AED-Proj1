@@ -1004,10 +1004,7 @@ void Helpy::rem(Request sub){
                     
                     cout << "UC-" << uc_ << " has sucessfully been removed from " << sub.get_student() << endl;
                 } else {
-                    string uc_ = sub.get_uc();
-                    lowercase(uc_,true);
-                    cout << "The selected student (" << sub.get_student() << ") does not have the selected UC (" << uc_ <<")" << endl;
-                    cout << "Aborting Request" << endl;  
+                    log(sub, "Failed because the student does not have the selected UC");
                 }
             }
         }
@@ -1044,10 +1041,7 @@ void Helpy::rem(Request sub){
                     s.set_Schedule(Schedule(blocks));
                 cout << "The student has been removed from the selected class" << endl;
                 } else {
-                    string y = sub.get_uc();
-                    lowercase(y,true);
-                    cout << "The selected student (" << sub.get_student() << ") is not in the selected class (" << y <<")" << endl;
-                    cout << "Aborting Request" << endl;  
+                    log(sub, "Failed because the student is not in the selected Class");
                 }
             }
             
@@ -1125,7 +1119,26 @@ void Helpy::change(Request sub){
                     pain[i.first] = i.second;
                 }
             }
-            s.set_ucs(pain);
+            list<Block> blocks;
+            for (auto it = s.get_ucs().begin(); it != s.get_ucs().end(); it++){
+                for(Block b : class_blocks[it->second]){
+                    if (b.get_code() == it->first)
+                    {
+                        blocks.push_back(b);
+                    }
+                }
+            }
+            Schedule student_schedule = Schedule(blocks);
+            int year = sub.get_class()[0] - '0';
+            int num = (sub.get_class()[5] - '0') * 10 + (sub.get_class()[6] - '0');
+            Class& c = all_classes[(year - 1) * 16 + (num - 1)];
+            string grief = is_valid_change(s, student_schedule, c);
+            if(grief == "yes"){
+                s.set_ucs(pain);
+                s.set_Schedule(student_schedule);
+            } else {
+                log(r, grief);
+            }
         }
     }
 }
@@ -1148,13 +1161,31 @@ string Helpy::is_valid(Student s, Class cl, string uc){
     return "yes";
 }
 
+string Helpy::is_valid_change(Student s, Schedule schedule_, Class c){
+    if(c.size() >= 30){
+        return "Failed due to exceeding class limit";
+    }
+    for(Block b: schedule_.get_blocks()){
+        if((b.get_type() == "TP" || b.get_type() == "PL") && b.get_code() == uc){
+            for(Block su: schedule_.get_blocks()){
+                if((su.get_type() == "TP" || su.get_type() == "PL") && (b != su) && ((su.get_startHour() >= b.get_startHour() && su.get_startHour() < b.get_endHour()) || (su.get_endHour() > b.get_startHour() && su.get_endHour() <= b.get_endHour()))){
+                    return "Failed due to Schedule overlap";
+                }
+            }
+        }
+    }
+    return "yes";
+}
+
 void Helpy::log(Request r, string s){
     fstream f;
     f.open("../Logs.txt", ios::app);
     if(r.get_type() == "remove"){
         f<<"Failed to " << r.get_type() <<' ' << r.get_uc() <<  " from student " << r.get_student() << ":" << s << endl;
-    } else {
+    } else if(r.get_type()) {
         f<<"Failed to " << r.get_type() << ' ' << r.get_uc() << "to class " << r.get_class() << " on student " << r.get_student() <<':' << s << endl;
+    } else{
+        f << "Failed to " << r.get_type() << ' ' << r.get_student() << " from class " << r.get_uc() << " to class " << r.get_class() << ':' << s << endl;
     }
     f.close();
 }
