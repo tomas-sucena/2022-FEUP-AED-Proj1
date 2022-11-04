@@ -3,6 +3,12 @@
 #include <sstream>
 #include <iostream>
 
+#define RESET   "\033[0;m"
+#define RED     "\033[1;31m"
+#define YELLOW  "\033[33m"
+#define BOLD    "\033[1m"
+
+
 map<string, int> Helpy::command = {{"display", 1}, {"print", 1}, {"show", 1}, 
                                    {"remove", 100}, {"add",200}};
 map<string, int> Helpy::target = {{"uc", 6}, {"class", 8}, {"student", 10}, {"all", 22}};
@@ -54,7 +60,7 @@ a0: cout << "* Guided" << endl;
     }     
 
     if (!valid){
-        cout << endl << "\033[1;31mInvalid command! Please choose one of the following:\033[0;m" << endl << endl;
+        cout << endl << RED <<"Invalid command! Please choose one of the following:" << RESET << endl << endl;
         goto a0;
     }       
 }
@@ -92,7 +98,7 @@ b1: string s1, s2, s3;
             break;
         }
         case(33) : {
-            display_class_schedule(valid);
+            display_class_schedule();
 
             break;
         }
@@ -102,27 +108,27 @@ b1: string s1, s2, s3;
             break;
         }
         case (35) : {
-            display_student_schedule(valid);
+            display_student_schedule();
 
             break;
         }
         case(38) : {
-            display_student_classes(valid);
+            display_student_classes();
 
             break;
         }
         case(40) : {
-            display_uc_students(valid);
+            display_uc_students();
 
             break;
         }
         case(41) : {
-            display_student_ucs(valid);
+            display_student_ucs();
 
             break;
         }
         case(42) : {
-            display_class_students(valid);
+            display_class_students();
 
             break;
         }
@@ -263,7 +269,7 @@ b2: cout << endl;
             break;
         }
         case(33) : {
-            display_class_schedule(valid);
+            display_class_schedule();
 
             break;
         }
@@ -273,12 +279,12 @@ b2: cout << endl;
             break;
         }
         case (35) : {
-            display_student_schedule(valid);
+            display_student_schedule();
 
             break;
         }
         case(38) : {
-            display_student_classes(valid);
+            display_student_classes();
 
             break;
         }
@@ -292,17 +298,17 @@ b2: cout << endl;
             break;
         }
         case(40) : {
-            display_uc_students(valid);
+            display_uc_students();
 
             break;
         }
         case(41) : {
-            display_student_ucs(valid);
+            display_student_ucs();
 
             break;
         }
         case(42) : {
-            display_class_students(valid);
+            display_class_students();
 
             break;
         }
@@ -322,7 +328,7 @@ b2: cout << endl;
             break;
         }
 d1:     default : {
-            cout << endl << "\033[1;31mInvalid command! Please, try again.\033[0;m" << endl;
+            cout << endl << RED << "Invalid command! Please, try again." << RESET << endl;
             goto b2;
         }
     }
@@ -347,8 +353,7 @@ a1: cout << endl << "Please type the code (L.EICXXX) of the desired UC." << endl
 
     for (UC u : all_UCs){
         if (u.get_UcCode() == uc){
-            cout << endl << "The UC " << "\033[1m" << uc << 
-            "\033[0m" << " has the following schedule:" << endl;
+            cout << endl << "The UC " << BOLD << uc << RESET << " has the following schedule:" << endl;
 
             u.get_schedule().print();
 
@@ -358,7 +363,7 @@ a1: cout << endl << "Please type the code (L.EICXXX) of the desired UC." << endl
     }
 
     if (!valid){
-        cout << endl << "I'm sorry, but that UC does not exist." << endl;
+        cout << endl << RED << "I'm sorry, but that UC does not exist." << RESET << endl;
         goto a1;
     }
 }
@@ -373,8 +378,7 @@ a2: cout << endl << "Please type the code (L.EICXXX) of the desired UC." << endl
     
     for (UC u : all_UCs){
         if (u.get_UcCode() == uc){
-            cout << endl << "The UC " << "\033[1m" << uc << 
-            "\033[0m" << " has the following classes:" << endl;
+            cout << endl << "The UC " << BOLD << uc << RESET << " has the following classes:" << endl;
 
             u.print_classes();
 
@@ -384,7 +388,7 @@ a2: cout << endl << "Please type the code (L.EICXXX) of the desired UC." << endl
     }
 
     if (!valid){
-        cout << endl << "I'm sorry, but that UC does not exist." << endl;
+        cout << endl << RED << "I'm sorry, but that UC does not exist." << RESET << endl;
         goto a2;
     }
 }
@@ -417,7 +421,7 @@ a3: cout << endl << "How would you like to order the students? (Code/Name)" << e
     }
     
     if (by_code == 2){
-        cout << endl << "\033[1;31mInvalid command! Please, try again.\033[0;m" << endl;
+        cout << endl << RED << "Invalid command! Please, try again." << RESET << endl;
         goto a3;
     }
 
@@ -443,7 +447,7 @@ a4: cout << endl << "How would you like to sort them? (Ascending/Descending)" <<
     }
 
     if (descending == 2){
-        cout << "\033[1;31mInvalid command! Please, try again.\033[0;m" << endl;
+        cout << RED << "Invalid command! Please, try again." << RESET << endl;
         goto a4;
     }
 
@@ -457,8 +461,7 @@ a5: cout << endl << "Please type the code (L.EICXXX) of the desired UC." << endl
 
     for (UC u : all_UCs){
         if (u.get_UcCode() == ucCode){
-            cout << endl << "The UC " << "\033[1m" << ucCode << 
-            "\033[0m" << " has the following students:" << endl << endl;
+            cout << endl << "The UC " << BOLD << ucCode << RESET << " has the following students:" << endl << endl;
 
             u.print_students(by_code, descending);
 
@@ -468,20 +471,20 @@ a5: cout << endl << "Please type the code (L.EICXXX) of the desired UC." << endl
     }
 
     if (!valid){
-        cout << endl << "I'm sorry, but that UC does not exist." << endl;
+        cout << endl << RED << "I'm sorry, but that UC does not exist." << RESET << endl;
         goto a5;
     }
 }
 
-void Helpy::display_class_schedule(bool& valid) const{
+void Helpy::display_class_schedule() const{
 a6: cout << endl << "Please type the code (XLEICXX) of the desired class." << endl;
 
     string classCode; cin >> classCode;
+    bool valid = false;
 
     for (Class c : all_classes){
         if (c.get_classCode() == classCode){
-            cout << endl << "The class " << "\033[1m" << classCode << 
-            "\033[0m" << " has the following schedule:" << endl;
+            cout << endl << "The class " << BOLD << classCode << RESET << " has the following schedule:" << endl;
 
             c.get_schedule().print();
 
@@ -491,12 +494,12 @@ a6: cout << endl << "Please type the code (XLEICXX) of the desired class." << en
     }
 
     if (!valid){
-        cout << endl << "I'm sorry, but that class does not exist." << endl;
+        cout << endl << RED << "I'm sorry, but that class does not exist." << RESET << endl;
         goto a6;
     }
 }
 
-void Helpy::display_class_students(bool& valid) const{
+void Helpy::display_class_students() const{
     cin.ignore();
 
     // ordenação por código ou nome
@@ -524,7 +527,7 @@ a7: cout << endl << "How would you like to order the students? (Code/Name)" << e
     }
 
     if (by_code == 2){
-        cout << endl << "\033[1;31mInvalid command! Please, try again.\033[0;m" << endl;
+        cout << endl << RED << "Invalid command! Please, try again." << RESET << endl;
         goto a7;
     }
 
@@ -550,7 +553,7 @@ a8: cout << endl << "How would you like to sort them? (Ascending/Descending)" <<
     }
 
     if (descending == 2){
-        cout << endl << "\033[1;31mInvalid command! Please, try again.\033[0;m" << endl;
+        cout << endl << RED << "Invalid command! Please, try again." << RESET << endl;
         goto a8;
     }
 
@@ -559,11 +562,11 @@ a9: cout << endl << "Please type the code (XLEICXX) of the desired class." << en
 
     string classCode; cin >> classCode;
     lowercase(classCode, true);
+    bool valid = false;
 
     for (Class c : all_classes){
         if (c.get_classCode() == classCode){
-            cout << endl << "The class " << "\033[1m" << classCode << 
-            "\033[0m" << " has the following students:" << endl;
+            cout << endl << "The class " << BOLD << classCode << RESET << " has the following students:" << endl;
 
             c.print_students(by_code, descending);
 
@@ -573,26 +576,27 @@ a9: cout << endl << "Please type the code (XLEICXX) of the desired class." << en
     }
 
     if (!valid){
-        cout << endl << "I'm sorry, but that class does not exist." << endl;
+        cout << endl << RED << "I'm sorry, but that class does not exist." << RESET << endl;
         goto a9;
     }
 }
 
-void Helpy::display_student_schedule(bool& valid) const{
+void Helpy::display_student_schedule() const{
+
     cin.ignore();
 
 a10:cout << endl << "Please write the code (upXXXXXXXXX) or the name of the desired student." << endl;
 
     string inp; getline(cin, inp);
     lowercase(inp);
+    bool valid = false;
 
     for (Student s : all_students){
         string smol = s.get_studentName();
         lowercase(smol);
 
         if (s.get_studentCode() == inp || smol == inp){
-            cout << endl << "The student " << "\033[1m" << s.get_studentName() << "\033[0m" 
-            << " (up" << s.get_studentCode() << ')' << " has the following schedule:" << endl;
+            cout << endl << "The student " << BOLD << s.get_studentName() << RESET << " (up" << s.get_studentCode() << ')' << " has the following schedule:" << endl;
 
             s.get_schedule().print();
 
@@ -602,26 +606,26 @@ a10:cout << endl << "Please write the code (upXXXXXXXXX) or the name of the desi
     }
 
     if (!valid){
-        cout << endl << "I'm sorry, but that student code is not valid." << endl;
+        cout << endl << RED << "I'm sorry, but that student code is not valid." << RESET << endl;
         goto a10;
     }
 }
 
-void Helpy::display_student_classes(bool& valid) const{
+void Helpy::display_student_classes() const{
     cin.ignore();
 
 a11:cout << endl << "Understood. Please write the code (upXXXXXXXXX) of the desired student." << endl;
 
     string inp; getline(cin, inp);
     lowercase(inp);
+    bool valid = false;
 
     for (Student s : all_students){
         string smol = s.get_studentName();
         lowercase(smol);
 
         if (s.get_studentCode() == inp || smol == inp){
-            cout << endl << "The student " << "\033[1m" << s.get_studentName() << "\033[0m" 
-            << " (up" << s.get_studentCode() << ')' << " belongs to the following classes:" << endl;
+            cout << endl << "The student " << BOLD << s.get_studentName() << RESET << " (up" << s.get_studentCode() << ')' << " belongs to the following classes:" << endl;
 
             s.print_classes();
 
@@ -631,7 +635,7 @@ a11:cout << endl << "Understood. Please write the code (upXXXXXXXXX) of the desi
     }
 
     if (!valid){
-        cout << endl << "I'm sorry, but that student code is not valid." << endl;
+        cout << endl << RED << "I'm sorry, but that student code is not valid." << RESET << endl;
         goto a11;
     }
 }
@@ -678,7 +682,7 @@ a12:cout << endl << "What classes would u like to see?" << endl << endl;
         }
     }
     else{
-        cout << endl << "\033[1;31mInvalid command. Please, try again.\033[0;m" << endl;
+        cout << endl << RED << "Invalid command. Please, try again." << RESET << endl;
         goto a12;
     }
 }
@@ -725,7 +729,7 @@ a13:cout << endl << "What UCs would you like to see?" << endl << endl;
         }
     }
     else{
-        cout << endl << "\033[1;31mInvalid command! Please, try again.\033[0;m" << endl;
+        cout << endl << RED << "Invalid command! Please, try again." << RESET << endl;
         goto a13;
     }
 }
@@ -756,7 +760,7 @@ a14:cout << endl << "How would you like to order the students? (Code/Name)" << e
     }
 
     if (by_code == 2){
-        cout << endl << "\033[1;31mInvalid command! Please, try again.\033[0;m" << endl;
+        cout << endl << RED << "Invalid command! Please, try again." << RESET << endl;
         goto a14;
     }
 
@@ -783,12 +787,12 @@ a15:cout << endl << "How would you like to sort them? (Ascending/Descending)" <<
     }
 
     if (descending == 2){
-        cout << "\033[1;31mInvalid command! Please, try again.\033[0;m" << endl;
+        cout << RED << "Invalid command! Please, try again." << RESET << endl;
         goto a15;
     }
 
     // buscar condição
-    int n = 0;
+    int number = 0;
 
 a16:cout << endl << "Would you like to filter the students by the number of UCs they are in? (Yes/No)" << endl;
 
@@ -808,7 +812,7 @@ a16:cout << endl << "Would you like to filter the students by the number of UCs 
             break;
         }
         else{
-            cout << endl << "\033[1;31mInvalid command! Please, try again.\033[0;m" << endl;
+            cout << endl << RED << "Invalid command! Please, try again." << RESET << endl;
             goto a16;
         }
     }
@@ -839,14 +843,14 @@ a17:    cout << endl << "Would you like to see if students have less, more or ex
         }
 
         if (cond == 3){
-            cout << endl << "\033[1;31mInvalid command! Please, try again.\033[0;m" << endl;
+            cout << endl << RED << "Invalid command! Please, try again." << RESET << endl;
             goto a17;
         }
 
-        cout << endl << "OK. Please type the number you want to use for filtering:"
+        cout << endl << "Please type the number you want to use for filtering:"
              << endl;
 
-        cin >> n;
+        cin >> number;
     }
 
     // ordenar o all_students por código, se preciso
@@ -865,15 +869,15 @@ a17:    cout << endl << "Would you like to see if students have less, more or ex
 
             int uc_num = (int) s.get_ucs().size();
 
-            if (filter && cond == 0 && uc_num > n){
+            if (filter && cond == 0 && uc_num > number){
                 cout << s.get_studentCode() << "  " << s.get_studentName() << endl;
                 continue;
             }
-            else if (filter && cond == 1 && uc_num < n){
+            else if (filter && cond == 1 && uc_num < number){
                 cout << s.get_studentCode() << "  " << s.get_studentName() << endl;
                 continue;
             }
-            else if (filter && cond == 2 && uc_num == n){
+            else if (filter && cond == 2 && uc_num == number){
                 cout << s.get_studentCode() << "  " << s.get_studentName() << endl;
                 continue;
             }
@@ -886,15 +890,15 @@ a17:    cout << endl << "Would you like to see if students have less, more or ex
         for (Student s : all_students){
             int uc_num = (int) s.get_ucs().size();
 
-            if (filter && cond == 0 && uc_num > n){
+            if (filter && cond == 0 && uc_num > number){
                 cout << s.get_studentCode() << "  " << s.get_studentName() << endl;
                 continue;
             }
-            else if (filter && cond == 1 && uc_num < n){
+            else if (filter && cond == 1 && uc_num < number){
                 cout << s.get_studentCode() << "  " << s.get_studentName() << endl;
                 continue;
             }
-            else if (filter && cond == 2 && uc_num == n){
+            else if (filter && cond == 2 && uc_num == number){
                 cout << s.get_studentCode() << "  " << s.get_studentName() << endl;
                 continue;
             }
@@ -905,21 +909,21 @@ a17:    cout << endl << "Would you like to see if students have less, more or ex
     }
 }
 
-void Helpy::display_student_ucs(bool& valid) const{
+void Helpy::display_student_ucs() const{
     cin.ignore();
 
-a19:cout << endl << "Understood. Please write the code (upXXXXXXXXX) or the name of the desired student." << endl;
+a19:cout << endl << "Please write the code (upXXXXXXXXX) or the name of the desired student." << endl;
     
     string inp; getline(cin, inp);
     lowercase(inp);
+    bool valid = false;
 
     for (Student s : all_students){
         string smol = s.get_studentName();
         lowercase(smol);
 
         if (s.get_studentCode() == inp || smol == inp){
-            cout << endl << "The student " << "\033[1m" << s.get_studentName() << "\033[0m" 
-            << " (up" << s.get_studentCode() << ')' << " has the following UCs:" << endl;
+            cout << endl << "The student " << BOLD << s.get_studentName() << RESET << " (up" << s.get_studentCode() << ')' << " has the following UCs:" << endl;
 
             s.print_ucs();
 
@@ -929,7 +933,7 @@ a19:cout << endl << "Understood. Please write the code (upXXXXXXXXX) or the name
     }
 
     if (!valid){
-        cout << endl << "I'm sorry, but that student code is not valid." << endl;
+        cout << endl << RED << "I'm sorry, but that student code is not valid." << RESET << endl;
         goto a19;
     }
 }

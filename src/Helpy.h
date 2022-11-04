@@ -42,12 +42,12 @@ class Helpy {
         void display_uc_classes() const;
         void display_uc_students() const;
 
-        void display_class_schedule(bool& valid) const;
-        void display_class_students(bool& valid) const;
+        void display_class_schedule() const;
+        void display_class_students() const;
 
-        void display_student_schedule(bool& valid) const;
-        void display_student_classes(bool& valid) const;
-        void display_student_ucs(bool& valid) const;
+        void display_student_schedule() const;
+        void display_student_classes() const;
+        void display_student_ucs() const;
         
         void display_all_classes() const;
         void display_all_ucs() const;
