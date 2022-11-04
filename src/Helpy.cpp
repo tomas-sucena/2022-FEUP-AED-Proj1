@@ -6,6 +6,7 @@
 #define RESET   "\033[0;m"
 #define RED     "\033[1;31m"
 #define YELLOW  "\033[33m"
+#define GREEN   "\033[32m"
 #define BOLD    "\033[1m"
 #define BREAK   "- - - - - - - - - - - - - - - - - - - - -"
 
@@ -381,6 +382,10 @@ e2: cout << endl << YELLOW << BREAK << RESET << endl << endl;
 
 /*-----FUNÇÕES DE IMPRESSÃO-----*/
 
+/**
+ * @brief displays the schedule of a determined UC
+ * complexity = n^3
+ */
 void Helpy::display_uc_schedule() const{
 a1: cout << endl << YELLOW << BREAK << RESET << endl << endl;
     cout << "Please type the code (L.EICXXX) of the desired UC." << endl;
