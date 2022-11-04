@@ -12,9 +12,8 @@
 #define BREAK   "- - - - - - - - - - - - - - - - - - - - -"
 
 
-map<string, int> Helpy::command = {{"display", 1}, {"print", 1}, {"show", 1}, 
-                                   {"remove", 100}, {"add",200}};
-map<string, int> Helpy::target = {{"uc", 6}, {"class", 8}, {"student", 10}, {"all", 22}};
+map<string, int> Helpy::command = {{"display", 1}, {"print", 1}, {"show", 1}, {"modify", 0}, {"remove", 100}, {"add",200}};
+map<string, int> Helpy::target = {{"uc", 6}, {"class", 8}, {"student", 10}, {"all", 22}, {"remove", 100}, {"add",200}};
 map<string, int> Helpy::what = {{"schedule", 24}, {"classes", 27}, {"class", 27}, {"ucs", 30}, {"uc", 30}, {"students", 33},{"student", 33}};
 
 // função auxiliar usada para tratar dos comandos
