@@ -34,9 +34,9 @@ Helpy::Helpy(vector<Student>& students, vector<UC>& UCs, vector<Class>& classes,
              class_blocks(c_blocks), uc_blocks(u_blocks) {}
 
 void Helpy::terminal(){
-    cout << endl << YELLOW << BREAK << RESET << endl << endl;
+a0: cout << endl << YELLOW << BREAK << RESET << endl << endl;
     cout << "Which mode would you prefer?" << endl << endl;
-a0: cout << "* Guided" << endl;
+    cout << "* Guided" << endl;
     cout << "* Advanced" << endl << endl;
 
     string line; getline(cin, line);
@@ -62,7 +62,7 @@ a0: cout << "* Guided" << endl;
     }     
 
     if (!valid){
-        cout << endl << RED <<"Invalid command! Please choose one of the following:" << RESET << endl << endl;
+        cout << endl << RED << "Invalid command! Please choose one of the following:" << RESET << endl << endl;
         goto a0;
     }       
 }
@@ -332,7 +332,7 @@ b2: cout << endl << YELLOW << BREAK << RESET << endl << endl;
 
             break;
         }
-        /*case(137) : { // remove student classes
+        case(137) : { // remove student classes
             cout << "Please type the code (upXXXXXXXXX) of the desired student"<<endl;
             string st; cin >>st;
             cout << "Please type the code of the class you want to remove" << endl;
@@ -360,7 +360,7 @@ b2: cout << endl << YELLOW << BREAK << RESET << endl << endl;
             string f; cin >> f; lowercase(f, true);
             queuer.push(Request(s1,s3,st,cl,f));
             break;
-        }*/        
+        }
 d1:     default : {
             cout << endl << YELLOW << BREAK << RESET << endl << endl;
             cout << RED << "Invalid command! Please, try again." << RESET << endl;
