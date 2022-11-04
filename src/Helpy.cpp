@@ -7,6 +7,7 @@
 #define RED     "\033[1;31m"
 #define YELLOW  "\033[33m"
 #define BOLD    "\033[1m"
+#define BREAK   "- - - - - - - - - - -"
 
 
 map<string, int> Helpy::command = {{"display", 1}, {"print", 1}, {"show", 1}, 
@@ -33,6 +34,7 @@ Helpy::Helpy(vector<Student>& students, vector<UC>& UCs, vector<Class>& classes,
              class_blocks(c_blocks), uc_blocks(u_blocks) {}
 
 void Helpy::terminal(){
+    cout << endl << YELLOW << BREAK << RESET << endl << endl;
     cout << "Which mode would you prefer?" << endl << endl;
 a0: cout << "* Guided" << endl;
     cout << "* Advanced" << endl << endl;
@@ -68,6 +70,7 @@ a0: cout << "* Guided" << endl;
                                 ///         ADVANCED MODE       ///
 void Helpy::advanced_mode(){
     /*-----LER COMANDOS-----*/
+    cout << endl << YELLOW << BREAK << RESET << endl << endl;
     cout << endl << "Hello! How can I be of assistance?" << endl;
 
 b1: string s1, s2, s3; 
@@ -108,7 +111,7 @@ b1: string s1, s2, s3;
 
             break;
         }
-        case (35) : {
+        case(35) : {
             display_student_schedule();
 
             break;
@@ -178,7 +181,7 @@ b1: string s1, s2, s3;
             break;
         }
         default : {
-            cout << endl << "\033[1;31mInvalid command! Please, type another command.\033[0;m" << endl;
+            cout << endl << RED << "Invalid command! Please, type another command." << RESET << endl;
             goto b1;
         }
     }
@@ -194,7 +197,8 @@ void Helpy::guided_mode(){
 
     /*-----LER COMANDOS-----*/
 
-    cout << endl << "Hello! How can I be of assistance?" << endl;
+    cout << endl << YELLOW << BREAK << RESET << endl << endl;
+    cout << "Hello! How can I be of assistance?" << endl;
 b2: cout << endl;
     cout << "* Display" << endl;
     cout << "* Add" << endl;
@@ -209,7 +213,7 @@ b2: cout << endl;
         goto e2;
     }
     else if (s1 == "display"){
-        cout << endl;
+        cout << endl << YELLOW << BREAK << RESET << endl << endl;
         cout << "* All" << endl;
         cout << "* Class" << endl;
         cout << "* Student" << endl;
@@ -223,27 +227,27 @@ b2: cout << endl;
     cin >> s2; lowercase(s2);
 
     if(s2 == "class"){
-        cout << endl;
+        cout << endl << YELLOW << BREAK << RESET << endl << endl;
         cout << "* Schedule" << endl;
         cout << "* Students" << endl;
         cout << endl;
     }
     else if (s2 == "student"){
-        cout << endl;
+        cout << endl << YELLOW << BREAK << RESET << endl << endl;
         cout << "* Classes" << endl;
         cout << "* Schedule" << endl;
         cout << "* UCs" << endl;
         cout << endl;
     }
     else if (s2 == "uc"){
-        cout << endl;
+        cout << endl << YELLOW << BREAK << RESET << endl << endl;
         cout << "* Classes" << endl;
         cout << "* Students" << endl;
         cout << "* Schedule" << endl;
         cout << endl;
     }
     else if (s2 == "all"){
-        cout << endl;
+        cout << endl << YELLOW << BREAK << RESET << endl << endl;
         cout << "* Classes" << endl;
         cout << "* Students" << endl;
         cout << "* UCs" << endl;
@@ -279,7 +283,7 @@ b2: cout << endl;
 
             break;
         }
-        case (35) : {
+        case(35) : {
             display_student_schedule();
 
             break;
@@ -328,25 +332,58 @@ b2: cout << endl;
 
             break;
         }
+        /*case(137) : { // remove student classes
+            cout << "Please type the code (upXXXXXXXXX) of the desired student"<<endl;
+            string st; cin >>st;
+            cout << "Please type the code of the class you want to remove" << endl;
+            string cl; cin >> cl; lowercase(cl, true);
+            queuer.push(Request(s1,s3,st,cl));
+            log(Request(s1,s3,st,cl), "Fuck this");
+
+            break;
+        }
+        case(140) : { // remove student uc
+            cout << "Please type the code (upXXXXXXXXX) of the desired student"<<endl;
+            string st; cin >>st;
+            cout << "Please type the code of the uc you want to remove" << endl;
+            string cl; cin >> cl; lowercase(cl, true);
+            queuer.push(Request(s1,s3,st,cl));
+
+            break;
+        }
+        case(240) : { //add uc to student
+            cout << "Please type the code (upXXXXXXXXX) of the desired student"<<endl;
+            string st; cin >>st;
+            cout << "Please type the code of the uc you want to add" << endl;
+            string cl; cin >> cl; lowercase(cl, true);
+            cout << "Please type the code of the class you want to add the uc to" << endl;
+            string f; cin >> f; lowercase(f, true);
+            queuer.push(Request(s1,s3,st,cl,f));
+            break;
+        }*/        
 d1:     default : {
-            cout << endl << RED << "Invalid command! Please, try again." << RESET << endl;
+            cout << endl << YELLOW << BREAK << RESET << endl << endl;
+            cout << RED << "Invalid command! Please, try again." << RESET << endl;
             goto b2;
         }
     }
 
-    cout << endl << "Anything else? (Yes/No)" << endl;
+    cout << endl << YELLOW << BREAK << RESET << endl << endl;
+    cout << "Anything else? (Yes/No)" << endl;
     cin >> s4; lowercase(s4);
     if (s4 == "yes" || s4 == "y"){
         goto b2;
     }
 
-e2: cout << endl << "See you next time!" << endl;
+e2: cout << endl << YELLOW << BREAK << RESET << endl << endl;
+    cout << "See you next time!" << endl;
 }
 
 /*-----FUNÇÕES DE IMPRESSÃO-----*/
 
 void Helpy::display_uc_schedule() const{
-a1: cout << endl << "Please type the code (L.EICXXX) of the desired UC." << endl;
+a1: cout << endl << YELLOW << BREAK << RESET << endl << endl;
+    cout << "Please type the code (L.EICXXX) of the desired UC." << endl;
 
     string uc; cin >> uc;
     lowercase(uc, true);
@@ -354,7 +391,8 @@ a1: cout << endl << "Please type the code (L.EICXXX) of the desired UC." << endl
 
     for (UC u : all_UCs){
         if (u.get_UcCode() == uc){
-            cout << endl << "The UC " << BOLD << uc << RESET << " has the following schedule:" << endl;
+            cout << endl << YELLOW << BREAK << RESET << endl << endl;
+            cout << "The UC " << BOLD << uc << RESET << " has the following schedule:" << endl << endl;
 
             u.get_schedule().print();
 
@@ -364,13 +402,15 @@ a1: cout << endl << "Please type the code (L.EICXXX) of the desired UC." << endl
     }
 
     if (!valid){
-        cout << endl << RED << "I'm sorry, but that UC does not exist." << RESET << endl;
+        cout << endl << YELLOW << BREAK << RESET << endl << endl;
+        cout << RED << "I'm sorry, but that UC does not exist." << RESET << endl;
         goto a1;
     }
 }
 
 void Helpy::display_uc_classes() const{
-a2: cout << endl << "Please type the code (L.EICXXX) of the desired UC." << endl;
+a2: cout << endl << YELLOW << BREAK << RESET << endl << endl;
+    cout << "Please type the code (L.EICXXX) of the desired UC." << endl;
 
     string uc; cin >> uc;
     lowercase(uc, true);
@@ -379,7 +419,8 @@ a2: cout << endl << "Please type the code (L.EICXXX) of the desired UC." << endl
     
     for (UC u : all_UCs){
         if (u.get_UcCode() == uc){
-            cout << endl << "The UC " << BOLD << uc << RESET << " has the following classes:" << endl;
+            cout << endl << YELLOW << BREAK << RESET << endl << endl;
+            cout << "The UC " << BOLD << uc << RESET << " has the following classes:" << endl << endl;
 
             u.print_classes();
 
@@ -389,7 +430,8 @@ a2: cout << endl << "Please type the code (L.EICXXX) of the desired UC." << endl
     }
 
     if (!valid){
-        cout << endl << RED << "I'm sorry, but that UC does not exist." << RESET << endl;
+        cout << endl << YELLOW << BREAK << RESET << endl << endl;
+        cout << RED << "I'm sorry, but that UC does not exist." << RESET << endl;
         goto a2;
     }
 }
@@ -398,7 +440,8 @@ void Helpy::display_uc_students() const{
     cin.ignore();
 
     // ordenação por código ou nome
-a3: cout << endl << "How would you like to order the students? (Code/Name)" << endl;
+a3: cout << endl << YELLOW << BREAK << RESET << endl << endl;
+    cout << "How would you like to order the students? (Code/Name)" << endl;
         
     string line; getline(cin, line);
     lowercase(line);
@@ -422,12 +465,14 @@ a3: cout << endl << "How would you like to order the students? (Code/Name)" << e
     }
     
     if (by_code == 2){
-        cout << endl << RED << "Invalid command! Please, try again." << RESET << endl;
+        cout << endl << YELLOW << BREAK << RESET << endl << endl;
+        cout << RED << "Invalid command! Please, try again." << RESET << endl;
         goto a3;
     }
 
     // ordenação ascendente ou descendente
-a4: cout << endl << "How would you like to sort them? (Ascending/Descending)" << endl;
+a4: cout << endl << YELLOW << BREAK << RESET << endl << endl;
+    cout << "How would you like to sort them? (Ascending/Descending)" << endl;
 
     getline(cin, line);
     lowercase(line);
@@ -448,12 +493,14 @@ a4: cout << endl << "How would you like to sort them? (Ascending/Descending)" <<
     }
 
     if (descending == 2){
+        cout << endl << YELLOW << BREAK << RESET << endl << endl;
         cout << RED << "Invalid command! Please, try again." << RESET << endl;
         goto a4;
     }
 
     // escolher a UC
-a5: cout << endl << "Please type the code (L.EICXXX) of the desired UC." << endl;
+a5: cout << endl << YELLOW << BREAK << RESET << endl << endl;
+    cout << endl << "Please type the code (L.EICXXX) of the desired UC." << endl;
 
     string ucCode; cin >> ucCode;
     lowercase(ucCode, true);
@@ -462,7 +509,8 @@ a5: cout << endl << "Please type the code (L.EICXXX) of the desired UC." << endl
 
     for (UC u : all_UCs){
         if (u.get_UcCode() == ucCode){
-            cout << endl << "The UC " << BOLD << ucCode << RESET << " has the following students:" << endl << endl;
+            cout << endl << YELLOW << BREAK << RESET << endl << endl;
+            cout << "The UC " << BOLD << ucCode << RESET << " has the following students:" << endl << endl;
 
             u.print_students(by_code, descending);
 
@@ -472,20 +520,23 @@ a5: cout << endl << "Please type the code (L.EICXXX) of the desired UC." << endl
     }
 
     if (!valid){
-        cout << endl << RED << "I'm sorry, but that UC does not exist." << RESET << endl;
+        cout << endl << YELLOW << BREAK << RESET << endl << endl;
+        cout << RED << "I'm sorry, but that UC does not exist." << RESET << endl;
         goto a5;
     }
 }
 
 void Helpy::display_class_schedule() const{
-a6: cout << endl << "Please type the code (XLEICXX) of the desired class." << endl;
+a6: cout << endl << YELLOW << BREAK << RESET << endl << endl;
+    cout << "Please type the code (XLEICXX) of the desired class." << endl;
 
     string classCode; cin >> classCode;
     bool valid = false;
 
     for (Class c : all_classes){
         if (c.get_classCode() == classCode){
-            cout << endl << "The class " << BOLD << classCode << RESET << " has the following schedule:" << endl;
+            cout << endl << YELLOW << BREAK << RESET << endl << endl;
+            cout << "The class " << BOLD << classCode << RESET << " has the following schedule:" << endl << endl;
 
             c.get_schedule().print();
 
@@ -495,7 +546,8 @@ a6: cout << endl << "Please type the code (XLEICXX) of the desired class." << en
     }
 
     if (!valid){
-        cout << endl << RED << "I'm sorry, but that class does not exist." << RESET << endl;
+        cout << endl << YELLOW << BREAK << RESET << endl << endl;
+        cout << RED << "I'm sorry, but that class does not exist." << RESET << endl;
         goto a6;
     }
 }
@@ -504,7 +556,8 @@ void Helpy::display_class_students() const{
     cin.ignore();
 
     // ordenação por código ou nome
-a7: cout << endl << "How would you like to order the students? (Code/Name)" << endl;
+a7: cout << endl << YELLOW << BREAK << RESET << endl << endl;
+    cout << "How would you like to order the students? (Code/Name)" << endl;
         
     string line; getline(cin, line);
     lowercase(line);
@@ -528,12 +581,14 @@ a7: cout << endl << "How would you like to order the students? (Code/Name)" << e
     }
 
     if (by_code == 2){
-        cout << endl << RED << "Invalid command! Please, try again." << RESET << endl;
+        cout << endl << YELLOW << BREAK << RESET << endl << endl;
+        cout << RED << "Invalid command! Please, try again." << RESET << endl;
         goto a7;
     }
 
     // ordenação ascendente ou descendente
-a8: cout << endl << "How would you like to sort them? (Ascending/Descending)" << endl;
+a8: cout << endl << YELLOW << BREAK << RESET << endl << endl;
+    cout << "How would you like to sort them? (Ascending/Descending)" << endl;
 
     getline(cin, line);
     lowercase(line);
@@ -554,12 +609,14 @@ a8: cout << endl << "How would you like to sort them? (Ascending/Descending)" <<
     }
 
     if (descending == 2){
-        cout << endl << RED << "Invalid command! Please, try again." << RESET << endl;
+        cout << endl << YELLOW << BREAK << RESET << endl << endl;
+        cout << RED << "Invalid command! Please, try again." << RESET << endl;
         goto a8;
     }
 
     // escolher a turma
-a9: cout << endl << "Please type the code (XLEICXX) of the desired class." << endl;
+a9: cout << endl << YELLOW << BREAK << RESET << endl << endl;
+    cout << "Please type the code (XLEICXX) of the desired class." << endl;
 
     string classCode; cin >> classCode;
     lowercase(classCode, true);
@@ -567,7 +624,8 @@ a9: cout << endl << "Please type the code (XLEICXX) of the desired class." << en
 
     for (Class c : all_classes){
         if (c.get_classCode() == classCode){
-            cout << endl << "The class " << BOLD << classCode << RESET << " has the following students:" << endl;
+            cout << endl << YELLOW << BREAK << RESET << endl << endl;
+            cout << "The class " << BOLD << classCode << RESET << " has the following students:" << endl << endl;
 
             c.print_students(by_code, descending);
 
@@ -577,7 +635,8 @@ a9: cout << endl << "Please type the code (XLEICXX) of the desired class." << en
     }
 
     if (!valid){
-        cout << endl << RED << "I'm sorry, but that class does not exist." << RESET << endl;
+        cout << endl << YELLOW << BREAK << RESET << endl << endl;
+        cout << RED << "I'm sorry, but that class does not exist." << RESET << endl;
         goto a9;
     }
 }
@@ -597,7 +656,8 @@ a10:cout << endl << "Please write the code (upXXXXXXXXX) or the name of the desi
         lowercase(smol);
 
         if (s.get_studentCode() == inp || smol == inp){
-            cout << endl << "The student " << BOLD << s.get_studentName() << RESET << " (up" << s.get_studentCode() << ')' << " has the following schedule:" << endl;
+            cout << endl << YELLOW << BREAK << RESET << endl << endl;
+            cout << "The student " << BOLD << s.get_studentName() << RESET << " (up" << s.get_studentCode() << ')' << " has the following schedule:" << endl << endl;
 
             s.get_schedule().print();
 
@@ -607,7 +667,8 @@ a10:cout << endl << "Please write the code (upXXXXXXXXX) or the name of the desi
     }
 
     if (!valid){
-        cout << endl << RED << "I'm sorry, but that student code is not valid." << RESET << endl;
+        cout << endl << YELLOW << BREAK << RESET << endl << endl;
+        cout << RED << "I'm sorry, but that student code is not valid." << RESET << endl;
         goto a10;
     }
 }
@@ -615,7 +676,8 @@ a10:cout << endl << "Please write the code (upXXXXXXXXX) or the name of the desi
 void Helpy::display_student_classes() const{
     cin.ignore();
 
-a11:cout << endl << "Understood. Please write the code (upXXXXXXXXX) of the desired student." << endl;
+a11:cout << endl << YELLOW << BREAK << RESET << endl << endl;
+    cout << "Please write the code (upXXXXXXXXX) of the desired student." << endl;
 
     string inp; getline(cin, inp);
     lowercase(inp);
@@ -626,7 +688,8 @@ a11:cout << endl << "Understood. Please write the code (upXXXXXXXXX) of the desi
         lowercase(smol);
 
         if (s.get_studentCode() == inp || smol == inp){
-            cout << endl << "The student " << BOLD << s.get_studentName() << RESET << " (up" << s.get_studentCode() << ')' << " belongs to the following classes:" << endl;
+            cout << endl << YELLOW << BREAK << RESET << endl << endl;
+            cout << "The student " << BOLD << s.get_studentName() << RESET << " (up" << s.get_studentCode() << ')' << " belongs to the following classes:" << endl << endl;
 
             s.print_classes();
 
@@ -636,7 +699,8 @@ a11:cout << endl << "Understood. Please write the code (upXXXXXXXXX) of the desi
     }
 
     if (!valid){
-        cout << endl << RED << "I'm sorry, but that student code is not valid." << RESET << endl;
+        cout << endl << YELLOW << BREAK << RESET << endl << endl;
+        cout << RED << "I'm sorry, but that student code is not valid." << RESET << endl;
         goto a11;
     }
 }
@@ -648,13 +712,17 @@ void Helpy::display_all_classes() const{
         all_classes_set.insert(c.get_classCode());
     }
 
-a12:cout << endl << "What classes would u like to see?" << endl << endl;
+a12:cout << endl << YELLOW << BREAK << RESET << endl << endl;
+    cout << "What classes would you like to see?" << endl << endl;
     cout << "All" << endl;
     cout << "First Year (first)" << endl;
     cout << "Second Year (second)" << endl;
     cout << "Third Year (third)" << endl << endl;
 
     string temp; cin >> temp; lowercase(temp);
+
+    cout << endl << YELLOW << BREAK << RESET << endl << endl;
+    cout << "The classes are the following:" << endl << endl;
 
     if (temp == "all"){
         for (string class_code : all_classes_set){
@@ -683,7 +751,8 @@ a12:cout << endl << "What classes would u like to see?" << endl << endl;
         }
     }
     else{
-        cout << endl << RED << "Invalid command. Please, try again." << RESET << endl;
+        cout << endl << YELLOW << BREAK << RESET << endl << endl;
+        cout << RED << "Invalid command. Please, try again." << RESET << endl;
         goto a12;
     }
 }
@@ -702,6 +771,9 @@ a13:cout << endl << "What UCs would you like to see?" << endl << endl;
     cout << "Third Year (third)" << endl << endl;
 
     string temp; cin >> temp; lowercase(temp);
+
+    cout << endl << YELLOW << BREAK << RESET << endl << endl;
+    cout << "The UCs are the following:" << endl << endl;
 
     if (temp == "all"){
         for (string uc_code : all_ucs_set){
@@ -730,7 +802,8 @@ a13:cout << endl << "What UCs would you like to see?" << endl << endl;
         }
     }
     else{
-        cout << endl << RED << "Invalid command! Please, try again." << RESET << endl;
+        cout << endl << YELLOW << BREAK << RESET << endl << endl;
+        cout << RED << "Invalid command! Please, try again." << RESET << endl;
         goto a13;
     }
 }
@@ -739,7 +812,8 @@ void Helpy::display_all_students() const{
     cin.ignore();
 
     // ordenação por código ou nome
-a14:cout << endl << "How would you like to order the students? (Code/Name)" << endl;
+a14:cout << endl << YELLOW << BREAK << RESET << endl << endl;
+    cout << "How would you like to order the students? (Code/Name)" << endl;
         
     string line; getline(cin, line);
     lowercase(line);
@@ -761,12 +835,14 @@ a14:cout << endl << "How would you like to order the students? (Code/Name)" << e
     }
 
     if (by_code == 2){
-        cout << endl << RED << "Invalid command! Please, try again." << RESET << endl;
+        cout << endl << YELLOW << BREAK << RESET << endl << endl;
+        cout << RED << "Invalid command! Please, try again." << RESET << endl;
         goto a14;
     }
 
     // ordenação ascendente ou descendente
-a15:cout << endl << "How would you like to sort them? (Ascending/Descending)" << endl;
+a15:cout << endl << YELLOW << BREAK << RESET << endl << endl;
+    cout << "How would you like to sort them? (Ascending/Descending)" << endl;
 
     getline(cin, line);
     lowercase(line);
@@ -788,6 +864,7 @@ a15:cout << endl << "How would you like to sort them? (Ascending/Descending)" <<
     }
 
     if (descending == 2){
+        cout << endl << YELLOW << BREAK << RESET << endl << endl;
         cout << RED << "Invalid command! Please, try again." << RESET << endl;
         goto a15;
     }
@@ -795,7 +872,8 @@ a15:cout << endl << "How would you like to sort them? (Ascending/Descending)" <<
     // buscar condição
     int number = 0;
 
-a16:cout << endl << "Would you like to filter the students by the number of UCs they are in? (Yes/No)" << endl;
+a16:cout << endl << YELLOW << BREAK << RESET << endl << endl;
+    cout << "Would you like to filter the students by the number of UCs they are in? (Yes/No)" << endl;
 
     getline(cin, line);
     lowercase(line);
@@ -813,14 +891,16 @@ a16:cout << endl << "Would you like to filter the students by the number of UCs 
             break;
         }
         else{
-            cout << endl << RED << "Invalid command! Please, try again." << RESET << endl;
+            cout << endl << YELLOW << BREAK << RESET << endl << endl;
+            cout << RED << "Invalid command! Please, try again." << RESET << endl;
             goto a16;
         }
     }
 
     short cond = 3;
     if (filter){
-a17:    cout << endl << "Would you like to see if students have less, more or exactly a number of UCs? (Less/More/Equal)" << endl;
+a17:    cout << endl << YELLOW << BREAK << RESET << endl << endl;
+        cout << "Would you like to see if students have less, more or exactly a number of UCs? (Less/More/Equal)" << endl;
 
         getline(cin, line);
         lowercase(line);
@@ -844,12 +924,13 @@ a17:    cout << endl << "Would you like to see if students have less, more or ex
         }
 
         if (cond == 3){
-            cout << endl << RED << "Invalid command! Please, try again." << RESET << endl;
+            cout << endl << YELLOW << BREAK << RESET << endl << endl;
+            cout << RED << "Invalid command! Please, try again." << RESET << endl;
             goto a17;
         }
 
-        cout << endl << "Please type the number you want to use for filtering:"
-             << endl;
+        cout << endl << YELLOW << BREAK << RESET << endl << endl;
+        cout << "Please type the number you want to use for filtering:" << endl;
 
         cin >> number;
     }
@@ -860,9 +941,10 @@ a17:    cout << endl << "Would you like to see if students have less, more or ex
     }
         
     // imprimir todos os estudantes
-    (filter) ? (cout << endl << "These are all the students that meet your criteria:") :
-               (cout << endl << "These are all the students currently enrolled in LEIC:");
-    cout << endl;
+    cout << endl << YELLOW << BREAK << RESET << endl << endl;
+    (filter) ? (cout << "These are all the students that meet your criteria:") :
+               (cout << "These are all the students currently enrolled in LEIC:");
+    cout << endl << endl;
 
     if (descending){
         for (int i = (int) all_students.size() - 1; i >= 0; i--){
@@ -913,7 +995,8 @@ a17:    cout << endl << "Would you like to see if students have less, more or ex
 void Helpy::display_student_ucs() const{
     cin.ignore();
 
-a19:cout << endl << "Please write the code (upXXXXXXXXX) or the name of the desired student." << endl;
+a19:cout << endl << YELLOW << BREAK << RESET << endl << endl;
+    cout << "Please write the code (upXXXXXXXXX) or the name of the desired student." << endl;
     
     string inp; getline(cin, inp);
     lowercase(inp);
@@ -924,7 +1007,8 @@ a19:cout << endl << "Please write the code (upXXXXXXXXX) or the name of the desi
         lowercase(smol);
 
         if (s.get_studentCode() == inp || smol == inp){
-            cout << endl << "The student " << BOLD << s.get_studentName() << RESET << " (up" << s.get_studentCode() << ')' << " has the following UCs:" << endl;
+            cout << endl << YELLOW << BREAK << RESET << endl << endl;
+            cout << "The student " << BOLD << s.get_studentName() << RESET << " (up" << s.get_studentCode() << ')' << " has the following UCs:" << endl << endl;
 
             s.print_ucs();
 
@@ -934,7 +1018,8 @@ a19:cout << endl << "Please write the code (upXXXXXXXXX) or the name of the desi
     }
 
     if (!valid){
-        cout << endl << RED << "I'm sorry, but that student code is not valid." << RESET << endl;
+        cout << endl << YELLOW << BREAK << RESET << endl << endl;
+        cout << RED << "I'm sorry, but that student code is not valid." << RESET << endl;
         goto a19;
     }
 }
