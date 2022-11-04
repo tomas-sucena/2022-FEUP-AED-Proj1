@@ -65,7 +65,6 @@ void Helpy::advanced_mode(){
     cout << endl << "Hello! How can I be of assistance?" << endl;
 
 b1: string s1, s2, s3; 
-    bool valid = false;
 
     cin >> s1; lowercase(s1);
 
@@ -88,7 +87,7 @@ b1: string s1, s2, s3;
     // processar o comando    
     switch (command[s1] + target[s2] + what[s3]){
         case(31) : {
-            display_uc_schedule(valid);
+            display_uc_schedule();
 
             break;
         }
@@ -98,7 +97,7 @@ b1: string s1, s2, s3;
             break;
         }
         case(34) : {
-            display_uc_classes(valid);
+            display_uc_classes();
 
             break;
         }
@@ -199,7 +198,6 @@ b2: cout << endl;
     cout << endl;
 
     string s1, s2, s3, s4; 
-    bool valid = false;
 
     cin >> s1; lowercase(s1);
     if (s1 == "quit"){
@@ -262,7 +260,7 @@ b2: cout << endl;
     // processar o comando    
     switch (command[s1] + target[s2] + what[s3]){
         case(31) : {
-            display_uc_schedule(valid);
+            display_uc_schedule();
 
             break;
         }
@@ -272,7 +270,7 @@ b2: cout << endl;
             break;
         }
         case(34) : {
-            display_uc_classes(valid);
+            display_uc_classes();
 
             break;
         }
@@ -342,11 +340,12 @@ e2: cout << endl << "See you next time!" << endl;
 
 /*-----FUNÇÕES DE IMPRESSÃO-----*/
 
-void Helpy::display_uc_schedule(bool& valid) const{
+void Helpy::display_uc_schedule() const{
 a1: cout << endl << "Please type the code (L.EICXXX) of the desired UC." << endl;
 
     string uc; cin >> uc;
     lowercase(uc, true);
+    bool valid = false;
 
     for (UC u : all_UCs){
         if (u.get_UcCode() == uc){
@@ -366,11 +365,13 @@ a1: cout << endl << "Please type the code (L.EICXXX) of the desired UC." << endl
     }
 }
 
-void Helpy::display_uc_classes(bool& valid) const{
+void Helpy::display_uc_classes() const{
 a2: cout << endl << "Please type the code (L.EICXXX) of the desired UC." << endl;
 
     string uc; cin >> uc;
     lowercase(uc, true);
+
+    bool valid = false;
     
     for (UC u : all_UCs){
         if (u.get_UcCode() == uc){
@@ -390,7 +391,7 @@ a2: cout << endl << "Please type the code (L.EICXXX) of the desired UC." << endl
     }
 }
 
-void Helpy::display_uc_students(bool& valid) const{
+void Helpy::display_uc_students() const{
 
     // ordenação por código ou nome
 a3: cout << endl << "How would you like to order the students? (Code/Name)" << endl;
@@ -454,6 +455,8 @@ a5: cout << endl << "Please type the code (L.EICXXX) of the desired UC." << endl
 
     string ucCode; cin >> ucCode;
     lowercase(ucCode, true);
+
+    bool valid = false;
 
     for (UC u : all_UCs){
         if (u.get_UcCode() == ucCode){
