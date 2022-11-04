@@ -80,7 +80,7 @@ int main(){
 
     // atualizar o vetor de UCs
     for (UC& uc : all_UCs){
-        uc.add_schedule(Schedule(uc_blocks[uc.get_UcCode()]));
+        uc.set_schedule(Schedule(uc_blocks[uc.get_UcCode()]));
     }
 
     vector<Class> all_classes;
