@@ -1285,12 +1285,12 @@ string Helpy::is_valid(Student s, Class& cl, string uc){
             year = (*pain)[0] - '0';
             nu = ((*pain)[5] - '0') * 10 + ((*pain)[6] - '0');
             Class& o = all_classes[(year - 1) * 16 + (nu - 1)];
-            dif = (&g == &cl) ? abs(g.size() - o.size()) + 1 : abs(g.size() - o.size());
+            dif = (&g == &cl) ? abs(g.get_ocupation()[uc] - o.get_ocupation()[uc]) + 1 : abs(g.get_ocupation()[uc] - o.get_ocupation()[uc]);
             if(&g == &cl){
                 cout << "Same" << endl;
             }
-            cout << g.size() << endl;
-            cout << o.size() << endl;
+            cout << g.get_ocupation()[uc] << endl;
+            cout << o.get_ocupation()[uc] << endl;
             if(dif > max){
                 max = dif;
             }

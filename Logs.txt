@@ -8,3 +8,4 @@ Failed to add L.EIC003to class 1LEIC05 on student 202025232:Failed due to class 
 Failed to add L.EIC003to class 1LEIC05 on student 202025232:Failed due to class desiquilibrium
 Failed to add L.EIC003to class 1LEIC05 on student 202025232:Failed due to class desiquilibrium
 Failed to add L.EIC003 to class 1LEIC05 on student 202025232:Failed due to class desiquilibrium
+Failed to add L.EIC003 to class 1LEIC05 on student 202025232:Failed due to class desiquilibrium
