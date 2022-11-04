@@ -557,7 +557,7 @@ a6: cout << endl << YELLOW << BREAK << RESET << endl << endl;
     string classCode; cin >> classCode;
     bool valid = false;
 
-    for (Class c : all_classes){
+    for (const Class& c : all_classes){
         if (c.get_classCode() == classCode){
             cout << endl << YELLOW << BREAK << RESET << endl << endl;
             cout << "The class " << BOLD << classCode << RESET << " has the following schedule:" << endl << endl;
@@ -644,7 +644,7 @@ a9: cout << endl << YELLOW << BREAK << RESET << endl << endl;
     lowercase(classCode, true);
     bool valid = false;
 
-    for (Class c : all_classes){
+    for (const Class& c : all_classes){
         if (c.get_classCode() == classCode){
             cout << endl << YELLOW << BREAK << RESET << endl << endl;
             cout << "The class " << BOLD << classCode << RESET << " has the following students:" << endl << endl;
@@ -670,7 +670,7 @@ a10:cout << endl << "Please write the code (upXXXXXXXXX) or the name of the desi
     lowercase(inp);
     bool valid = false;
 
-    for (Student s : all_students){
+    for (const Student& s : all_students){
         string smol = s.get_studentName();
         lowercase(smol);
 
@@ -700,7 +700,7 @@ a11:cout << endl << YELLOW << BREAK << RESET << endl << endl;
     lowercase(inp);
     bool valid = false;
 
-    for (Student s : all_students){
+    for (const Student& s : all_students){
         string smol = s.get_studentName();
         lowercase(smol);
 
@@ -725,7 +725,7 @@ a11:cout << endl << YELLOW << BREAK << RESET << endl << endl;
 void Helpy::display_all_classes() const{
     set<string> all_classes_set;
 
-    for (Class c : all_classes){
+    for (const Class& c : all_classes){
         all_classes_set.insert(c.get_classCode());
     }
 
@@ -742,7 +742,7 @@ a12:cout << endl << YELLOW << BREAK << RESET << endl << endl;
     cout << "The classes are the following:" << endl << endl;
 
     if (temp == "all"){
-        for (string class_code : all_classes_set){
+        for (const string& class_code : all_classes_set){
             cout << class_code << endl;
         }
     }
@@ -986,7 +986,7 @@ a17:    cout << endl << YELLOW << BREAK << RESET << endl << endl;
         }
     }
     else{
-        for (Student s : all_students){
+        for (const Student& s : all_students){
             int uc_num = (int) s.get_ucs().size();
 
             if (filter && cond == 0 && uc_num > number){
@@ -1138,7 +1138,7 @@ void Helpy::rem(Request sub){
                 c.remove_student(s.get_studentName()); // remover o estudante da class
                 list<Block> blocks;
                     for (auto it = s.get_ucs().begin(); it != s.get_ucs().end(); it++){
-                        for(Block b : class_blocks[it->second]){
+                        for(const Block& b : class_blocks[it->second]){
                             if (b.get_code() == it->first)
                             {
                                 blocks.push_back(b);
@@ -1211,7 +1211,7 @@ void Helpy::change(Request sub){
             set<string> student_uc = s.get_uc();
             map<string,string> a = s.get_ucs();
             for(string ucs : student_uc){
-                int num = (ucs[0] == 'L') ? (ucs[6] - '0') * 10 + (ucs[7] - '0') - 1 : all_UCs.size()-1;
+                int num = (ucs[0] == 'L') ? (ucs[6] - '0') * 10 + (ucs[7] - '0') - 1 : (int) all_UCs.size()-1;
                 UC& u = all_UCs[num];
                 set<string> uc_class = u.get_classes();
                 if(uc_class.find(sub.get_class()) == uc_class.end()){
@@ -1221,7 +1221,7 @@ void Helpy::change(Request sub){
                 }
             }
             map<string, string> pain;
-            for(auto i: a){
+            for(const auto& i: a){
                 if(student_uc.find(i.first) != student_uc.end()){
                     pain[i.first] = sub.get_class();
                 } else {
@@ -1230,7 +1230,7 @@ void Helpy::change(Request sub){
             }
             list<Block> blocks;
             for (auto it = s.get_ucs().begin(); it != s.get_ucs().end(); it++){
-                for(Block b : class_blocks[it->second]){
+                for (const Block& b : class_blocks[it->second]){
                     if (b.get_code() == it->first)
                     {
                         blocks.push_back(b);
@@ -1266,15 +1266,16 @@ string Helpy::is_valid(Student s, Class& cl, string uc){
     }
     Schedule st = s.get_schedule();
     Schedule c = cl.get_schedule();
-    for(Block b: c.get_blocks()){
+    for(const Block& b: c.get_blocks()){
         if((b.get_type() == "TP" || b.get_type() == "PL") && b.get_code() == uc){
-            for(Block su: st.get_blocks()){
+            for(const Block& su: st.get_blocks()){
                 if((su.get_type() == "TP" || su.get_type() == "PL") && ((su.get_startHour() >= b.get_startHour() && su.get_startHour() < b.get_endHour()) || (su.get_endHour() > b.get_startHour() && su.get_endHour() <= b.get_endHour()))){
                     return "Failed due to Schedule overlap";
                 }
             }
         }
     }
+    /*
     int num = (uc[0] == 'L') ? (uc[6] - '0') * 10 + (uc[7] - '0') - 1 : all_UCs.size() - 1;
     UC& u = all_UCs[num];
     set<string> sub = u.get_classes();
@@ -1291,12 +1292,12 @@ string Helpy::is_valid(Student s, Class& cl, string uc){
             year = (*pain)[0] - '0';
             nu = ((*pain)[5] - '0') * 10 + ((*pain)[6] - '0');
             Class& o = all_classes[(year - 1) * 16 + (nu - 1)];
-            dif = (&g == &cl) ? abs(g.get_ocupation()[uc] - o.get_ocupation()[uc]) + 1 : abs(g.get_ocupation()[uc] - o.get_ocupation()[uc]);
+            dif = (&g == &cl) ? abs(g.get_occupation()[uc] - o.get_occupation()[uc]) + 1 : abs(g.get_occupation()[uc] - o.get_occupation()[uc]);
             if(&g == &cl){
                 cout << "Same" << endl;
             }
-            cout << g.get_ocupation()[uc] << endl;
-            cout << o.get_ocupation()[uc] << endl;
+            cout << g.get_occupation()[uc] << endl;
+            cout << o.get_occupation()[uc] << endl;
             if(dif > max){
                 max = dif;
             }
@@ -1304,7 +1305,7 @@ string Helpy::is_valid(Student s, Class& cl, string uc){
         if(max >= 4){
             return "Failed due to class disequilibrium";
         }
-    }
+    }*/
 
     return "yes";
 }
@@ -1339,12 +1340,12 @@ string Helpy::is_valid_change(Student s, Schedule schedule_, Class& c, set<strin
                 year = (*pain)[0] - '0';
                 nu = ((*pain)[5] - '0') * 10 + ((*pain)[6] - '0');
                 Class& o = all_classes[(year - 1) * 16 + (nu - 1)];
-                dif = (&g == &c) ? abs(g.get_ocupation()[uc] - o.get_ocupation()[uc]) + 1 : abs(g.get_ocupation()[uc] - o.get_ocupation()[uc]);
+                dif = (&g == &c) ? abs(g.get_occupation()[uc] - o.get_occupation()[uc]) + 1 : abs(g.get_occupation()[uc] - o.get_occupation()[uc]);
                 if(&g == &c){
                     cout << "Same" << endl;
                 }
-                cout << g.get_ocupation()[uc] << endl;
-                cout << o.get_ocupation()[uc] << endl;
+                cout << g.get_occupation()[uc] << endl;
+                cout << o.get_occupation()[uc] << endl;
                 if(dif > max){
                     max = dif;
                 }

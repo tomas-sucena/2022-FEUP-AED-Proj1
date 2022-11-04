@@ -17,12 +17,12 @@ Schedule Class::get_schedule() const{
     return schedule_;
 }
 
-map<string,int> Class::get_ocupation() const{
-    return ocupation;
+map<string,int> Class::get_occupation() const{
+    return occupation;
 }
 
 void Class::set_ocupation(map<string,int> a){
-    ocupation = a;
+    occupation = a;
 }
 
 vector<pair<int, string>> Class::get_students() const{

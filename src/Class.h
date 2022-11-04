@@ -14,7 +14,7 @@ class Class {
         string classCode_;
         vector<pair<int, string>> students_; // ordenado por código
         Schedule schedule_;
-        map<string, int> ocupation;
+        map<string, int> occupation;
 
     public:
         // constructor
@@ -24,7 +24,7 @@ class Class {
         string get_classCode() const;
         Schedule get_schedule() const;
         void print_students(bool by_code, bool descending) const;
-        map<string,int> get_ocupation() const;
+        map<string,int> get_occupation() const;
         void set_ocupation(map<string, int> a);
         vector<pair<int, string>> get_students() const;
 
