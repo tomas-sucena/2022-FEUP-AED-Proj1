@@ -7,7 +7,7 @@
 #define RED     "\033[1;31m"
 #define YELLOW  "\033[33m"
 #define BOLD    "\033[1m"
-#define BREAK   "- - - - - - - - - - -"
+#define BREAK   "- - - - - - - - - - - - - - - - - - - - -"
 
 
 map<string, int> Helpy::command = {{"display", 1}, {"print", 1}, {"show", 1}, 
@@ -376,7 +376,7 @@ d1:     default : {
     }
 
 e2: cout << endl << YELLOW << BREAK << RESET << endl << endl;
-    cout << "See you next time!" << endl;
+    cout << "See you next time!" << endl << endl;
 }
 
 /*-----FUNÇÕES DE IMPRESSÃO-----*/
@@ -764,7 +764,8 @@ void Helpy::display_all_ucs() const{
         all_ucs_set.insert(u.get_UcCode());
     }
 
-a13:cout << endl << "What UCs would you like to see?" << endl << endl;
+a13:cout << endl << YELLOW << BREAK << RESET << endl << endl;
+    cout << endl << "What UCs would you like to see?" << endl << endl;
     cout << "All" << endl;
     cout << "First Year (first)" << endl;
     cout << "Second Year (second)" << endl;
