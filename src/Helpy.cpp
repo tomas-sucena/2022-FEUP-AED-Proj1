@@ -197,9 +197,9 @@ void Helpy::guided_mode(){
 
     /*-----LER COMANDOS-----*/
 
-    cout << endl << YELLOW << BREAK << RESET << endl << endl;
+b2: cout << endl << YELLOW << BREAK << RESET << endl << endl;
     cout << "Hello! How can I be of assistance?" << endl;
-b2: cout << endl;
+    cout << endl;
     cout << "* Display" << endl;
     cout << "* Add" << endl;
     cout << "* Remove" << endl;
