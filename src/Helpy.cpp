@@ -1222,7 +1222,7 @@ void Helpy::change(Request sub){
                 s.set_ucs(pain);
                 s.set_Schedule(student_schedule);
             } else {
-                log(r, grief);
+                log(sub, grief);
             }
         }
     }
@@ -1250,10 +1250,10 @@ string Helpy::is_valid_change(Student s, Schedule schedule_, Class c){
     if(c.size() >= 30){
         return "Failed due to exceeding class limit";
     }
-    for(Block b: schedule_.get_blocks()){
-        if((b.get_type() == "TP" || b.get_type() == "PL") && b.get_code() == uc){
-            for(Block su: schedule_.get_blocks()){
-                if((su.get_type() == "TP" || su.get_type() == "PL") && (b != su) && ((su.get_startHour() >= b.get_startHour() && su.get_startHour() < b.get_endHour()) || (su.get_endHour() > b.get_startHour() && su.get_endHour() <= b.get_endHour()))){
+    for(Block& b: schedule_.get_blocks()){
+        if(b.get_type() == "TP" || b.get_type() == "PL"){
+            for(Block& su: schedule_.get_blocks()){
+                if((su.get_type() == "TP" || su.get_type() == "PL")  && ((su.get_startHour() >= b.get_startHour() && su.get_startHour() < b.get_endHour()) || (su.get_endHour() > b.get_startHour() && su.get_endHour() <= b.get_endHour()))){
                     return "Failed due to Schedule overlap";
                 }
             }
@@ -1267,7 +1267,7 @@ void Helpy::log(Request r, string s){
     f.open("../Logs.txt", ios::app);
     if(r.get_type() == "remove"){
         f<<"Failed to " << r.get_type() <<' ' << r.get_uc() <<  " from student " << r.get_student() << ":" << s << endl;
-    } else if(r.get_type()) {
+    } else if(r.get_type() == "add") {
         f<<"Failed to " << r.get_type() << ' ' << r.get_uc() << "to class " << r.get_class() << " on student " << r.get_student() <<':' << s << endl;
     } else{
         f << "Failed to " << r.get_type() << ' ' << r.get_student() << " from class " << r.get_uc() << " to class " << r.get_class() << ':' << s << endl;
