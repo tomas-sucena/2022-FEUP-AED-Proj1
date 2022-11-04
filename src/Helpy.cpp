@@ -1091,6 +1091,8 @@ void Helpy::rem(Request sub){
                     cout << "UC-" << uc_ << " has sucessfully been removed from " << sub.get_student() << endl;
                 } else {
                     log(sub, "Failed because the student does not have the selected UC");
+                    cout << RED << "Failed, see logs for more information"<< endl;
+                    return;
                 }
             }
         }
@@ -1128,13 +1130,16 @@ void Helpy::rem(Request sub){
                 cout << "The student has been removed from the selected class" << endl;
                 } else {
                     log(sub, "Failed because the student is not in the selected Class");
+                    cout << RED << "Failed, see logs for more information"<< endl;
+                    return;
                 }
             }
             
         }
     }
     if(!valid){
-            cout << "The selected student (" << sub.get_student() << ") does not exist in this database" << endl;
+        log(sub, "The selected student does not exist");
+        cout << RED << "Failed, see logs for more information"<< endl;
     }
 }
 
@@ -1144,6 +1149,7 @@ void Helpy::add(Request sub){
             map<string, string> a = s.get_ucs();
             if(a.find(sub.get_uc()) != a.end()){
                 log(sub, "Failed because student already has selected uc");
+                cout << RED << "Failed, see logs for more information"<< endl;
                 return;
             }
             int year = sub.get_class()[0] - '0';
@@ -1172,6 +1178,7 @@ void Helpy::add(Request sub){
                 break;
             } else {
                 log(sub, conf);
+                cout << RED << "Failed, see logs for more information"<< endl;
                 return;
             }
         }
@@ -1194,6 +1201,7 @@ void Helpy::change(Request sub){
                 set<string> uc_class = u.get_classes();
                 if(uc_class.find(sub.get_class()) == uc_class.end()){
                     log(sub, "Not all UCs from previous class are taught at the new class");
+                    cout << RED << "Failed, see logs for more information"<< endl;
                     return;
                 }
             }
@@ -1224,6 +1232,8 @@ void Helpy::change(Request sub){
                 s.set_Schedule(student_schedule);
             } else {
                 log(sub, grief);
+                cout << RED << "Failed, see logs for more information"<< endl;
+                return;
             }
         }
     }
@@ -1254,7 +1264,7 @@ string Helpy::is_valid_change(Student s, Schedule schedule_, Class c){
     for(Block& b: schedule_.get_blocks()){
         if(b.get_type() == "TP" || b.get_type() == "PL"){
             for(Block& su: schedule_.get_blocks()){
-                if((su.get_type() == "TP" || su.get_type() == "PL")  && ((su.get_startHour() >= b.get_startHour() && su.get_startHour() < b.get_endHour()) || (su.get_endHour() > b.get_startHour() && su.get_endHour() <= b.get_endHour()))){
+                if((su.get_type() == "TP" || su.get_type() == "PL") && ((su.get_startHour() >= b.get_startHour() && su.get_startHour() < b.get_endHour()) || (su.get_endHour() > b.get_startHour() && su.get_endHour() <= b.get_endHour()))){
                     return "Failed due to Schedule overlap";
                 }
             }
