@@ -90,9 +90,8 @@ b1: cout << "How can I be of assistance?" << endl;
 
     if(s1 == "process" && s2 == "queue"){
         processQueue();
-        cout <<"Queue has been processed" << endl;
-        rewrite_file();
-        goto b1;
+        cout << endl << "Queue has been processed" << endl;
+        goto t;
     }
 
     cin >> s3;
@@ -190,7 +189,7 @@ b1: cout << "How can I be of assistance?" << endl;
         }
     }
 
-    cout << endl << "Anything else? (Yes/No)" << endl;
+t:  cout << endl << "Anything else? (Yes/No)" << endl;
 
     s1.clear(); getline(cin >> ws, s1);
     lowercase(s1);
