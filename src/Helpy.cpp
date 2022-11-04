@@ -13,7 +13,7 @@
 
 
 map<string, int> Helpy::command = {{"display", 1}, {"print", 1}, {"show", 1}, {"modify", 0}, {"remove", 100}, {"add",200}};
-map<string, int> Helpy::target = {{"uc", 6}, {"class", 8}, {"student", 10}, {"all", 22}, {"remove", 100}, {"add",200}};
+map<string, int> Helpy::target = {{"uc", 6}, {"class", 8}, {"student", 10}, {"students", 10}, {"all", 22}, {"remove", 100}, {"add",200}};
 map<string, int> Helpy::what = {{"schedule", 24}, {"classes", 27}, {"class", 27}, {"ucs", 30}, {"uc", 30}, {"students", 33},{"student", 33}};
 
 // função auxiliar usada para tratar dos comandos
@@ -72,8 +72,7 @@ a0: cout << endl << YELLOW << BREAK << RESET << endl << endl;
 void Helpy::advanced_mode(){
     /*-----LER COMANDOS-----*/
     cout << endl << YELLOW << BREAK << RESET << endl;
-    cout << endl << "Hello! ";
-b1: cout << "How can I be of assistance?" << endl;
+b1: cout << endl << "How can I be of assistance?" << endl;
 
     string s1, s2, s3;
     istringstream s_;

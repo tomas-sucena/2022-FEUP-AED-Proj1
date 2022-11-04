@@ -18,11 +18,7 @@ Schedule Class::get_schedule() const{
 }
 
 map<string,int> Class::get_occupation() const{
-    return occupation;
-}
-
-void Class::set_ocupation(map<string,int> a){
-    occupation = a;
+    return occupation_;
 }
 
 vector<pair<int, string>> Class::get_students() const{
@@ -36,7 +32,7 @@ void Class::print_students(bool by_code, bool descending) const{
             reverse(temp.begin(), temp.end());
         }
 
-        for (auto info : temp){
+        for (const auto& info : temp){
             cout << "up" << info.first << "   " << info.second << endl;
         }
     }
@@ -47,13 +43,13 @@ void Class::print_students(bool by_code, bool descending) const{
             reverse(temp.begin(), temp.end());
         }
 
-        for (auto info : temp){
+        for (const auto& info : temp){
             cout << "up" << info.first << "   " << info.second << endl;  
         }
     }
 }
 
-void Class::add_student(int studentCode, string studentName){
+void Class::add_student(int studentCode, string studentName, string ucCode){
     bool found = false;
     
     // pesquisa binária
@@ -76,6 +72,7 @@ void Class::add_student(int studentCode, string studentName){
 
     if (!found){
         students_.push_back({studentCode, studentName});
+        occupation_[ucCode]++;
     }
     
     sort(students_.begin(), students_.end());
@@ -94,7 +91,7 @@ bool Class::equals(Class c){
     return (c.get_classCode() == classCode_);
 }
 
-bool Class::operator<(const Class c) const{
+bool Class::operator<(const Class& c) const{
     return (classCode_ < c.get_classCode());
 }
 
