@@ -86,7 +86,7 @@ b1: string s1, s2, s3;
 
     if(s1 == "process" && s2 == "queue"){
         processQueue();
-        cout << "Queue has been processed" << endl;
+        cout <<"Queue has been processed" << endl;
         rewrite_file();
         goto b1;
     }
@@ -1091,7 +1091,7 @@ void Helpy::rem(Request sub){
                     cout << "UC-" << uc_ << " has sucessfully been removed from " << sub.get_student() << endl;
                 } else {
                     log(sub, "Failed because the student does not have the selected UC");
-                    cout << RED << "Failed, see logs for more information"<< endl;
+                    cout << RED << "Failed, see logs for more information"<< RESET << endl;
                     return;
                 }
             }
@@ -1130,7 +1130,7 @@ void Helpy::rem(Request sub){
                 cout << "The student has been removed from the selected class" << endl;
                 } else {
                     log(sub, "Failed because the student is not in the selected Class");
-                    cout << RED << "Failed, see logs for more information"<< endl;
+                    cout << RED << "Failed, see logs for more information"<< RESET <<  endl;
                     return;
                 }
             }
@@ -1139,7 +1139,7 @@ void Helpy::rem(Request sub){
     }
     if(!valid){
         log(sub, "The selected student does not exist");
-        cout << RED << "Failed, see logs for more information"<< endl;
+        cout << RED << "Failed, see logs for more information"<< RESET << endl;
     }
 }
 
@@ -1149,7 +1149,7 @@ void Helpy::add(Request sub){
             map<string, string> a = s.get_ucs();
             if(a.find(sub.get_uc()) != a.end()){
                 log(sub, "Failed because student already has selected uc");
-                cout << RED << "Failed, see logs for more information"<< endl;
+                cout << RED << "Failed, see logs for more information"<< RESET << endl;
                 return;
             }
             int year = sub.get_class()[0] - '0';
@@ -1162,7 +1162,7 @@ void Helpy::add(Request sub){
                     c.add_student(stoi(s.get_studentCode()), s.get_studentName());
                 }
                 a[sub.get_uc()] = sub.get_class();
-                int num = (sub.get_uc()[6] - '0') * 10 + (sub.get_class()[7] - '0') - 1;
+                int num = (sub.get_uc()[0] == 'L') ? (sub.get_uc()[6] - '0') * 10 + (sub.get_uc()[7] - '0') - 1 : all_UCs.size() - 1;
                 UC& u = all_UCs[num];
                 u.add_student(stoi(s.get_studentCode()), s.get_studentName());
                 list<Block> blocks;
@@ -1175,10 +1175,11 @@ void Helpy::add(Request sub){
                     }
                 }
                 s.set_Schedule(Schedule(blocks));
+                cout << GREEN << "Successfully added UC " << sub.get_uc() << " to class " << sub.get_class() <<" on student " << sub.get_student() << RESET << endl; 
                 break;
             } else {
                 log(sub, conf);
-                cout << RED << "Failed, see logs for more information"<< endl;
+                cout << RED << "Failed, see logs for more information"<< RESET << endl;
                 return;
             }
         }
@@ -1201,7 +1202,7 @@ void Helpy::change(Request sub){
                 set<string> uc_class = u.get_classes();
                 if(uc_class.find(sub.get_class()) == uc_class.end()){
                     log(sub, "Not all UCs from previous class are taught at the new class");
-                    cout << RED << "Failed, see logs for more information"<< endl;
+                    cout << RED << "Failed, see logs for more information"<< RESET << endl;
                     return;
                 }
             }
@@ -1230,9 +1231,10 @@ void Helpy::change(Request sub){
             if(grief == "yes"){
                 s.set_ucs(pain);
                 s.set_Schedule(student_schedule);
+                cout << GREEN << "Successfully changed student " << sub.get_student() << " from class " << sub.get_uc() << " to class " << sub.get_class() << "." << RESET << endl;
             } else {
                 log(sub, grief);
-                cout << RED << "Failed, see logs for more information"<< endl;
+                cout << RED << "Failed, see logs for more information"<< RESET << endl;
                 return;
             }
         }
@@ -1254,6 +1256,33 @@ string Helpy::is_valid(Student s, Class cl, string uc){
             }
         }
     }
+    int num = (uc[0] == 'L') ? (uc[6] - '0') * 10 + (uc[7] - '0') - 1 : all_UCs.size() - 1;
+    UC& u = all_UCs[num];
+    set<string> sub = u.get_classes();
+    int max = INT32_MIN;
+    for(auto cla = sub.begin() ; cla != sub.end(); cla++){
+        int year = (*cla)[0] - '0';
+        int nu = ((*cla)[5] - '0') * 10 + ((*cla)[6] - '0');
+        Class& g = all_classes[(year - 1) * 16 + (nu - 1)];
+        for(auto pain = sub.begin(); pain != sub.end(); pain++){
+            if(pain == cla){
+                continue;
+            }
+            year = (*pain)[0] - '0';
+            nu = ((*pain)[5] - '0') * 10 + ((*pain)[6] - '0');
+            Class& o = all_classes[(year - 1) * 16 + (nu - 1)];
+            cout << &g;
+            cout << &cl;
+            int dif = (&g == &cl) ? abs(g.size() - o.size()) + 1 : abs(g.size() - o.size());
+            if(dif > max){
+                max = dif;
+            }
+        }
+    }
+    if(max >= 4){
+        return "Failed due to class desiquilibrium";
+    }
+
     return "yes";
 }
 
@@ -1264,7 +1293,7 @@ string Helpy::is_valid_change(Student s, Schedule schedule_, Class c){
     for(Block& b: schedule_.get_blocks()){
         if(b.get_type() == "TP" || b.get_type() == "PL"){
             for(Block& su: schedule_.get_blocks()){
-                if((su.get_type() == "TP" || su.get_type() == "PL") && ((su.get_startHour() >= b.get_startHour() && su.get_startHour() < b.get_endHour()) || (su.get_endHour() > b.get_startHour() && su.get_endHour() <= b.get_endHour()))){
+                if((su.get_type() == "TP" || su.get_type() == "PL") && (&b == &su) && ((su.get_startHour() >= b.get_startHour() && su.get_startHour() < b.get_endHour()) || (su.get_endHour() > b.get_startHour() && su.get_endHour() <= b.get_endHour()))){
                     return "Failed due to Schedule overlap";
                 }
             }
