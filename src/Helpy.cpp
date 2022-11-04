@@ -1236,6 +1236,11 @@ void Helpy::change(Request sub){
             if(grief == "yes"){
                 s.set_ucs(pain);
                 s.set_Schedule(student_schedule);
+                c.add_student(stoi(s.get_studentCode()), s.get_studentName());
+                year = sub.get_uc()[0] - '0';
+                num = (sub.get_uc()[5] - '0') * 10 + (sub.get_uc()[6] - '0');
+                Class& o = all_classes[(year - 1) * 16 + (num - 1)];
+                o.remove_student(s.get_studentName());
                 cout << GREEN << "Successfully changed student " << sub.get_student() << " from class " << sub.get_uc() << " to class " << sub.get_class() << "." << RESET << endl;
             } else {
                 log(sub, grief);
