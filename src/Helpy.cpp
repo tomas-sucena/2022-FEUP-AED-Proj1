@@ -79,6 +79,7 @@ b1: string s1, s2, s3;
     if(s1 == "process" && s2 == "queue"){
         processQueue();
         cout << "Queue has been processed" << endl;
+        rewrite_file();
         goto b1;
     }
 
@@ -1090,7 +1091,37 @@ void Helpy::add(Request sub){
     }
 }
 
-void Helpy::change(Request sub){}
+void Helpy::change(Request sub){
+    for(Student& s: all_students){
+        if(s.get_studentCode() == sub.get_student()){
+            set<string> student_uc;
+            map<string,string> a = s.get_ucs();
+            for(auto i : a){
+                if(i.second == sub.get_uc()){
+                    student_uc.insert(i.first);
+                }
+            }
+            for(string ucs : student_uc){
+                int num = (ucs[0] == 'L') ? (ucs[6] - '0') * 10 + (ucs[7] - '0') - 1 : all_UCs.size()-1;
+                UC& u = all_UCs[num];
+                set<string> uc_class = u.get_classes();
+                if(uc_class.find(sub.get_class()) == uc_class.end()){
+                    log(sub, "Not all UCs from previous class are taught at the new class");
+                    return;
+                }
+            }
+            map<string, string> pain;
+            for(auto i: a){
+                if(student_uc.find(i.first) != student_uc.end()){
+                    pain[i.first] = sub.get_class();
+                } else {
+                    pain[i.first] = i.second;
+                }
+            }
+            s.set_ucs(pain);
+        }
+    }
+}
 
 string Helpy::is_valid(Student s, Class cl, string uc){
     if(cl.size() >= 30){
