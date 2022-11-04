@@ -38,9 +38,9 @@ class Helpy {
         void rewrite_file();
         void log(Request r, string s);
         
-        void display_uc_schedule(bool& valid) const;
-        void display_uc_classes(bool& valid) const;
-        void display_uc_students(bool& valid) const;
+        void display_uc_schedule() const;
+        void display_uc_classes() const;
+        void display_uc_students() const;
 
         void display_class_schedule(bool& valid) const;
         void display_class_students(bool& valid) const;
