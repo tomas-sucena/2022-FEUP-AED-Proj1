@@ -11,6 +11,7 @@
 #define BOLD    "\033[1m"
 #define BREAK   "- - - - - - - - - - - - - - - - - - - - -"
 
+
 map<string, int> Helpy::command = {{"display", 1}, {"print", 1}, {"show", 1}, 
                                    {"remove", 100}, {"add",200}};
 map<string, int> Helpy::target = {{"uc", 6}, {"class", 8}, {"student", 10}, {"all", 22}};
@@ -425,6 +426,10 @@ a1: cout << endl << YELLOW << BREAK << RESET << endl << endl;
     }
 }
 
+/**
+ * @brief displays the classes of a determined UC
+ * complexity = n^3
+ */
 void Helpy::display_uc_classes() const{
 a2: cout << endl << YELLOW << BREAK << RESET << endl << endl;
     cout << "Please type the code (L.EICXXX) of the desired UC." << endl;
@@ -453,6 +458,10 @@ a2: cout << endl << YELLOW << BREAK << RESET << endl << endl;
     }
 }
 
+/**
+ * @brief displays the students of a determined UC
+ * complexity = n^3*log(n)
+ */
 void Helpy::display_uc_students() const{
     cin.ignore();
 
@@ -1044,7 +1053,7 @@ a19:cout << endl << YELLOW << BREAK << RESET << endl << endl;
 /*-----FUNÇÕES DA FILA-----*/
 void Helpy::rewrite_file(){
     ofstream out("temp.csv");
-    
+
     out << "StudentCode,StudentName,UcCode,ClassCode" << endl;
 
     for (const Student& s : all_students){
@@ -1252,7 +1261,7 @@ void Helpy::change(Request sub){
             int year = sub.get_class()[0] - '0';
             int num = (sub.get_class()[5] - '0') * 10 + (sub.get_class()[6] - '0');
             Class& c = all_classes[(year - 1) * 16 + (num - 1)];
-            string grief = is_valid_change(s, student_schedule, c);
+            string grief = is_valid_change(s, student_schedule, c, student_uc);
             if(grief == "yes"){
                 s.set_ucs(pain);
                 s.set_Schedule(student_schedule);
@@ -1271,7 +1280,7 @@ void Helpy::change(Request sub){
     }
 }
 
-string Helpy::is_valid(Student s, Class cl, string uc){
+string Helpy::is_valid(Student s, Class& cl, string uc){
     if(cl.size() >= 30){
         return "Failed due to exceeding class limit";
     }
@@ -1289,10 +1298,11 @@ string Helpy::is_valid(Student s, Class cl, string uc){
     int num = (uc[0] == 'L') ? (uc[6] - '0') * 10 + (uc[7] - '0') - 1 : all_UCs.size() - 1;
     UC& u = all_UCs[num];
     set<string> sub = u.get_classes();
-    int max = INT32_MIN;
+    int dif = 0;
     for(auto cla = sub.begin() ; cla != sub.end(); cla++){
         int year = (*cla)[0] - '0';
         int nu = ((*cla)[5] - '0') * 10 + ((*cla)[6] - '0');
+        int max = INT32_MIN;
         Class& g = all_classes[(year - 1) * 16 + (nu - 1)];
         for(auto pain = sub.begin(); pain != sub.end(); pain++){
             if(pain == cla){
@@ -1301,34 +1311,70 @@ string Helpy::is_valid(Student s, Class cl, string uc){
             year = (*pain)[0] - '0';
             nu = ((*pain)[5] - '0') * 10 + ((*pain)[6] - '0');
             Class& o = all_classes[(year - 1) * 16 + (nu - 1)];
-            cout << &g;
-            cout << &cl;
-            int dif = (&g == &cl) ? abs(g.size() - o.size()) + 1 : abs(g.size() - o.size());
+            dif = (&g == &cl) ? abs(g.size() - o.size()) + 1 : abs(g.size() - o.size());
+            if(&g == &cl){
+                cout << "Same" << endl;
+            }
+            cout << g.size() << endl;
+            cout << o.size() << endl;
             if(dif > max){
                 max = dif;
             }
         }
-    }
-    if(max >= 4){
-        return "Failed due to class disequilibrium";
+        if(max >= 4){
+            return "Failed due to class disequilibrium";
+        }
     }
 
     return "yes";
 }
 
-string Helpy::is_valid_change(Student s, Schedule schedule_, Class c){
+string Helpy::is_valid_change(Student s, Schedule schedule_, Class& c, set<string> ucs){
     if(c.size() >= 30){
         return "Failed due to exceeding class limit";
     }
     for(Block& b: schedule_.get_blocks()){
         if(b.get_type() == "TP" || b.get_type() == "PL"){
             for(Block& su: schedule_.get_blocks()){
-                if((su.get_type() == "TP" || su.get_type() == "PL") && (&b == &su) && ((su.get_startHour() >= b.get_startHour() && su.get_startHour() < b.get_endHour()) || (su.get_endHour() > b.get_startHour() && su.get_endHour() <= b.get_endHour()))){
+                if((su.get_type() == "TP" || su.get_type() == "PL") && (&b != &su) && ((su.get_startHour() >= b.get_startHour() && su.get_startHour() < b.get_endHour()) || (su.get_endHour() > b.get_startHour() && su.get_endHour() <= b.get_endHour()))){
                     return "Failed due to Schedule overlap";
                 }
             }
         }
     }
+    for(string uc: ucs){
+    int num = (uc[0] == 'L') ? (uc[6] - '0') * 10 + (uc[7] - '0') - 1 : all_UCs.size() - 1;
+    UC& u = all_UCs[num];
+    set<string> sub = u.get_classes();
+    int dif = 0;
+    for(auto cla = sub.begin() ; cla != sub.end(); cla++){
+        int year = (*cla)[0] - '0';
+        int nu = ((*cla)[5] - '0') * 10 + ((*cla)[6] - '0');
+        int max = INT32_MIN;
+        Class& g = all_classes[(year - 1) * 16 + (nu - 1)];
+        for(auto pain = sub.begin(); pain != sub.end(); pain++){
+            if(pain == cla){
+                continue;
+            }
+            year = (*pain)[0] - '0';
+            nu = ((*pain)[5] - '0') * 10 + ((*pain)[6] - '0');
+            Class& o = all_classes[(year - 1) * 16 + (nu - 1)];
+            dif = (&g == &c) ? abs(g.size() - o.size()) + 1 : abs(g.size() - o.size());
+            if(&g == &c){
+                cout << "Same" << endl;
+            }
+            cout << g.size() << endl;
+            cout << o.size() << endl;
+            if(dif > max){
+                max = dif;
+            }
+        }
+        if(max >= 4){
+            return "Failed due to class desiquilibrium";
+        }
+    }
+    }
+
     return "yes";
 }
 
@@ -1338,7 +1384,7 @@ void Helpy::log(Request r, string s){
     if(r.get_type() == "remove"){
         f<<"Failed to " << r.get_type() <<' ' << r.get_uc() <<  " from student " << r.get_student() << ":" << s << endl;
     } else if(r.get_type() == "add") {
-        f<<"Failed to " << r.get_type() << ' ' << r.get_uc() << "to class " << r.get_class() << " on student " << r.get_student() <<':' << s << endl;
+        f<<"Failed to " << r.get_type() << ' ' << r.get_uc() << " to class " << r.get_class() << " on student " << r.get_student() <<':' << s << endl;
     } else{
         f << "Failed to " << r.get_type() << ' ' << r.get_student() << " from class " << r.get_uc() << " to class " << r.get_class() << ':' << s << endl;
     }
