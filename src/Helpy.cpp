@@ -392,7 +392,7 @@ a1: cout << endl << YELLOW << BREAK << RESET << endl << endl;
     for (UC u : all_UCs){
         if (u.get_UcCode() == uc){
             cout << endl << YELLOW << BREAK << RESET << endl << endl;
-            cout << "The UC " << BOLD << uc << RESET << " has the following schedule:" << endl;
+            cout << "The UC " << BOLD << uc << RESET << " has the following schedule:" << endl << endl;
 
             u.get_schedule().print();
 
@@ -420,7 +420,7 @@ a2: cout << endl << YELLOW << BREAK << RESET << endl << endl;
     for (UC u : all_UCs){
         if (u.get_UcCode() == uc){
             cout << endl << YELLOW << BREAK << RESET << endl << endl;
-            cout << "The UC " << BOLD << uc << RESET << " has the following classes:" << endl;
+            cout << "The UC " << BOLD << uc << RESET << " has the following classes:" << endl << endl;
 
             u.print_classes();
 
@@ -536,7 +536,7 @@ a6: cout << endl << YELLOW << BREAK << RESET << endl << endl;
     for (Class c : all_classes){
         if (c.get_classCode() == classCode){
             cout << endl << YELLOW << BREAK << RESET << endl << endl;
-            cout << "The class " << BOLD << classCode << RESET << " has the following schedule:" << endl;
+            cout << "The class " << BOLD << classCode << RESET << " has the following schedule:" << endl << endl;
 
             c.get_schedule().print();
 
@@ -625,7 +625,7 @@ a9: cout << endl << YELLOW << BREAK << RESET << endl << endl;
     for (Class c : all_classes){
         if (c.get_classCode() == classCode){
             cout << endl << YELLOW << BREAK << RESET << endl << endl;
-            cout << "The class " << BOLD << classCode << RESET << " has the following students:" << endl;
+            cout << "The class " << BOLD << classCode << RESET << " has the following students:" << endl << endl;
 
             c.print_students(by_code, descending);
 
@@ -657,7 +657,7 @@ a10:cout << endl << "Please write the code (upXXXXXXXXX) or the name of the desi
 
         if (s.get_studentCode() == inp || smol == inp){
             cout << endl << YELLOW << BREAK << RESET << endl << endl;
-            cout << "The student " << BOLD << s.get_studentName() << RESET << " (up" << s.get_studentCode() << ')' << " has the following schedule:" << endl;
+            cout << "The student " << BOLD << s.get_studentName() << RESET << " (up" << s.get_studentCode() << ')' << " has the following schedule:" << endl << endl;
 
             s.get_schedule().print();
 
@@ -689,7 +689,7 @@ a11:cout << endl << YELLOW << BREAK << RESET << endl << endl;
 
         if (s.get_studentCode() == inp || smol == inp){
             cout << endl << YELLOW << BREAK << RESET << endl << endl;
-            cout << "The student " << BOLD << s.get_studentName() << RESET << " (up" << s.get_studentCode() << ')' << " belongs to the following classes:" << endl;
+            cout << "The student " << BOLD << s.get_studentName() << RESET << " (up" << s.get_studentCode() << ')' << " belongs to the following classes:" << endl << endl;
 
             s.print_classes();
 
@@ -1008,7 +1008,7 @@ a19:cout << endl << YELLOW << BREAK << RESET << endl << endl;
 
         if (s.get_studentCode() == inp || smol == inp){
             cout << endl << YELLOW << BREAK << RESET << endl << endl;
-            cout << "The student " << BOLD << s.get_studentName() << RESET << " (up" << s.get_studentCode() << ')' << " has the following UCs:" << endl;
+            cout << "The student " << BOLD << s.get_studentName() << RESET << " (up" << s.get_studentCode() << ')' << " has the following UCs:" << endl << endl;
 
             s.print_ucs();
 
