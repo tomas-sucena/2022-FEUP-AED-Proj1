@@ -3,3 +3,5 @@
 src/proj
 .idea
 build/
+docs/html/
+docs/latex/
