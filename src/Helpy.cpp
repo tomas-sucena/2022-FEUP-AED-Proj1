@@ -76,10 +76,11 @@ void Helpy::advanced_mode(){
 b1: cout << "How can I be of assistance?" << endl;
 
     string s1, s2, s3;
+    istringstream s_;
 
     cin >> s1; lowercase(s1);
 
-    if (s1 == "quit" || s1 == "no"  || s1 == "die"){
+    if (s1 == "quit" || s1 == "no" || s1 == "die"){
         goto e1;
     }
 
@@ -193,7 +194,7 @@ b1: cout << "How can I be of assistance?" << endl;
     s1.clear(); getline(cin, s1);
     lowercase(s1);
 
-    istringstream s_(s1);
+    s_.clear(); s_.str(s1);
 
     while (s_ >> s1){
         if (s1 == "yes" || s1 == "y"){
@@ -1046,7 +1047,7 @@ void Helpy::rewrite_file(){
     
     out << "StudentCode,StudentName,UcCode,ClassCode" << endl;
 
-    for (Student s : all_students){
+    for (const Student& s : all_students){
         string studentCode = s.get_studentCode();
         string studentName = s.get_studentName();
 
@@ -1092,22 +1093,28 @@ void Helpy::rem(Request sub){
                 if(it != a.end()){
                     a.erase(it);
                     s.set_ucs(a);
-                    list<Block> blocks;
-                    for (auto it = s.get_ucs().begin(); it != s.get_ucs().end(); it++){
-                        for(Block b : class_blocks[it->second]){
-                            if (b.get_code() == it->first)
-                            {
-                                blocks.push_back(b);
-                            }
+
+                    // criar o novo horário do estudante
+                    list<Block> blocks = s.get_schedule().get_blocks();
+
+                    auto iit = blocks.begin();
+                    for (; iit != blocks.end(); iit++){
+                        if (iit->get_code() == sub.get_uc()){
+                            break;
                         }
                     }
+
+                    blocks.erase(iit);
                     s.set_Schedule(Schedule(blocks));
 
                     string uc_ = sub.get_uc();
                     lowercase(uc_,true);
                     
                     cout << "UC-" << uc_ << " has sucessfully been removed from " << sub.get_student() << endl;
-                } else {
+
+                    break;
+                }
+                else {
                     log(sub, "Failed because the student does not have the selected UC");
                     cout << RED << "Failed, see logs for more information"<< RESET << endl;
                     return;
@@ -1303,7 +1310,7 @@ string Helpy::is_valid(Student s, Class cl, string uc){
         }
     }
     if(max >= 4){
-        return "Failed due to class desiquilibrium";
+        return "Failed due to class disequilibrium";
     }
 
     return "yes";
