@@ -49,7 +49,7 @@ void Class::print_students(bool by_code, bool descending) const{
     }
 }
 
-void Class::add_student(int studentCode, string studentName, string ucCode){
+void Class::add_student(int studentCode, const string& studentName, const string& ucCode){
     bool found = false;
     
     // pesquisa binária

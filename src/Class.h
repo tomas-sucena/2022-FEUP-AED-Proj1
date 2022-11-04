@@ -27,7 +27,7 @@ class Class {
         map<string, int> get_occupation() const;
 
         void print_students(bool by_code, bool descending) const;
-        void add_student(int studentCode, string studentName, string ucCode);
+        void add_student(int studentCode, const string& studentName, const string& ucCode);
         void remove_student(string studentName);//por implementar
         int size() const;
 
