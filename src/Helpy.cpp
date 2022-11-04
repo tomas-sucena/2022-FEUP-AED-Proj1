@@ -1253,7 +1253,7 @@ string Helpy::is_valid_change(Student s, Schedule schedule_, Class c){
     for(Block& b: schedule_.get_blocks()){
         if(b.get_type() == "TP" || b.get_type() == "PL"){
             for(Block& su: schedule_.get_blocks()){
-                if((su.get_type() == "TP" || su.get_type() == "PL")  && ((su.get_startHour() >= b.get_startHour() && su.get_startHour() < b.get_endHour()) || (su.get_endHour() > b.get_startHour() && su.get_endHour() <= b.get_endHour()))){
+                if((su.get_type() == "TP" || su.get_type() == "PL") && ((su.get_startHour() >= b.get_startHour() && su.get_startHour() < b.get_endHour()) || (su.get_endHour() > b.get_startHour() && su.get_endHour() <= b.get_endHour()))){
                     return "Failed due to Schedule overlap";
                 }
             }
