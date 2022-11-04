@@ -1251,7 +1251,7 @@ void Helpy::change(Request sub){
     }
 }
 
-string Helpy::is_valid(Student s, Class cl, string uc){
+string Helpy::is_valid(Student s, Class& cl, string uc){
     if(cl.size() >= 30){
         return "Failed due to exceeding class limit";
     }
@@ -1269,10 +1269,11 @@ string Helpy::is_valid(Student s, Class cl, string uc){
     int num = (uc[0] == 'L') ? (uc[6] - '0') * 10 + (uc[7] - '0') - 1 : all_UCs.size() - 1;
     UC& u = all_UCs[num];
     set<string> sub = u.get_classes();
-    int max = INT32_MIN;
+    int dif = 0;
     for(auto cla = sub.begin() ; cla != sub.end(); cla++){
         int year = (*cla)[0] - '0';
         int nu = ((*cla)[5] - '0') * 10 + ((*cla)[6] - '0');
+        int max = INT32_MIN;
         Class& g = all_classes[(year - 1) * 16 + (nu - 1)];
         for(auto pain = sub.begin(); pain != sub.end(); pain++){
             if(pain == cla){
@@ -1281,16 +1282,19 @@ string Helpy::is_valid(Student s, Class cl, string uc){
             year = (*pain)[0] - '0';
             nu = ((*pain)[5] - '0') * 10 + ((*pain)[6] - '0');
             Class& o = all_classes[(year - 1) * 16 + (nu - 1)];
-            cout << &g;
-            cout << &cl;
-            int dif = (&g == &cl) ? abs(g.size() - o.size()) + 1 : abs(g.size() - o.size());
+            dif = (&g == &cl) ? abs(g.size() - o.size()) + 1 : abs(g.size() - o.size());
+            if(&g == &cl){
+                cout << "Same" << endl;
+            }
+            cout << g.size() << endl;
+            cout << o.size() << endl;
             if(dif > max){
                 max = dif;
             }
         }
-    }
-    if(max >= 4){
-        return "Failed due to class desiquilibrium";
+        if(max >= 4){
+            return "Failed due to class desiquilibrium";
+        }
     }
 
     return "yes";
@@ -1318,7 +1322,7 @@ void Helpy::log(Request r, string s){
     if(r.get_type() == "remove"){
         f<<"Failed to " << r.get_type() <<' ' << r.get_uc() <<  " from student " << r.get_student() << ":" << s << endl;
     } else if(r.get_type() == "add") {
-        f<<"Failed to " << r.get_type() << ' ' << r.get_uc() << "to class " << r.get_class() << " on student " << r.get_student() <<':' << s << endl;
+        f<<"Failed to " << r.get_type() << ' ' << r.get_uc() << " to class " << r.get_class() << " on student " << r.get_student() <<':' << s << endl;
     } else{
         f << "Failed to " << r.get_type() << ' ' << r.get_student() << " from class " << r.get_uc() << " to class " << r.get_class() << ':' << s << endl;
     }

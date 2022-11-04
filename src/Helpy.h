@@ -56,7 +56,7 @@ class Helpy {
         void add(Request sub);
         void rem(Request sub);
         void change(Request sub);
-        string is_valid(Student s, Class cl, string uc);
+        string is_valid(Student s, Class& cl, string uc);
         string is_valid_change(Student s, Schedule schedule_, Class c);
 };
 
