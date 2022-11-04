@@ -3,12 +3,12 @@
 #include <sstream>
 #include <iostream>
 
+// cores para o output
 #define RESET   "\033[0;m"
 #define RED     "\033[1;31m"
 #define YELLOW  "\033[33m"
 #define BOLD    "\033[1m"
 #define BREAK   "- - - - - - - - - - - - - - - - - - - - -"
-
 
 map<string, int> Helpy::command = {{"display", 1}, {"print", 1}, {"show", 1}, 
                                    {"remove", 100}, {"add",200}};
@@ -70,7 +70,7 @@ a0: cout << "* Guided" << endl;
                                 ///         ADVANCED MODE       ///
 void Helpy::advanced_mode(){
     /*-----LER COMANDOS-----*/
-    cout << endl << YELLOW << BREAK << RESET << endl << endl;
+    cout << endl << YELLOW << BREAK << RESET << endl;
     cout << endl << "Hello! How can I be of assistance?" << endl;
 
 b1: string s1, s2, s3; 
@@ -152,7 +152,7 @@ b1: string s1, s2, s3;
             break;
         }
         case(137) : { // remove student classes
-            cout << "Please type the code (upXXXXXXXXX) of the desired student"<<endl;
+            cout << endl << "Please type the code (upXXXXXXXXX) of the desired student"<< endl;
             string st; cin >>st;
             cout << "Please type the code of the class you want to remove" << endl;
             string cl; cin >> cl; lowercase(cl, true);
@@ -162,7 +162,7 @@ b1: string s1, s2, s3;
             break;
         }
         case(140) : { // remove student uc
-            cout << "Please type the code (upXXXXXXXXX) of the desired student"<<endl;
+            cout << endl << "Please type the code (upXXXXXXXXX) of the desired student" << endl;
             string st; cin >>st;
             cout << "Please type the code of the uc you want to remove" << endl;
             string cl; cin >> cl; lowercase(cl, true);
@@ -171,7 +171,7 @@ b1: string s1, s2, s3;
             break;
         }
         case(240) : { //add uc to student
-            cout << "Please type the code (upXXXXXXXXX) of the desired student"<<endl;
+            cout << endl << "Please type the code (upXXXXXXXXX) of the desired student"<< endl;
             string st; cin >>st;
             cout << "Please type the code of the uc you want to add" << endl;
             string cl; cin >> cl; lowercase(cl, true);
