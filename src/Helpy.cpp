@@ -71,9 +71,10 @@ a0: cout << endl << YELLOW << BREAK << RESET << endl << endl;
 void Helpy::advanced_mode(){
     /*-----LER COMANDOS-----*/
     cout << endl << YELLOW << BREAK << RESET << endl;
-    cout << endl << "Hello! How can I be of assistance?" << endl;
+    cout << endl << "Hello! ";
+b1: cout << "How can I be of assistance?" << endl;
 
-b1: string s1, s2, s3; 
+    string s1, s2, s3;
 
     cin >> s1; lowercase(s1);
 
@@ -187,7 +188,17 @@ b1: string s1, s2, s3;
     }
 
     cout << endl << "Anything else? (Yes/No)" << endl;
-    goto b1;
+
+    s1.clear(); getline(cin, s1);
+    lowercase(s1);
+
+    istringstream s_(s1);
+
+    while (s_ >> s1){
+        if (s1 == "yes" || s1 == "y"){
+            goto b1;
+        }
+    }
 
 e1: cout << endl << "See you next time!" << endl;
 }

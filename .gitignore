@@ -3,5 +3,6 @@
 src/proj
 .idea
 build/
+cmake-build-debug/
 docs/html/
 docs/latex/
