@@ -192,7 +192,7 @@ b1: cout << "How can I be of assistance?" << endl;
 
     cout << endl << "Anything else? (Yes/No)" << endl;
 
-    s1.clear(); getline(cin, s1);
+    s1.clear(); getline(cin >> ws, s1);
     lowercase(s1);
 
     s_.clear(); s_.str(s1);
@@ -463,13 +463,11 @@ a2: cout << endl << YELLOW << BREAK << RESET << endl << endl;
  * complexity = n^3*log(n)
  */
 void Helpy::display_uc_students() const{
-    cin.ignore();
-
     // ordenação por código ou nome
 a3: cout << endl << YELLOW << BREAK << RESET << endl << endl;
     cout << "How would you like to order the students? (Code/Name)" << endl;
         
-    string line; getline(cin, line);
+    string line; getline(cin >> ws, line);
     lowercase(line);
 
     istringstream line_(line);
@@ -526,7 +524,7 @@ a4: cout << endl << YELLOW << BREAK << RESET << endl << endl;
 
     // escolher a UC
 a5: cout << endl << YELLOW << BREAK << RESET << endl << endl;
-    cout << endl << "Please type the code (L.EICXXX) of the desired UC." << endl;
+    cout << "Please type the code (L.EICXXX) of the desired UC." << endl;
 
     string ucCode; cin >> ucCode;
     lowercase(ucCode, true);
@@ -579,13 +577,11 @@ a6: cout << endl << YELLOW << BREAK << RESET << endl << endl;
 }
 
 void Helpy::display_class_students() const{
-    cin.ignore();
-
     // ordenação por código ou nome
 a7: cout << endl << YELLOW << BREAK << RESET << endl << endl;
     cout << "How would you like to order the students? (Code/Name)" << endl;
         
-    string line; getline(cin, line);
+    string line; getline(cin >> ws, line);
     lowercase(line);
 
     istringstream line_(line);
@@ -668,11 +664,9 @@ a9: cout << endl << YELLOW << BREAK << RESET << endl << endl;
 }
 
 void Helpy::display_student_schedule() const{
-    cin.ignore();
-
 a10:cout << endl << "Please write the code (upXXXXXXXXX) or the name of the desired student." << endl;
 
-    string inp; getline(cin, inp);
+    string inp; getline(cin >> ws, inp);
     lowercase(inp);
     bool valid = false;
 
@@ -699,12 +693,10 @@ a10:cout << endl << "Please write the code (upXXXXXXXXX) or the name of the desi
 }
 
 void Helpy::display_student_classes() const{
-    cin.ignore();
-
 a11:cout << endl << YELLOW << BREAK << RESET << endl << endl;
     cout << "Please write the code (upXXXXXXXXX) of the desired student." << endl;
 
-    string inp; getline(cin, inp);
+    string inp; getline(cin >> ws, inp);
     lowercase(inp);
     bool valid = false;
 
@@ -835,13 +827,11 @@ a13:cout << endl << YELLOW << BREAK << RESET << endl << endl;
 }
 
 void Helpy::display_all_students() const{
-    cin.ignore();
-
     // ordenação por código ou nome
 a14:cout << endl << YELLOW << BREAK << RESET << endl << endl;
     cout << "How would you like to order the students? (Code/Name)" << endl;
         
-    string line; getline(cin, line);
+    string line; getline(cin >> ws, line);
     lowercase(line);
 
     short by_code = 2;
@@ -1019,12 +1009,10 @@ a17:    cout << endl << YELLOW << BREAK << RESET << endl << endl;
 }
 
 void Helpy::display_student_ucs() const{
-    cin.ignore();
-
 a19:cout << endl << YELLOW << BREAK << RESET << endl << endl;
     cout << "Please write the code (upXXXXXXXXX) or the name of the desired student." << endl;
     
-    string inp; getline(cin, inp);
+    string inp; getline(cin >> ws, inp);
     lowercase(inp);
     bool valid = false;
 
@@ -1052,7 +1040,7 @@ a19:cout << endl << YELLOW << BREAK << RESET << endl << endl;
 
 /*-----FUNÇÕES DA FILA-----*/
 void Helpy::rewrite_file(){
-    ofstream out("temp.csv");
+    ofstream out("../students_classes.csv", std::ofstream::trunc);
 
     out << "StudentCode,StudentName,UcCode,ClassCode" << endl;
 
@@ -1068,9 +1056,6 @@ void Helpy::rewrite_file(){
     }
 
     out.close();
-
-    remove("../students_classes.csv");
-    rename("temp.csv", "../students_classes.csv");
 }
 
 void Helpy::processQueue(){
