@@ -16,7 +16,7 @@ using namespace std;
 int main(){
     /*-----LER FICHEIROS-----*/
     // ler o 1º ficheiro
-    ifstream classes_per_uc("../classes_per_uc.csv");
+    ifstream classes_per_uc("../csv/classes_per_uc.csv");
 
     string line; getline(classes_per_uc, line); // ignorar o cabeçalho
 
@@ -44,7 +44,7 @@ int main(){
     }
 
     // ler o 2º ficheiro
-    ifstream classes("../classes.csv");
+    ifstream classes("../csv/classes.csv");
 
     getline(classes, line); // ignorar o cabeçalho
 
@@ -89,7 +89,7 @@ int main(){
     }
 
     // ler o 3º ficheiro
-    ifstream students_classes("../students_classes.csv");
+    ifstream students_classes("../csv/students_classes.csv");
     
     getline(students_classes, line); // ignorar o cabeçalho
 

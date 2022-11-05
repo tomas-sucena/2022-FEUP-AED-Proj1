@@ -33,6 +33,7 @@ class Helpy {
         void terminal();
         void advanced_mode();
         void guided_mode();
+        bool process_command(string& s1, string& s2, string& s3);
 
         void processQueue();
         void rewrite_file();

@@ -97,95 +97,8 @@ b1: cout << endl << "How can i be of assistance?" << endl;
     lowercase(s3);
   
     // processar o comando    
-    switch (command[s1] + target[s2] + what[s3]){
-        case(31) : {
-            display_uc_schedule();
-
-            break;
-        }
-        case(33) : {
-            display_class_schedule();
-
-            break;
-        }
-        case(34) : {
-            display_uc_classes();
-
-            break;
-        }
-        case(35) : {
-            display_student_schedule();
-
-            break;
-        }
-        case(38) : {
-            display_student_classes();
-
-            break;
-        }
-        case(40) : {
-            display_uc_students();
-
-            break;
-        }
-        case(41) : {
-            display_student_ucs();
-
-            break;
-        }
-        case(42) : {
-            display_class_students();
-
-            break;
-        }
-        case(50) : {
-            display_all_classes();
-
-            break;
-        }
-        case(53) : {
-            display_all_ucs();
-
-            break;
-        }
-        case(56) : {
-            display_all_students();
-
-            break;
-        }
-        case(137) : { // remove student classes
-            cout << endl << "Please type the code (upXXXXXXXXX) of the desired student"<< endl;
-            string st; cin >>st;
-            cout << "Please type the code of the class you want to remove" << endl;
-            string cl; cin >> cl; lowercase(cl, true);
-            queuer.push(Request(s1,s3,st,cl));
-            log(Request(s1,s3,st,cl), "Fuck this");
-
-            break;
-        }
-        case(140) : { // remove student uc
-            cout << endl << "Please type the code (upXXXXXXXXX) of the desired student" << endl;
-            string st; cin >>st;
-            cout << "Please type the code of the uc you want to remove" << endl;
-            string cl; cin >> cl; lowercase(cl, true);
-            queuer.push(Request(s1,s3,st,cl));
-
-            break;
-        }
-        case(240) : { //add uc to student
-            cout << endl << "Please type the code (upXXXXXXXXX) of the desired student"<< endl;
-            string st; cin >>st;
-            cout << "Please type the code of the uc you want to add" << endl;
-            string cl; cin >> cl; lowercase(cl, true);
-            cout << "Please type the code of the class you want to add the uc to" << endl;
-            string f; cin >> f; lowercase(f, true);
-            queuer.push(Request(s1,s3,st,cl,f));
-            break;
-        }
-        default : {
-            cout << endl << RED << "Invalid command! Please, type another command." << RESET << endl;
-            goto b1;
-        }
+    if(!process_command(s1, s2, s3)){
+        goto b1;
     }
 
 t:  cout << endl << "Anything else? (Yes/No)" << endl;
@@ -242,7 +155,7 @@ b2: cout << endl << YELLOW << BREAK << RESET << endl << endl;
         cin >> s2; lowercase(s2);
 
         if (s2 == "add"){
-            goto sc;
+            //goto sc;
         }
         else if (s2 == "remove"){        
             cout << endl << YELLOW << BREAK << RESET << endl << endl;
@@ -255,11 +168,14 @@ b2: cout << endl << YELLOW << BREAK << RESET << endl << endl;
             goto e2;
         }
         else{
-            goto d1;
+            process_command(s1, s2, s3);
+            goto b2;
         }
     }
     else{
-        goto d1;
+        cout << YELLOW << BREAK << RESET << endl << endl;
+        process_command(s1, s2, s3);
+        goto b2;
     }
 
     cin >> s2; lowercase(s2);
@@ -295,7 +211,9 @@ b2: cout << endl << YELLOW << BREAK << RESET << endl << endl;
         goto e2;
     }
     else{
-        goto d1;
+        cout << YELLOW << BREAK << RESET << endl << endl;
+        process_command(s1, s2, s3);
+        goto b2;
     }
 
 rmv:cin >> s3; lowercase(s3);
@@ -304,109 +222,9 @@ rmv:cin >> s3; lowercase(s3);
         goto e2;
     }
 
-    // processar o comando    
-sc:     switch (command[s1] + target[s2] + what[s3]){
-        case(31) : {
-            display_uc_schedule();
-
-            break;
-        }
-        case(33) : {
-            display_class_schedule();
-
-            break;
-        }
-        case(34) : {
-            display_uc_classes();
-
-            break;
-        }
-        case(35) : {
-            display_student_schedule();
-
-            break;
-        }
-        case(38) : {
-            display_student_classes();
-
-            break;
-        }
-        case(39) : { // remove student classes
-            cout << "Please type the code (upXXXXXXXXX) of the desired student."<<endl;
-            string st; cin >>st;
-            cout << "Please type the code of the class you want to remove." << endl;
-            string cl; cin >> cl;
-            queuer.push(Request(s1,s2,s3,st,cl));
-
-            break;
-        }
-        case(40) : {
-            display_uc_students();
-
-            break;
-        }
-        case(41) : {
-            display_student_ucs();
-
-            break;
-        }
-        case(42) : {
-            display_class_students();
-
-            break;
-        }
-        case(50) : {
-            display_all_classes();
-
-            break;
-        }
-        case(53) : {
-            display_all_ucs();
-
-            break;
-        }
-        case(56) : {
-            display_all_students();
-
-            break;
-        }
-        case(137) : { // remove student classes
-            cout << "Please type the code (upXXXXXXXXX) of the desired student"<<endl;
-            string st; cin >>st;
-            cout << "Please type the code of the class you want to remove" << endl;
-            string cl; cin >> cl; lowercase(cl, true);
-            queuer.push(Request(s1,s3,st,cl));
-            log(Request(s1,s3,st,cl), "Fuck this");
-
-            break;
-        }
-        case(140) : { // remove student uc
-            cout << "Please type the code (upXXXXXXXXX) of the desired student"<<endl;
-            string st; cin >>st;
-            cout << "Please type the code of the uc you want to remove" << endl;
-            string cl; cin >> cl; lowercase(cl, true);
-            queuer.push(Request(s1,s3,st,cl));
-
-            break;
-        }
-        case(200) : { //add uc to student
-            cout << endl << YELLOW << BREAK << RESET << endl << endl;
-            cout << "Please type the code (upXXXXXXXXX) of the desired student." << endl;
-            string st; cin >>st;
-            cout << endl << YELLOW << BREAK << RESET << endl << endl;
-            cout << "Please type the code of the uc you want to add." << endl;
-            string cl; cin >> cl; lowercase(cl, true);
-            cout << endl << YELLOW << BREAK << RESET << endl << endl;
-            cout << "Please type the code of the class you want to add the uc to." << endl;
-            string f; cin >> f; lowercase(f, true);
-            queuer.push(Request(s1,s3,st,cl,f));
-            break;
-        }
-d1:     default : {
-            cout << endl << YELLOW << BREAK << RESET << endl << endl;
-            cout << RED << "Invalid command! Please, try again." << RESET << endl;
-            goto b2;
-        }
+    // processar o comando
+    if(!process_command(s1, s2, s3)){
+        goto b2;
     }
 
     cout << endl << YELLOW << BREAK << RESET << endl << endl;
@@ -419,6 +237,92 @@ d1:     default : {
 e2: cout << endl << YELLOW << BREAK << RESET << endl << endl;
     cout << "See you next time!" << endl << endl;
 }
+
+bool Helpy::process_command(string& s1, string& s2, string& s3){
+    switch (command[s1] + target[s2] + what[s3]){
+        case(31) : {
+            display_uc_schedule();
+            break;
+        }
+        case(33) : {
+            display_class_schedule();
+            break;
+        }
+        case(34) : {
+            display_uc_classes();
+            break;
+        }
+        case(35) : {
+            display_student_schedule();
+            break;
+        }
+        case(38) : {
+            display_student_classes();
+            break;
+        }
+        case(40) : {
+            display_uc_students();
+            break;
+        }
+        case(41) : {
+            display_student_ucs();
+            break;
+        }
+        case(42) : {
+            display_class_students();
+            break;
+        }
+        case(50) : {
+            display_all_classes();
+            break;
+        }
+        case(53) : {
+            display_all_ucs();
+            break;
+        }
+        case(56) : {
+            display_all_students();
+            break;
+        }
+        case(137) : { // remove student classes
+            cout << endl << "Please type the code (upXXXXXXXXX) of the desired student"<< endl;
+            string st; cin >>st;
+            cout << "Please type the code of the class you want to remove" << endl;
+            string cl; cin >> cl; lowercase(cl, true);
+            queuer.push(Request(s1,s3,st,cl));
+            log(Request(s1,s3,st,cl), "Fuck this");
+
+            break;
+        }
+        case(140) : { // remove student uc
+            cout << endl << "Please type the code (upXXXXXXXXX) of the desired student" << endl;
+            string st; cin >>st;
+            cout << "Please type the code of the uc you want to remove" << endl;
+            string cl; cin >> cl; lowercase(cl, true);
+            queuer.push(Request(s1,s3,st,cl));
+
+            break;
+        }
+        case(240) : { //add uc to student
+            cout << endl << "Please type the code (upXXXXXXXXX) of the desired student"<< endl;
+            string st; cin >>st;
+            cout << "Please type the code of the uc you want to add" << endl;
+            string cl; cin >> cl; lowercase(cl, true);
+            cout << "Please type the code of the class you want to add the uc to" << endl;
+            string f; cin >> f; lowercase(f, true);
+            queuer.push(Request(s1,s3,st,cl,f));
+            break;
+        }
+        default : {
+            cout << endl << RED << "Invalid command! Please, type another command." << RESET << endl;
+
+            return false;
+        }
+    }
+
+    return true;
+}
+
 
 /*-----FUNÇÕES DE IMPRESSÃO-----*/
 
@@ -714,7 +618,7 @@ a10:cout << endl << "Please write the code (upXXXXXXXXX) or the name of the desi
 
     if (!valid){
         cout << endl << YELLOW << BREAK << RESET << endl << endl;
-        cout << RED << "I'm sorry, but that student code is not valid." << RESET << endl;
+        cout << RED << "I'm sorry, but that student does not exist." << RESET << endl;
         goto a10;
     }
 }
@@ -744,7 +648,7 @@ a11:cout << endl << YELLOW << BREAK << RESET << endl << endl;
 
     if (!valid){
         cout << endl << YELLOW << BREAK << RESET << endl << endl;
-        cout << RED << "I'm sorry, but that student code is not valid." << RESET << endl;
+        cout << RED << "I'm sorry, but that student does not exist." << RESET << endl;
         goto a11;
     }
 }
@@ -1060,14 +964,14 @@ a19:cout << endl << YELLOW << BREAK << RESET << endl << endl;
 
     if (!valid){
         cout << endl << YELLOW << BREAK << RESET << endl << endl;
-        cout << RED << "I'm sorry, but that student code is not valid." << RESET << endl;
+        cout << RED << "I'm sorry, but that student does not exist." << RESET << endl;
         goto a19;
     }
 }
 
 /*-----FUNÇÕES DA FILA-----*/
 void Helpy::rewrite_file(){
-    ofstream out("../students_classes.csv", std::ofstream::trunc);
+    ofstream out("../csv/students_classes.csv", std::ofstream::trunc);
 
     out << "StudentCode,StudentName,UcCode,ClassCode" << endl;
 
@@ -1134,7 +1038,8 @@ void Helpy::rem(Request sub){
 
                     UC& u = all_UCs[dec * 5 + (unit - 1)];
                     u.remove_student(stoi(s.get_studentCode()));
-                    
+
+                    cout << endl << YELLOW << BREAK << RESET << endl << endl;
                     cout << "UC-" << u.get_ucCode() << " has sucessfully been removed from " << sub.get_student() << endl;
 
                     break;
