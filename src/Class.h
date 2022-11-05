@@ -13,8 +13,8 @@ class Class {
     private:
         string classCode_;
         vector<pair<int, string>> students_; // ordenado por código
+        map<string, set<string>> occupation_;
         Schedule schedule_;
-        map<string, int> occupation_;
 
     public:
         // constructor
@@ -23,8 +23,8 @@ class Class {
         // methods
         string get_classCode() const;
         vector<pair<int, string>> get_students() const;
+        map<string, set<string>> get_occupation() const;
         Schedule get_schedule() const;
-        map<string, int> get_occupation() const;
 
         void print_students(bool by_code, bool descending) const;
         void add_student(int studentCode, const string& studentName, const string& ucCode);

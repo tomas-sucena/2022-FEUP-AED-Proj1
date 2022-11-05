@@ -37,7 +37,7 @@ void UC::print_classes(){
 /**
  * @return string with the code (L.EICXXX) of the UC
  */
-string UC::get_UcCode(){
+string UC::get_ucCode() const{
     return ucCode_;
 }
 
@@ -111,13 +111,27 @@ void UC::add_student(int studentCode, string studentName){
  * complexity = n
  * @param studentName name of the student
  */
-void UC::remove_student(string studentName){
-    for(auto it = students_.begin(); it != students_.end(); it++){
-        if(it->second == studentName){
-            students_.erase(it);
+void UC::remove_student(const int& studentCode){
+    // pesquisa binária
+    int lower = 0, upper = (int) students_.size() - 1;
+
+    int res = 0;
+    while (lower <= upper){
+        int mid = (lower + upper) / 2;
+
+        if (students_[mid].first < studentCode){
+            lower = mid + 1;
+        }
+        else if (students_[mid].first > studentCode){
+            upper = mid - 1;
+        }
+        else{
+            res = mid;
             break;
         }
     }
+
+    students_.erase(students_.begin() + res);
 }
 
 /**

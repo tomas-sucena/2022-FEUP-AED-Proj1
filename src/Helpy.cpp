@@ -405,7 +405,7 @@ a1: cout << endl << YELLOW << BREAK << RESET << endl << endl;
     bool valid = false;
 
     for (UC u : all_UCs){
-        if (u.get_UcCode() == uc){
+        if (u.get_ucCode() == uc){
             cout << endl << YELLOW << BREAK << RESET << endl << endl;
             cout << "The UC " << BOLD << uc << RESET << " has the following schedule:" << endl << endl;
 
@@ -437,7 +437,7 @@ a2: cout << endl << YELLOW << BREAK << RESET << endl << endl;
     bool valid = false;
     
     for (UC u : all_UCs){
-        if (u.get_UcCode() == uc){
+        if (u.get_ucCode() == uc){
             cout << endl << YELLOW << BREAK << RESET << endl << endl;
             cout << "The UC " << BOLD << uc << RESET << " has the following classes:" << endl << endl;
 
@@ -529,7 +529,7 @@ a5: cout << endl << YELLOW << BREAK << RESET << endl << endl;
     bool valid = false;
 
     for (UC u : all_UCs){
-        if (u.get_UcCode() == ucCode){
+        if (u.get_ucCode() == ucCode){
             cout << endl << YELLOW << BREAK << RESET << endl << endl;
             cout << "The UC " << BOLD << ucCode << RESET << " has the following students:" << endl << endl;
 
@@ -775,7 +775,7 @@ void Helpy::display_all_ucs() const{
     set<string> all_ucs_set;
 
     for (UC u : all_UCs){
-        all_ucs_set.insert(u.get_UcCode());
+        all_ucs_set.insert(u.get_ucCode());
     }
 
 a13:cout << endl << YELLOW << BREAK << RESET << endl << endl;
@@ -1098,10 +1098,14 @@ void Helpy::rem(Request sub){
                     blocks.erase(iit);
                     s.set_Schedule(Schedule(blocks));
 
-                    string uc_ = sub.get_uc();
-                    lowercase(uc_,true);
+                    // remover o estudante da UC
+                    int dec = sub.get_uc()[6] - '0',
+                        unit = sub.get_uc()[7] - '0';
+
+                    UC& u = all_UCs[dec * 5 + (unit - 1)];
+                    u.remove_student(stoi(s.get_studentCode()));
                     
-                    cout << "UC-" << uc_ << " has sucessfully been removed from " << sub.get_student() << endl;
+                    cout << "UC-" << u.get_ucCode() << " has sucessfully been removed from " << sub.get_student() << endl;
 
                     break;
                 }
@@ -1162,42 +1166,58 @@ void Helpy::rem(Request sub){
 void Helpy::add(Request sub){
     for(Student& s: all_students){
         if(s.get_studentCode() == sub.get_student()){
-            map<string, string> a = s.get_ucs();
-            if(a.find(sub.get_uc()) != a.end()){
-                log(sub, "Failed because student already has selected uc");
-                cout << RED << "Failed, see logs for more information"<< RESET << endl;
+            map<string, string> s_ucs = s.get_ucs();
+
+            if(s_ucs.find(sub.get_uc()) != s_ucs.end()){
+                log(sub, "Failed because the student is already enrolled in the selected UC");
+                cout << RED << "Failed, see logs for more information" << RESET << endl;
                 return;
             }
+
             int year = sub.get_class()[0] - '0';
             int num = (sub.get_class()[5] - '0') * 10 + (sub.get_class()[6] - '0');
+
             Class& c = all_classes[(year - 1) * 16 + (num - 1)];
+
             string conf = is_valid(s,c,sub.get_uc());
+
             if(conf == "yes"){
-                if(s.get_classes().find(sub.get_class()) != s.get_classes().end()){
+                if(s.get_classes().find(sub.get_class()) == s.get_classes().end()){
                     s.add_class(sub.get_class());
-                    c.add_student(stoi(s.get_studentCode()), s.get_studentName());
+                    c.add_student(stoi(s.get_studentCode()), s.get_studentName(), sub.get_uc());
                 }
-                a[sub.get_uc()] = sub.get_class();
-                int num = (sub.get_uc()[0] == 'L') ? (sub.get_uc()[6] - '0') * 10 + (sub.get_uc()[7] - '0') - 1 : all_UCs.size() - 1;
-                UC& u = all_UCs[num];
+
+                // atualizar as UCs do estudante
+                s_ucs[sub.get_uc()] = sub.get_class();
+                s.set_ucs(s_ucs);
+
+                // adicionar o estudante à UC
+                int dec = sub.get_uc()[6] - '0',
+                    unit = sub.get_uc()[7] - '0';
+
+                UC& u = all_UCs[dec * 5 + (unit - 1)];
                 u.add_student(stoi(s.get_studentCode()), s.get_studentName());
-                list<Block> blocks;
-                for (auto it = s.get_ucs().begin(); it != s.get_ucs().end(); it++){
-                    for(Block b : class_blocks[it->second]){
-                        if (b.get_code() == it->first)
-                        {
-                            blocks.push_back(b);
-                        }
+
+                // atualizar o horário do estudante
+                list<Block> blocks = s.get_schedule().get_blocks();
+
+                for (const Block& b : u.get_schedule().get_blocks()){
+                    if (b.get_code() == sub.get_class()){
+                        blocks.push_back(b);
+                        break;
                     }
                 }
+
                 s.set_Schedule(Schedule(blocks));
-                cout << GREEN << "Successfully added UC " << sub.get_uc() << " to class " << sub.get_class() <<" on student " << sub.get_student() << RESET << endl; 
-                break;
-            } else {
+
+                cout << GREEN << "Successfully added UC " << sub.get_uc() << " to class " << sub.get_class() <<" on student " << sub.get_student() << RESET << endl;
+            }
+            else {
                 log(sub, conf);
                 cout << RED << "Failed, see logs for more information"<< RESET << endl;
-                return;
             }
+
+            break;
         }
     }
 }
@@ -1242,7 +1262,7 @@ void Helpy::change(Request sub){
             if(grief == "yes"){
                 s.set_ucs(pain);
                 s.set_Schedule(student_schedule);
-                c.add_student(stoi(s.get_studentCode()), s.get_studentName());
+                //c.add_student(stoi(s.get_studentCode()), s.get_studentName());
                 year = sub.get_uc()[0] - '0';
                 num = (sub.get_uc()[5] - '0') * 10 + (sub.get_uc()[6] - '0');
                 Class& o = all_classes[(year - 1) * 16 + (num - 1)];
@@ -1258,7 +1278,7 @@ void Helpy::change(Request sub){
 }
 
 string Helpy::is_valid(Student s, Class& cl, string uc){
-    if(cl.size() >= 30){
+    if(cl.get_occupation()[uc].size() >= 30){
         return "Failed due to exceeding class limit";
     }
     Schedule st = s.get_schedule();
@@ -1337,12 +1357,13 @@ string Helpy::is_valid_change(Student s, Schedule schedule_, Class& c, set<strin
                 year = (*pain)[0] - '0';
                 nu = ((*pain)[5] - '0') * 10 + ((*pain)[6] - '0');
                 Class& o = all_classes[(year - 1) * 16 + (nu - 1)];
-                dif = (&g == &c) ? abs(g.get_occupation()[uc] - o.get_occupation()[uc]) + 1 : abs(g.get_occupation()[uc] - o.get_occupation()[uc]);
+                dif = (&g == &c) ? abs(int(g.get_occupation()[uc].size() - o.get_occupation()[uc].size())) + 1 :
+                                   abs(int(g.get_occupation()[uc].size() - o.get_occupation()[uc].size()));
                 if(&g == &c){
                     cout << "Same" << endl;
                 }
-                cout << g.get_occupation()[uc] << endl;
-                cout << o.get_occupation()[uc] << endl;
+                cout << g.get_occupation()[uc].size() << endl;
+                cout << o.get_occupation()[uc].size() << endl;
                 if(dif > max){
                     max = dif;
                 }

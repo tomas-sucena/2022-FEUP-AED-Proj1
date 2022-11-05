@@ -17,7 +17,7 @@ Schedule Class::get_schedule() const{
     return schedule_;
 }
 
-map<string,int> Class::get_occupation() const{
+map<string, set<string>> Class::get_occupation() const{
     return occupation_;
 }
 
@@ -72,7 +72,7 @@ void Class::add_student(int studentCode, const string& studentName, const string
 
     if (!found){
         students_.push_back({studentCode, studentName});
-        occupation_[ucCode]++;
+        occupation_[ucCode].insert(studentName);
     }
     
     sort(students_.begin(), students_.end());
@@ -82,6 +82,16 @@ void Class::remove_student(string studentName){
     for(auto it = students_.begin(); it != students_.end(); it++){
         if(it->second == studentName){
             students_.erase(it);
+            break;
+        }
+    }
+
+    // remover o estudante da contagem de alunos em cada UC
+    for (auto& p : occupation_){
+        auto it = p.second.find(studentName);
+
+        if (it != p.second.end()){
+            p.second.erase(it);
             break;
         }
     }

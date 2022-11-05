@@ -22,7 +22,7 @@ class UC {
         UC(string ucCode, set<string> classes, Schedule schedule);
 
         // methods
-        string get_UcCode();
+        string get_ucCode() const;
         
         set<string> get_classes() const;
         void print_classes();
@@ -31,7 +31,7 @@ class UC {
 
         void print_students(bool by_code, bool descending) const;
         void add_student(int studentCode, string studentName);
-        void remove_student(string studentName); //por implementar
+        void remove_student(const int& studentCode);
 
         void set_schedule(Schedule schedule);
         Schedule get_schedule();
