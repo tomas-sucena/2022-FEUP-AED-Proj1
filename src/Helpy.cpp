@@ -1000,8 +1000,10 @@ a20:cout << endl << YELLOW << BREAK << RESET << endl;
         goto a20;
     }
 
-    cout << "Please type the code of the class you want to remove" << endl;
+    cout << endl << YELLOW << BREAK << RESET << endl;
+    cout << endl << "Please type the code of the class you want to remove" << endl;
     string cl; cin >> cl; lowercase(cl, true);
+
     queuer.push(Request(s1,s3,st,cl));
     log(Request(s1,s3,st,cl), "Fuck this");
 }
@@ -1034,8 +1036,10 @@ a21:cout << endl << YELLOW << BREAK << RESET << endl;
         goto a21;
     }
 
-    cout << "Please type the code of the uc you want to remove" << endl;
+    cout << endl << YELLOW << BREAK << RESET << endl;
+    cout << endl << "Please type the code of the UC you want to remove" << endl;
     string cl; cin >> cl; lowercase(cl, true);
+
     queuer.push(Request(s1,s3,st,cl));
 }
 
@@ -1067,10 +1071,14 @@ a22:cout << endl << YELLOW << BREAK << RESET << endl;
         goto a22;
     }
 
-    cout << "Please type the code of the uc you want to add" << endl;
+    cout << endl << YELLOW << BREAK << RESET << endl;
+    cout << endl << "Please type the code of the UC you want to add" << endl;
     string cl; cin >> cl; lowercase(cl, true);
-    cout << "Please type the code of the class you want to add the uc to" << endl;
+
+    cout << endl << YELLOW << BREAK << RESET << endl;
+    cout << endl << "Please type the code of the class you want to add the UC to" << endl;
     string f; cin >> f; lowercase(f, true);
+
     queuer.push(Request(s1,s3,st,cl,f));
 }
 
@@ -1168,7 +1176,7 @@ void Helpy::rem(Request sub){
                   map<string, string> a = s.get_ucs();
                   for(auto i: a){
                     if(i.second == sub.get_uc()){
-                        int num = (i.first[0] == 'L') ? (i.first[6] - '0') * 10 + (i.first[7] - '0') - 1 : all_UCs.size()-1;
+                        int num = (i.first[0] == 'L') ? (i.first[6] - '0') * 5 + (i.first[7] - '0') - 1 : all_UCs.size()-1;
                         UC& u = all_UCs[num];
                         u.add_student(stoi(s.get_studentCode()), s.get_studentName());
                         a.erase(i.first); // isto remove a class do estudante
