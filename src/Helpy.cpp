@@ -882,9 +882,11 @@ a17:    cout << endl << YELLOW << BREAK << RESET << endl << endl;
         cin >> number;
     }
 
-    // ordenar o all_students por código, se preciso
+    vector<Student> students = all_students; // vetor temporário
+
+    // ordenar o vetor por código, se preciso
     if (by_code){
-        sort(all_students.begin(), all_students.end(), order_bycode);
+        sort(students.begin(), students.end(), order_bycode);
     }
         
     // imprimir todos os estudantes
@@ -894,8 +896,8 @@ a17:    cout << endl << YELLOW << BREAK << RESET << endl << endl;
     cout << endl << endl;
 
     if (descending){
-        for (int i = (int) all_students.size() - 1; i >= 0; i--){
-            Student s = all_students[i];
+        for (int i = (int) students.size() - 1; i >= 0; i--){
+            Student s = students[i];
 
             int uc_num = (int) s.get_ucs().size();
 
@@ -917,7 +919,7 @@ a17:    cout << endl << YELLOW << BREAK << RESET << endl << endl;
         }
     }
     else{
-        for (const Student& s : all_students){
+        for (const Student& s : students){
             int uc_num = (int) s.get_ucs().size();
 
             if (filter && cond == 0 && uc_num > number){
