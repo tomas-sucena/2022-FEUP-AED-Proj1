@@ -63,7 +63,8 @@ a0: cout << endl << YELLOW << BREAK << RESET << endl << endl;
     }     
 
     if (!valid){
-        cout << endl << RED << "Invalid command! Please choose one of the following:" << RESET << endl << endl;
+        cout << endl << YELLOW << BREAK << RESET << endl << endl;
+        cout << RED << "Invalid command! Please, try again." << RESET << endl;
         goto a0;
     }       
 }
@@ -72,7 +73,7 @@ a0: cout << endl << YELLOW << BREAK << RESET << endl << endl;
 void Helpy::advanced_mode(){
     /*-----LER COMANDOS-----*/
     cout << endl << YELLOW << BREAK << RESET << endl;
-b1: cout << endl << "How can I be of assistance?" << endl;
+b1: cout << endl << "How can i be of assistance?" << endl;
 
     string s1, s2, s3;
     istringstream s_;
@@ -237,7 +238,7 @@ b2: cout << endl << YELLOW << BREAK << RESET << endl << endl;
 
     cin >> s2; lowercase(s2);
 
-    if(s2 == "class"){
+    if (s2 == "class"){
         cout << endl << YELLOW << BREAK << RESET << endl << endl;
         cout << "* Schedule" << endl;
         cout << "* Students" << endl;
@@ -913,7 +914,7 @@ a16:cout << endl << YELLOW << BREAK << RESET << endl << endl;
     short cond = 3;
     if (filter){
 a17:    cout << endl << YELLOW << BREAK << RESET << endl << endl;
-        cout << "Would you like to see if students have less, more or exactly a number of UCs? (Less/More/Equal)" << endl;
+        cout << "Would you like to see if the students have less, more or exactly a number of UCs? (Less/More/Equal)" << endl;
 
         getline(cin, line);
         lowercase(line);
