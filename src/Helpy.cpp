@@ -153,8 +153,7 @@ b2: cout << endl << YELLOW << BREAK << RESET << endl;
     }
     else if (s1 == "remove"){
         cout << endl << YELLOW << BREAK << RESET << endl << endl;
-        cout << "* Class" << endl;
-        cout << "* UC" << endl;
+        cout << "* Student" << endl;
         cout << endl;
     }
     else if (s1 == "process"){
@@ -224,7 +223,7 @@ b2: cout << endl << YELLOW << BREAK << RESET << endl;
         goto b2;
     }
 
-rmv:cin >> s3; lowercase(s3);
+    cin >> s3; lowercase(s3);
     
     if (s3 == "quit"){
         goto e2;
@@ -300,40 +299,20 @@ bool Helpy::process_command(string& s1, string& s2, string& s3){
             break;
         }
         case(137) : { // remove student classes
-            cout << endl << YELLOW << BREAK << RESET << endl << endl;
-            cout << endl << "Please type the code (upXXXXXXXXX) of the desired student"<< endl;
-            string st; cin >>st;
-            cout << "Please type the code of the class you want to remove" << endl;
-            string cl; cin >> cl; lowercase(cl, true);
-            queuer.push(Request(s1,s3,st,cl));
-            log(Request(s1,s3,st,cl), "Fuck this");
-
+            remove_student_classes(s1, s2, s3);
             break;
         }
         case(140) : { // remove student uc
-            cout << endl << YELLOW << BREAK << RESET << endl << endl;
-            cout << endl << "Please type the code (upXXXXXXXXX) of the desired student" << endl;
-            string st; cin >>st;
-            cout << "Please type the code of the uc you want to remove" << endl;
-            string cl; cin >> cl; lowercase(cl, true);
-            queuer.push(Request(s1,s3,st,cl));
-
+            remove_student_ucs(s1, s2, s3);
             break;
         }
         case(240) : { //add uc to student
-            cout << endl << YELLOW << BREAK << RESET << endl << endl;
-            cout << endl << "Please type the code (upXXXXXXXXX) of the desired student"<< endl;
-            string st; cin >>st;
-            cout << "Please type the code of the uc you want to add" << endl;
-            string cl; cin >> cl; lowercase(cl, true);
-            cout << "Please type the code of the class you want to add the uc to" << endl;
-            string f; cin >> f; lowercase(f, true);
-            queuer.push(Request(s1,s3,st,cl,f));
+            add_student_uc(s1, s2, s3);
             break;
         }
         default : {
-            cout << endl << YELLOW << BREAK << RESET << endl << endl;
-            cout << RED << "Invalid command! Please, type another command." << RESET << endl;
+            cout << endl << YELLOW << BREAK << RESET << endl;
+            cout << endl << RED << "Invalid command! Please, type another command." << RESET << endl;
 
             return false;
         }
@@ -618,6 +597,7 @@ a10:cout << endl << "Please write the code (upXXXXXXXXX) or the name of the desi
 
     string inp; getline(cin >> ws, inp);
     lowercase(inp);
+
     bool valid = false;
 
     for (const Student& s : all_students){
@@ -648,6 +628,7 @@ a11:cout << endl << YELLOW << BREAK << RESET << endl << endl;
 
     string inp; getline(cin >> ws, inp);
     lowercase(inp);
+
     bool valid = false;
 
     for (const Student& s : all_students){
@@ -964,6 +945,7 @@ a19:cout << endl << YELLOW << BREAK << RESET << endl << endl;
     
     string inp; getline(cin >> ws, inp);
     lowercase(inp);
+
     bool valid = false;
 
     for (Student s : all_students){
@@ -987,6 +969,109 @@ a19:cout << endl << YELLOW << BREAK << RESET << endl << endl;
         goto a19;
     }
 }
+
+void Helpy::remove_student_classes(string& s1, string& s2, string& s3){
+a20:cout << endl << YELLOW << BREAK << RESET << endl;
+
+    cout << endl << "Please type the code (upXXXXXXXXX) or the name of the desired student" << endl;
+
+    string st; getline(cin >> ws, st);
+    lowercase(st);
+
+    bool valid = false;
+
+    for (const Student& s : all_students){
+        string smol = s.get_studentName();
+        lowercase(smol);
+
+        if (s.get_studentCode() == st || smol == st){
+            st = s.get_studentCode();
+            valid = true;
+
+            break;
+        }
+    }
+
+    if (!valid){
+        cout << endl << YELLOW << BREAK << RESET << endl << endl;
+        cout << RED << "I'm sorry, but that student does not exist." << RESET << endl;
+        goto a20;
+    }
+
+    cout << "Please type the code of the class you want to remove" << endl;
+    string cl; cin >> cl; lowercase(cl, true);
+    queuer.push(Request(s1,s3,st,cl));
+    log(Request(s1,s3,st,cl), "Fuck this");
+}
+
+void Helpy::remove_student_ucs(string& s1, string& s2, string& s3){
+a21:cout << endl << YELLOW << BREAK << RESET << endl;
+
+    cout << endl << "Please type the code (upXXXXXXXXX) or the name of the desired student" << endl;
+
+    string st; getline(cin >> ws, st);
+    lowercase(st);
+
+    bool valid = false;
+
+    for (const Student& s : all_students){
+        string smol = s.get_studentName();
+        lowercase(smol);
+
+        if (s.get_studentCode() == st || smol == st){
+            st = s.get_studentCode();
+            valid = true;
+
+            break;
+        }
+    }
+
+    if (!valid){
+        cout << endl << YELLOW << BREAK << RESET << endl << endl;
+        cout << RED << "I'm sorry, but that student does not exist." << RESET << endl;
+        goto a21;
+    }
+
+    cout << "Please type the code of the uc you want to remove" << endl;
+    string cl; cin >> cl; lowercase(cl, true);
+    queuer.push(Request(s1,s3,st,cl));
+}
+
+void Helpy::add_student_uc(string& s1, string& s2, string& s3){
+a22:cout << endl << YELLOW << BREAK << RESET << endl;
+
+    cout << endl << "Please type the code (upXXXXXXXXX) or the name of the desired student" << endl;
+
+    string st; getline(cin >> ws, st);
+    lowercase(st);
+
+    bool valid = false;
+
+    for (const Student& s : all_students){
+        string smol = s.get_studentName();
+        lowercase(smol);
+
+        if (s.get_studentCode() == st || smol == st){
+            st = s.get_studentCode();
+            valid = true;
+
+            break;
+        }
+    }
+
+    if (!valid){
+        cout << endl << YELLOW << BREAK << RESET << endl << endl;
+        cout << RED << "I'm sorry, but that student does not exist." << RESET << endl;
+        goto a22;
+    }
+
+    cout << "Please type the code of the uc you want to add" << endl;
+    string cl; cin >> cl; lowercase(cl, true);
+    cout << "Please type the code of the class you want to add the uc to" << endl;
+    string f; cin >> f; lowercase(f, true);
+    queuer.push(Request(s1,s3,st,cl,f));
+}
+
 
 /*-----FUNÇÕES DA FILA-----*/
 void Helpy::rewrite_file(){

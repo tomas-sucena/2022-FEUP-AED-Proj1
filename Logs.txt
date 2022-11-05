@@ -9,3 +9,6 @@ Failed to add L.EIC011 to class 2L.EIC003 on student 202040617:Failed due to exc
 Failed to add L.EIC011 to class 2LEIC10 on student 202040617:Failed due to exceeding class limit
 Failed to add L.EIC011 to class 2LEIC05 on student 202044867:Failed because the student is already enrolled in the selected UC
 Failed to add L.EIC011 to class 2LEIC06 on student 202044867:Failed due to Schedule overlap
+Failed to add L.EIC005 to class 1LEIC03 on student 202034072:Failed due to Schedule overlap
+Failed to remove 2LEIC10 from student 202040617:Fuck this
+Failed to remove L.EIC011 from student Abilio:The selected student does not exist
