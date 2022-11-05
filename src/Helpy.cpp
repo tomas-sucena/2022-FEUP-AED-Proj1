@@ -72,8 +72,8 @@ a0: cout << endl << YELLOW << BREAK << RESET << endl << endl;
                                 ///         ADVANCED MODE       ///
 void Helpy::advanced_mode(){
     /*-----LER COMANDOS-----*/
-    cout << endl << YELLOW << BREAK << RESET << endl;
-b1: cout << endl << "How can i be of assistance?" << endl;
+b1: cout << endl << YELLOW << BREAK << RESET << endl;
+    cout << endl << "How can I be of assistance?" << endl;
 
     string s1, s2, s3;
     istringstream s_;
@@ -90,7 +90,7 @@ b1: cout << endl << "How can i be of assistance?" << endl;
     if(s1 == "process" && s2 == "queue"){
         processQueue();
         cout << endl << "Queue has been processed" << endl;
-        goto t;
+        goto t1;
     }
 
     cin >> s3;
@@ -101,7 +101,8 @@ b1: cout << endl << "How can i be of assistance?" << endl;
         goto b1;
     }
 
-t:  cout << endl << "Anything else? (Yes/No)" << endl;
+t1: cout << endl << YELLOW << BREAK << RESET << endl;
+    cout << endl << "Anything else? (Yes/No)" << endl;
 
     s1.clear(); getline(cin >> ws, s1);
     lowercase(s1);
@@ -114,31 +115,30 @@ t:  cout << endl << "Anything else? (Yes/No)" << endl;
         }
     }
 
-e1: cout << endl << "See you next time!" << endl;
+e1: cout << endl << YELLOW << BREAK << RESET << endl << endl;
+    cout << "See you next time!" << endl;
 }
 
                             ///             GUIDED MODE             ////
 void Helpy::guided_mode(){
-
     /*-----LER COMANDOS-----*/
-
-b2: cout << endl << YELLOW << BREAK << RESET << endl << endl;
-    cout << "Hello! How can I be of assistance?" << endl;
+b2: cout << endl << YELLOW << BREAK << RESET << endl;
+    cout << endl << "Hello! How can I be of assistance?" << endl;
     cout << endl;
     cout << "* Display" << endl;
-    cout << "* Modify" << endl;
+    cout << "* Add" << endl;
+    cout << "* Remove" << endl;
     cout << "* Process" << endl;
     cout << "* Quit" << endl;
     cout << endl;
 
-    string s1, s2, s3, s4;
+    string s1, s2, s3;
     s3 = "zero";
 
+    istringstream s_;
+
     cin >> s1; lowercase(s1);
-    if (s1 == "quit"){
-        goto e2;
-    }
-    else if (s1 == "display"){
+    if (s1 == "display"){
         cout << endl << YELLOW << BREAK << RESET << endl << endl;
         cout << "* All" << endl;
         cout << "* Class" << endl;
@@ -146,41 +146,50 @@ b2: cout << endl << YELLOW << BREAK << RESET << endl << endl;
         cout << "* UC" << endl;
         cout << endl;
     }
-    else if (s1 == "modify"){
+    else if (s1 == "add"){
         cout << endl << YELLOW << BREAK << RESET << endl << endl;
-        cout << "* Add" << endl;
-        cout << "* Remove" << endl;
+        cout << "* Student" << endl;
         cout << endl;
-
-        cin >> s2; lowercase(s2);
-
-        if (s2 == "add"){
-            //goto sc;
-        }
-        else if (s2 == "remove"){        
-            cout << endl << YELLOW << BREAK << RESET << endl << endl;
-            cout << "* Class" << endl;
-            cout << "* UC" << endl;
-            cout << endl;
-            goto rmv;
-        }
-        else if (s2 == "quit"){
-            goto e2;
-        }
-        else{
-            process_command(s1, s2, s3);
-            goto b2;
-        }
     }
-    else{
-        cout << YELLOW << BREAK << RESET << endl << endl;
+    else if (s1 == "remove"){
+        cout << endl << YELLOW << BREAK << RESET << endl << endl;
+        cout << "* Class" << endl;
+        cout << "* UC" << endl;
+        cout << endl;
+    }
+    else if (s1 == "process"){
+        cout << endl << YELLOW << BREAK << RESET << endl << endl;
+        cout << "* Queue" << endl;
+        cout << "* Quit" << endl;
+        cout << endl;
+    }
+    else if (s1 == "quit"){
+        goto e2;
+    }
+    else{ // erro
         process_command(s1, s2, s3);
         goto b2;
     }
 
     cin >> s2; lowercase(s2);
 
-    if (s2 == "class"){
+    if (s1 == "process" && s2 == "queue"){
+        processQueue();
+        cout << endl << "Queue has been processed" << endl;
+        goto t2;
+    }
+    else if (command[s1] == 200 && s2 == "student"){ // s1 -> add
+        cout << endl << YELLOW << BREAK << RESET << endl << endl;
+        cout << "* UC" << endl;
+        cout << endl;
+    }
+    else if (command[s1] == 100 && s2 == "student"){ // s1 -> remove
+        cout << endl << YELLOW << BREAK << RESET << endl << endl;
+        cout << "* UC" << endl;
+        cout << "* Class" << endl;
+        cout << endl;
+    }
+    else if (s2 == "class"){
         cout << endl << YELLOW << BREAK << RESET << endl << endl;
         cout << "* Schedule" << endl;
         cout << "* Students" << endl;
@@ -210,8 +219,7 @@ b2: cout << endl << YELLOW << BREAK << RESET << endl << endl;
     else if (s2 == "quit"){
         goto e2;
     }
-    else{
-        cout << YELLOW << BREAK << RESET << endl << endl;
+    else{ // erro
         process_command(s1, s2, s3);
         goto b2;
     }
@@ -227,15 +235,22 @@ rmv:cin >> s3; lowercase(s3);
         goto b2;
     }
 
-    cout << endl << YELLOW << BREAK << RESET << endl << endl;
-    cout << "Anything else? (Yes/No)" << endl;
-    cin >> s4; lowercase(s4);
-    if (s4 == "yes" || s4 == "y"){
-        goto b2;
+t2: cout << endl << YELLOW << BREAK << RESET << endl;
+    cout << endl << "Anything else? (Yes/No)" << endl;
+
+    s1.clear(); getline(cin >> ws, s1);
+    lowercase(s1);
+
+    s_.clear(); s_.str(s1);
+
+    while (s_ >> s1){
+        if (s1 == "yes" || s1 == "y"){
+            goto b2;
+        }
     }
 
 e2: cout << endl << YELLOW << BREAK << RESET << endl << endl;
-    cout << "See you next time!" << endl << endl;
+    cout << "See you next time!" << endl;
 }
 
 bool Helpy::process_command(string& s1, string& s2, string& s3){
@@ -285,6 +300,7 @@ bool Helpy::process_command(string& s1, string& s2, string& s3){
             break;
         }
         case(137) : { // remove student classes
+            cout << endl << YELLOW << BREAK << RESET << endl << endl;
             cout << endl << "Please type the code (upXXXXXXXXX) of the desired student"<< endl;
             string st; cin >>st;
             cout << "Please type the code of the class you want to remove" << endl;
@@ -295,6 +311,7 @@ bool Helpy::process_command(string& s1, string& s2, string& s3){
             break;
         }
         case(140) : { // remove student uc
+            cout << endl << YELLOW << BREAK << RESET << endl << endl;
             cout << endl << "Please type the code (upXXXXXXXXX) of the desired student" << endl;
             string st; cin >>st;
             cout << "Please type the code of the uc you want to remove" << endl;
@@ -304,6 +321,7 @@ bool Helpy::process_command(string& s1, string& s2, string& s3){
             break;
         }
         case(240) : { //add uc to student
+            cout << endl << YELLOW << BREAK << RESET << endl << endl;
             cout << endl << "Please type the code (upXXXXXXXXX) of the desired student"<< endl;
             string st; cin >>st;
             cout << "Please type the code of the uc you want to add" << endl;
@@ -314,7 +332,8 @@ bool Helpy::process_command(string& s1, string& s2, string& s3){
             break;
         }
         default : {
-            cout << endl << RED << "Invalid command! Please, type another command." << RESET << endl;
+            cout << endl << YELLOW << BREAK << RESET << endl << endl;
+            cout << RED << "Invalid command! Please, type another command." << RESET << endl;
 
             return false;
         }
