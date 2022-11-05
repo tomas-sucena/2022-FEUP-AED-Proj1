@@ -14,7 +14,7 @@
 
 map<string, int> Helpy::command = {{"display", 1}, {"print", 1}, {"show", 1}, {"modify", 0}, {"remove", 100}, {"add",200}};
 map<string, int> Helpy::target = {{"uc", 6}, {"class", 8}, {"student", 10}, {"students", 10}, {"all", 22}, {"remove", 100}, {"add",200}};
-map<string, int> Helpy::what = {{"schedule", 24}, {"classes", 27}, {"class", 27}, {"ucs", 30}, {"uc", 30}, {"students", 33},{"student", 33}};
+map<string, int> Helpy::what = {{"schedule", 24}, {"classes", 27}, {"class", 27}, {"ucs", 30}, {"uc", 30}, {"students", 33}, {"student", 33}, {"zero", 0}};
 
 // função auxiliar usada para tratar dos comandos
 void lowercase(string& s, bool uppercase = false){
@@ -213,12 +213,13 @@ b2: cout << endl << YELLOW << BREAK << RESET << endl << endl;
     cout << "Hello! How can I be of assistance?" << endl;
     cout << endl;
     cout << "* Display" << endl;
-    cout << "* Add" << endl;
-    cout << "* Remove" << endl;
+    cout << "* Modify" << endl;
+    cout << "* Process" << endl;
     cout << "* Quit" << endl;
     cout << endl;
 
-    string s1, s2, s3, s4; 
+    string s1, s2, s3, s4;
+    s3 = "zero";
 
     cin >> s1; lowercase(s1);
     if (s1 == "quit"){
@@ -231,6 +232,31 @@ b2: cout << endl << YELLOW << BREAK << RESET << endl << endl;
         cout << "* Student" << endl;
         cout << "* UC" << endl;
         cout << endl;
+    }
+    else if (s1 == "modify"){
+        cout << endl << YELLOW << BREAK << RESET << endl << endl;
+        cout << "* Add" << endl;
+        cout << "* Remove" << endl;
+        cout << endl;
+
+        cin >> s2; lowercase(s2);
+
+        if (s2 == "add"){
+            goto sc;
+        }
+        else if (s2 == "remove"){        
+            cout << endl << YELLOW << BREAK << RESET << endl << endl;
+            cout << "* Class" << endl;
+            cout << "* UC" << endl;
+            cout << endl;
+            goto rmv;
+        }
+        else if (s2 == "quit"){
+            goto e2;
+        }
+        else{
+            goto d1;
+        }
     }
     else{
         goto d1;
@@ -272,14 +298,14 @@ b2: cout << endl << YELLOW << BREAK << RESET << endl << endl;
         goto d1;
     }
 
-    cin >> s3; lowercase(s3);
+rmv:cin >> s3; lowercase(s3);
     
     if (s3 == "quit"){
         goto e2;
     }
 
     // processar o comando    
-    switch (command[s1] + target[s2] + what[s3]){
+sc:     switch (command[s1] + target[s2] + what[s3]){
         case(31) : {
             display_uc_schedule();
 
@@ -363,12 +389,15 @@ b2: cout << endl << YELLOW << BREAK << RESET << endl << endl;
 
             break;
         }
-        case(240) : { //add uc to student
-            cout << "Please type the code (upXXXXXXXXX) of the desired student"<<endl;
+        case(200) : { //add uc to student
+            cout << endl << YELLOW << BREAK << RESET << endl << endl;
+            cout << "Please type the code (upXXXXXXXXX) of the desired student." << endl;
             string st; cin >>st;
-            cout << "Please type the code of the uc you want to add" << endl;
+            cout << endl << YELLOW << BREAK << RESET << endl << endl;
+            cout << "Please type the code of the uc you want to add." << endl;
             string cl; cin >> cl; lowercase(cl, true);
-            cout << "Please type the code of the class you want to add the uc to" << endl;
+            cout << endl << YELLOW << BREAK << RESET << endl << endl;
+            cout << "Please type the code of the class you want to add the uc to." << endl;
             string f; cin >> f; lowercase(f, true);
             queuer.push(Request(s1,s3,st,cl,f));
             break;
@@ -729,10 +758,10 @@ void Helpy::display_all_classes() const{
 
 a12:cout << endl << YELLOW << BREAK << RESET << endl << endl;
     cout << "What classes would you like to see?" << endl << endl;
-    cout << "All" << endl;
-    cout << "First Year (first)" << endl;
-    cout << "Second Year (second)" << endl;
-    cout << "Third Year (third)" << endl << endl;
+    cout << "* All" << endl;
+    cout << "* First Year (first)" << endl;
+    cout << "* Second Year (second)" << endl;
+    cout << "* Third Year (third)" << endl << endl;
 
     string temp; cin >> temp; lowercase(temp);
 
@@ -781,10 +810,10 @@ void Helpy::display_all_ucs() const{
 
 a13:cout << endl << YELLOW << BREAK << RESET << endl << endl;
     cout << endl << "What UCs would you like to see?" << endl << endl;
-    cout << "All" << endl;
-    cout << "First Year (first)" << endl;
-    cout << "Second Year (second)" << endl;
-    cout << "Third Year (third)" << endl << endl;
+    cout << "* All" << endl;
+    cout << "* First Year (first)" << endl;
+    cout << "* Second Year (second)" << endl;
+    cout << "* Third Year (third)" << endl << endl;
 
     string temp; cin >> temp; lowercase(temp);
 
