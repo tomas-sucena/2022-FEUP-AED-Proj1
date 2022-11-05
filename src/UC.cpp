@@ -98,7 +98,7 @@ void UC::print_students(bool by_code, bool descending) const{
 /**
  * @brief adds a student to the UC
  * complexity = n*log(n)
- * @param studentCode code of the student
+ * @param studentCode code (upXXXXXXXXX) of the student
  * @param studentName name of the student
  */
 void UC::add_student(int studentCode, string studentName){
