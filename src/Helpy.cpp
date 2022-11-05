@@ -159,7 +159,6 @@ b2: cout << endl << YELLOW << BREAK << RESET << endl;
     else if (s1 == "process"){
         cout << endl << YELLOW << BREAK << RESET << endl << endl;
         cout << "* Queue" << endl;
-        cout << "* Quit" << endl;
         cout << endl;
     }
     else if (s1 == "quit"){
@@ -663,42 +662,58 @@ void Helpy::display_all_classes() const{
 a12:cout << endl << YELLOW << BREAK << RESET << endl << endl;
     cout << "What classes would you like to see?" << endl << endl;
     cout << "* All" << endl;
-    cout << "* First Year (first)" << endl;
-    cout << "* Second Year (second)" << endl;
-    cout << "* Third Year (third)" << endl << endl;
+    cout << "* First Year" << endl;
+    cout << "* Second Year" << endl;
+    cout << "* Third Year" << endl << endl;
 
-    string temp; cin >> temp; lowercase(temp);
+    bool flag_class = true;
+    string line; getline(cin >> ws, line);
+    lowercase(line);
 
-    cout << endl << YELLOW << BREAK << RESET << endl << endl;
-    cout << "The classes are the following:" << endl << endl;
+    istringstream line_(line);
+    string temp;
 
-    if (temp == "all"){
-        for (const string& class_code : all_classes_set){
-            cout << class_code << endl;
-        }
-    }
-    else if (temp == "first"){
-        for (string class_code : all_classes_set){
-            if (class_code[0] == '1'){
+    while(line_ >> temp){
+        if (temp == "all"){
+            cout << endl << YELLOW << BREAK << RESET << endl << endl;
+            cout << "The classes are the following:" << endl << endl;
+            for (const string& class_code : all_classes_set){
                 cout << class_code << endl;
             }
+            flag_class = false;
         }
-    }
-    else if (temp == "second"){
-        for (string class_code : all_classes_set){
-            if (class_code[0] == '2'){
-                cout << class_code << endl;
+        else if (temp == "first"){
+            cout << endl << YELLOW << BREAK << RESET << endl << endl;
+            cout << "The classes are the following:" << endl << endl;
+            for (string class_code : all_classes_set){
+                if (class_code[0] == '1'){
+                    cout << class_code << endl;
+                }
             }
+            flag_class = false;
         }
-    }
-    else if (temp == "third"){
-        for (string class_code : all_classes_set){
-            if (class_code[0] == '3'){
-                cout << class_code << endl;
+        else if (temp == "second"){
+            cout << endl << YELLOW << BREAK << RESET << endl << endl;
+            cout << "The classes are the following:" << endl << endl;
+            for (string class_code : all_classes_set){
+                if (class_code[0] == '2'){
+                    cout << class_code << endl;
+                }
             }
+            flag_class = false;
+        }
+        else if (temp == "third"){
+            cout << endl << YELLOW << BREAK << RESET << endl << endl;
+            cout << "The classes are the following:" << endl << endl;
+            for (string class_code : all_classes_set){
+                if (class_code[0] == '3'){
+                    cout << class_code << endl;
+                }
+            }
+            flag_class = false;
         }
     }
-    else{
+    if (flag_class){
         cout << endl << YELLOW << BREAK << RESET << endl << endl;
         cout << RED << "Invalid command. Please, try again." << RESET << endl;
         goto a12;
@@ -715,42 +730,58 @@ void Helpy::display_all_ucs() const{
 a13:cout << endl << YELLOW << BREAK << RESET << endl << endl;
     cout << endl << "What UCs would you like to see?" << endl << endl;
     cout << "* All" << endl;
-    cout << "* First Year (first)" << endl;
-    cout << "* Second Year (second)" << endl;
-    cout << "* Third Year (third)" << endl << endl;
+    cout << "* First Year" << endl;
+    cout << "* Second Year" << endl;
+    cout << "* Third Year" << endl << endl;
 
-    string temp; cin >> temp; lowercase(temp);
+    bool flag_uc = true;
+    string line; getline(cin >> ws, line);
+    lowercase(line);
 
-    cout << endl << YELLOW << BREAK << RESET << endl << endl;
-    cout << "The UCs are the following:" << endl << endl;
+    istringstream line_(line);
+    string temp;
 
-    if (temp == "all"){
-        for (string uc_code : all_ucs_set){
-            cout << uc_code << endl;
-        }
-    }
-    else if (temp == "first"){
-        for (string uc_code : all_ucs_set){
-            if (int(uc_code[6]) == '0'){
+    while(line_ >> temp){
+        if (temp == "all"){
+            cout << endl << YELLOW << BREAK << RESET << endl << endl;
+            cout << "The UCs are the following:" << endl << endl;
+            for (string uc_code : all_ucs_set){
                 cout << uc_code << endl;
             }
+            flag_uc = false;
         }
-    }
-    else if (temp == "second"){
-        for (string uc_code : all_ucs_set){
-            if (int(uc_code[6]) == '1'){
-                cout << uc_code << endl;
+        else if (temp == "first"){
+            cout << endl << YELLOW << BREAK << RESET << endl << endl;
+            cout << "The UCs are the following:" << endl << endl;
+            for (string uc_code : all_ucs_set){
+                if (int(uc_code[6]) == '0' || uc_code[0] == 'U'){
+                    cout << uc_code << endl;
+                }
             }
+            flag_uc = false;
         }
-    }
-    else if (temp == "third"){
-        for (string uc_code : all_ucs_set){
-            if (int(uc_code[6]) == '2'){
-                cout << uc_code << endl;
+        else if (temp == "second"){
+            cout << endl << YELLOW << BREAK << RESET << endl << endl;
+            cout << "The UCs are the following:" << endl << endl;
+            for (string uc_code : all_ucs_set){
+                if (int(uc_code[6]) == '1'){
+                    cout << uc_code << endl;
+                }
             }
+            flag_uc = false;
+        }
+        else if (temp == "third"){
+            cout << endl << YELLOW << BREAK << RESET << endl << endl;
+            cout << "The UCs are the following:" << endl << endl;
+            for (string uc_code : all_ucs_set){
+                if (int(uc_code[6]) == '2'){
+                    cout << uc_code << endl;
+                }
+            }
+            flag_uc = false;
         }
     }
-    else{
+    if (flag_uc){
         cout << endl << YELLOW << BREAK << RESET << endl << endl;
         cout << RED << "Invalid command! Please, try again." << RESET << endl;
         goto a13;
