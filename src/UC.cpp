@@ -48,7 +48,7 @@ string UC::get_ucCode() const{
 
 /**
  * @brief returns all the classes of the UC
- * @return set<string> with all the classes of the UC
+ * @return map<string, set<string>> with all the classes of the UC and their respective students
  */
 map<string, set<string>> UC::get_classes() const{
     return classes_;
