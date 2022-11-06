@@ -24,7 +24,10 @@ Schedule Class::get_schedule() const{
     return schedule_;
 }
 
-
+/**
+ * @brief returns all the UCs of a class and their respective students
+ * @return map<string, set<string>> with all all the UCs of a class and their respective students
+ */
 map<string, set<string>> Class::get_occupation() const{
     return occupation_;
 }
