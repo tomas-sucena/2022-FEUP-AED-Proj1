@@ -17,7 +17,7 @@ map<string, int> Helpy::what = {{"schedule", 24}, {"classes", 27}, {"class", 27}
 
 /**
  * @brief turns the characters of a string all into lowercase or uppercase
- * 
+ * complexity = n
  * @param s string to be modified
  * @param uppercase if true turns all the characters of the string to uppercase; if false turns all the characters of the string to lowercase
  */
@@ -40,18 +40,22 @@ bool order_bycode(const Student s1, const Student s2){
 
 /**
  * @brief Construct a new Helpy:: Helpy object
- * 
- * @param students 
- * @param UCs 
- * @param classes 
- * @param c_blocks 
- * @param u_blocks 
+ * @param students vector of students
+ * @param UCs vector of UCs
+ * @param classes vector of classes
+ * @param c_blocks map containing the schedule blocks of all the classes
+ * @param u_blocks map containing the schedule blocks of all the UCs
  */
 Helpy::Helpy(vector<Student>& students, vector<UC>& UCs, vector<Class>& classes, 
              map<string, list<Block>>& c_blocks, map<string, list<Block>>& u_blocks) : 
              all_students(students), all_UCs(UCs), all_classes(classes), 
              class_blocks(c_blocks), uc_blocks(u_blocks) {}
 
+
+/**
+ * @brief allows to choose the mode of the UI
+ * complexity = n^2
+ */
 void Helpy::terminal(){
 a0: cout << endl << YELLOW << BREAK << RESET << endl << endl;
     cout << "Which mode would you prefer?" << endl << endl;
@@ -88,8 +92,15 @@ a0: cout << endl << YELLOW << BREAK << RESET << endl << endl;
 }
 
                                 ///         ADVANCED MODE       ///
+
+/**
+ * @brief executes the advanced mode of the UI
+ * complexity = n^2
+ */
 void Helpy::advanced_mode(){
+
     /*-----LER COMANDOS-----*/
+
 b1: cout << endl << YELLOW << BREAK << RESET << endl;
     cout << endl << "How can I be of assistance?" << endl;
 
@@ -138,8 +149,15 @@ e1: cout << endl << YELLOW << BREAK << RESET << endl << endl;
 }
 
                             ///             GUIDED MODE             ////
+
+/**
+ * @brief executes the guided mode of the UI
+ * complexity = n^2
+ */
 void Helpy::guided_mode(){
+
     /*-----LER COMANDOS-----*/
+
 b2: cout << endl << YELLOW << BREAK << RESET << endl;
     cout << endl << "Hello! How can I be of assistance?" << endl;
     cout << endl;
@@ -264,6 +282,15 @@ e2: cout << endl << YELLOW << BREAK << RESET << endl << endl;
     cout << "See you next time!" << endl;
 }
 
+/**
+ * @brief processes the commands that were inputed
+ * complexity = n
+ * @param s1 first word of the command
+ * @param s2 second word of the command
+ * @param s3 third word of the command
+ * @return true if the command exists
+ * @return false if the command doesnt exist
+ */
 bool Helpy::process_command(string& s1, string& s2, string& s3){
     switch (command[s1] + target[s2] + what[s3]){
         case(31) : {
@@ -329,7 +356,6 @@ bool Helpy::process_command(string& s1, string& s2, string& s3){
             return false;
         }
     }
-
     return true;
 }
 
@@ -491,6 +517,10 @@ a5: cout << endl << YELLOW << BREAK << RESET << endl << endl;
     }
 }
 
+/**
+ * @brief displays the schedule of a determined class
+ * complexity = n^3
+ */
 void Helpy::display_class_schedule() const{
 a6: cout << endl << YELLOW << BREAK << RESET << endl << endl;
     cout << "Please type the code (XLEICXX) of the desired class." << endl;
@@ -517,6 +547,10 @@ a6: cout << endl << YELLOW << BREAK << RESET << endl << endl;
     }
 }
 
+/**
+ * @brief displays the students of a determined class
+ * complexity = n^3*log(n)
+ */
 void Helpy::display_class_students() const{
     // ordenação por código ou nome
 a7: cout << endl << YELLOW << BREAK << RESET << endl << endl;
@@ -604,6 +638,10 @@ a9: cout << endl << YELLOW << BREAK << RESET << endl << endl;
     }
 }
 
+/**
+ * @brief displays the schedule of a determined student
+ * complexity = n^3
+ */
 void Helpy::display_student_schedule() const{
 a10:cout << endl << YELLOW << BREAK << RESET << endl;
     cout << endl << "Please write the code (upXXXXXXXXX) or the name of the desired student." << endl;
@@ -635,6 +673,10 @@ a10:cout << endl << YELLOW << BREAK << RESET << endl;
     }
 }
 
+/**
+ * @brief displays the classes of a determined student
+ * complexity = n^3
+ */
 void Helpy::display_student_classes() const{
 a11:cout << endl << YELLOW << BREAK << RESET << endl << endl;
     cout << "Please write the code (upXXXXXXXXX) of the desired student." << endl;
@@ -666,6 +708,10 @@ a11:cout << endl << YELLOW << BREAK << RESET << endl << endl;
     }
 }
 
+/**
+ * @brief displays all the classes
+ * complexity = n^3
+ */
 void Helpy::display_all_classes() const{
     set<string> all_classes_set;
 
@@ -734,6 +780,10 @@ a12:cout << endl << YELLOW << BREAK << RESET << endl << endl;
     }
 }
 
+/**
+ * @brief displays all the UCs
+ * complexity = n^3
+ */
 void Helpy::display_all_ucs() const{
     set<string> all_ucs_set;
 
@@ -802,6 +852,10 @@ a13:cout << endl << YELLOW << BREAK << RESET << endl << endl;
     }
 }
 
+/**
+ * @brief displays all the students
+ * complexity = n^3*log(n)
+ */
 void Helpy::display_all_students() const{
     // ordenação por código ou nome
 a14:cout << endl << YELLOW << BREAK << RESET << endl << endl;
@@ -986,6 +1040,10 @@ a17:    cout << endl << YELLOW << BREAK << RESET << endl << endl;
     }
 }
 
+/**
+ * @brief displays the UCs of a determined student
+ * complexity = n^3
+ */
 void Helpy::display_student_ucs() const{
 a19:cout << endl << YELLOW << BREAK << RESET << endl << endl;
     cout << "Please write the code (upXXXXXXXXX) or the name of the desired student." << endl;
@@ -1017,6 +1075,13 @@ a19:cout << endl << YELLOW << BREAK << RESET << endl << endl;
     }
 }
 
+/**
+ * @brief inserts a request to remove a student's class into the queue
+ * complexity = n^2
+ * @param s1 first word of the command
+ * @param s2 second word of the command
+ * @param s3 third word of the command
+ */
 void Helpy::remove_student_classes(string& s1, string& s2, string& s3){
 a20:cout << endl << YELLOW << BREAK << RESET << endl;
 
@@ -1050,9 +1115,15 @@ a20:cout << endl << YELLOW << BREAK << RESET << endl;
     string cl; cin >> cl; lowercase(cl, true);
 
     queuer.push(Request(s1,s3,st,cl));
-    log(Request(s1,s3,st,cl), "Fuck this");
 }
 
+/**
+ * @brief inserts a request to remove a student's UC into the queue
+ * complexity = n^2
+ * @param s1 first word of the command
+ * @param s2 second word of the command
+ * @param s3 third word of the command
+ */
 void Helpy::remove_student_ucs(string& s1, string& s2, string& s3){
 a21:cout << endl << YELLOW << BREAK << RESET << endl;
 
@@ -1088,6 +1159,13 @@ a21:cout << endl << YELLOW << BREAK << RESET << endl;
     queuer.push(Request(s1,s3,st,uc, ""));
 }
 
+/**
+ * @brief inserts a request to add a student's UC into the queue
+ * complexity = n^2
+ * @param s1 first word of the command
+ * @param s2 second word of the command
+ * @param s3 third word of the command
+ */
 void Helpy::add_student_uc(string& s1, string& s2, string& s3){
 a22:cout << endl << YELLOW << BREAK << RESET << endl;
 
@@ -1129,6 +1207,11 @@ a22:cout << endl << YELLOW << BREAK << RESET << endl;
 
 
 /*-----FUNÇÕES DA FILA-----*/
+
+/**
+ * @brief rewrites the students_classes.csv file
+ * complexity = n^2
+ */
 void Helpy::rewrite_file(){
     ofstream out("../csv/students_classes.csv", std::ofstream::trunc);
 
@@ -1148,6 +1231,10 @@ void Helpy::rewrite_file(){
     out.close();
 }
 
+/**
+ * @brief processes the queue
+ * complexity = n^2
+ */
 void Helpy::processQueue(){
     while(!queuer.empty()){
         Request sub = queuer.front();
@@ -1164,6 +1251,11 @@ void Helpy::processQueue(){
     rewrite_file();
 }
 
+/**
+ * @brief processes a remove request
+ * complexity = n^2
+ * @param sub request
+ */
 void Helpy::rem(Request sub){
     bool valid = false;
 
@@ -1282,6 +1374,11 @@ void Helpy::rem(Request sub){
     }
 }
 
+/**
+ * @brief processes an add request
+ * complexity = n^2*log(n)
+ * @param sub request
+ */
 void Helpy::add(Request sub){
     for(Student& s: all_students){
         if(s.get_studentCode() == sub.get_student()){
@@ -1341,6 +1438,11 @@ void Helpy::add(Request sub){
     }
 }
 
+/**
+ * @brief processes a change request
+ * complexity = n^3
+ * @param sub request
+ */
 void Helpy::change(Request sub){
     for(Student& s: all_students){
         if (s.get_studentCode() == sub.get_student()){
@@ -1418,6 +1520,14 @@ void Helpy::change(Request sub){
     }
 }
 
+/**
+ * @brief checks if an add request is valid
+ * complexity = n
+ * @param s student
+ * @param c class
+ * @param uc UC
+ * @return string containing information about the validity of the request
+ */
 string Helpy::is_valid(Student& s, Class& c, string uc){
     // verificar se a turma está cheia
     if(c.get_ucs()[uc].size() >= 30){
@@ -1461,6 +1571,15 @@ string Helpy::is_valid(Student& s, Class& c, string uc){
     return "yes";
 }
 
+/**
+ * @brief checks if a change request is valid
+ * complexity = n^2
+ * @param s student
+ * @param schedule_ schedule
+ * @param c class
+ * @param ucs UCs
+ * @return string containing information about the validity of the request
+ */
 string Helpy::is_valid_change(Student s, Schedule schedule_, Class& c, set<string> ucs){
     // verificar se a turma está cheia
     for (string uc : ucs){
@@ -1504,6 +1623,11 @@ string Helpy::is_valid_change(Student s, Schedule schedule_, Class& c, set<strin
     return "yes";
 }
 
+/**
+ * @brief writes in Logs.txt
+ * @param r request
+ * @param s string containing an error information
+ */
 void Helpy::log(Request r, string s){
     ofstream f("../Logs.txt", ios::app);
 
