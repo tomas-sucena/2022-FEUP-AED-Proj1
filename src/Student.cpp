@@ -74,28 +74,48 @@ void Student::set_Schedule(Schedule a){
     schedule_ = a;
 }
 
+/**
+ * @brief prints all the classes the student is in
+ * complexity = n
+ */
 void Student::print_classes() const{
     for (string classCode : classes_){
         cout << classCode << endl;
     }
 }
 
+/**
+ * @brief prints all the UCs the student is enrolled in
+ * complexity = n
+ */
 void Student::print_ucs() const{
     for (auto info : ucs_){
         cout << info.first << endl;
     }
 }
 
+/**
+ * @brief sets the map containing the relation between the UCs and classes of the student
+ * @param sub map containing the relation between the UCs and classes of the student
+ */
 void Student::set_ucs(map<string,string> sub){
     ucs_ = sub;
 }
 
+/**
+ * @brief sets the UCs of the student
+ * complexity = n
+ */
 void Student::set_uc(){
     for(auto it : ucs_){
         uc_.insert(it.first);
     }
 }
 
+/**
+ * @brief returns the UCs the student is enrolled in
+ * @return set<string> 
+ */
 set<string> Student::get_uc() const{
     return uc_;
 }
