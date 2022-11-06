@@ -1443,20 +1443,7 @@ string Helpy::is_valid(Student& s, Class& c, string uc){
             return "Failed due to Schedule overlap";
         }
     }
-
-    /*
-    Schedule st = s.get_schedule();
-    Schedule sch = c.get_schedule();
-    for(const Block& b: sch.get_blocks()){
-        if((b.get_type() == "TP" || b.get_type() == "PL") && b.get_code() == uc){
-            for(const Block& su: st.get_blocks()){
-                if((su.get_type() == "TP" || su.get_type() == "PL") && ((su.get_startHour() >= b.get_startHour() && su.get_startHour() < b.get_endHour()) || (su.get_endHour() > b.get_startHour() && su.get_endHour() <= b.get_endHour()))){
-                    return "Failed due to Schedule overlap";
-                }
-            }
-        }
-    }*/
-
+    
     // verificar se a troca gera desequilíbrio nas turmas das UCs
     int dec = uc[6] - '0',
         unit = uc[7] - '0';
