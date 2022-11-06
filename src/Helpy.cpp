@@ -1401,7 +1401,7 @@ void Helpy::change(Request sub){
 }
 
 string Helpy::is_valid(Student s, Class& cl, string uc){
-    if(cl.get_occupation()[uc].size() >= 30){
+    if(cl.get_ucs()[uc].size() >= 30){
         return "Failed due to exceeding class limit";
     }
     Schedule st = s.get_schedule();
@@ -1453,7 +1453,7 @@ string Helpy::is_valid(Student s, Class& cl, string uc){
 string Helpy::is_valid_change(Student s, Schedule schedule_, Class& c, set<string> ucs){
     // verificar se a turma está cheia
     for (string uc : ucs){
-        if (c.get_occupation()[uc].size() >= 30){
+        if (c.get_ucs()[uc].size() >= 30){
             return "Failed because the class is full";
         }
     }

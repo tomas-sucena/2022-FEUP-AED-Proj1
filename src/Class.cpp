@@ -6,10 +6,6 @@ bool order_by_name(const pair<int, string> p1,
     return (p1.second < p2.second);
 }
 
-bool Class::equals(Class c){
-    return (c.get_classCode() == classCode_);
-}
-
 bool Class::operator<(const Class& c) const{
     return (classCode_ < c.get_classCode());
 }
@@ -40,8 +36,8 @@ Schedule Class::get_schedule() const{
 }
 
 
-map<string, set<string>> Class::get_occupation() const{
-    return occupation_;
+map<string, set<string>> Class::get_ucs() const{
+    return ucs_;
 }
 
 /**
@@ -115,7 +111,7 @@ void Class::add_student(int studentCode, const string& studentName, const string
         students_.push_back({studentCode, studentName});
         sort(students_.begin(), students_.end());
 
-        occupation_[ucCode].insert(studentName);
+        ucs_[ucCode].insert(studentName);
     }
 }
 
@@ -133,7 +129,7 @@ void Class::remove_student(string studentName){
     }
 
     // remover o estudante da contagem de alunos em cada UC
-    for (auto& p : occupation_){
+    for (auto& p : ucs_){
         auto it = p.second.find(studentName);
 
         if (it != p.second.end()){
@@ -141,12 +137,4 @@ void Class::remove_student(string studentName){
             break;
         }
     }
-}
-
-/**
- * @brief returns the number of students that are in the class
- * @return int 
- */
-int Class::size() const{
-    return students_.size();
 }

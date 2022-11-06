@@ -13,7 +13,7 @@ class Class {
     private:
         string classCode_;
         vector<pair<int, string>> students_; // ordenado por código
-        map<string, set<string>> occupation_;
+        map<string, set<string>> ucs_;
         Schedule schedule_;
 
     public:
@@ -23,15 +23,13 @@ class Class {
         // methods
         string get_classCode() const;
         vector<pair<int, string>> get_students() const;
-        map<string, set<string>> get_occupation() const;
+        map<string, set<string>> get_ucs() const;
         Schedule get_schedule() const;
 
         void print_students(bool by_code, bool descending) const;
         void add_student(int studentCode, const string& studentName, const string& ucCode);
-        void remove_student(string studentName);//por implementar
-        int size() const;
+        void remove_student(string studentName);
 
-        bool equals(Class c);
         bool operator<(const Class& c) const; // overloading
 };
 
