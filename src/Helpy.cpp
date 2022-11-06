@@ -1400,19 +1400,36 @@ void Helpy::change(Request sub){
     }
 }
 
-string Helpy::is_valid(Student s, Class& cl, string uc){
-    if(cl.get_ucs()[uc].size() >= 30){
+string Helpy::is_valid(Student& s, Class& c, string uc){
+    // verificar se a turma está cheia
+    if(c.get_ucs()[uc].size() >= 30){
         return "Failed due to exceeding class limit";
     }
+
+    // verificar se não há sobreposição de aulas no horário
     Schedule st = s.get_schedule();
-    Schedule c = cl.get_schedule();
-    for(const Block& b: c.get_blocks()){
+    Schedule sch = c.get_schedule();
+    for(const Block& b: sch.get_blocks()){
         if((b.get_type() == "TP" || b.get_type() == "PL") && b.get_code() == uc){
             for(const Block& su: st.get_blocks()){
                 if((su.get_type() == "TP" || su.get_type() == "PL") && ((su.get_startHour() >= b.get_startHour() && su.get_startHour() < b.get_endHour()) || (su.get_endHour() > b.get_startHour() && su.get_endHour() <= b.get_endHour()))){
                     return "Failed due to Schedule overlap";
                 }
             }
+        }
+    }
+
+    // verificar se a troca gera desequilíbrio nas turmas das UCs
+    int dec = uc[6] - '0',
+        unit = uc[7] - '0';
+
+    UC& u = all_UCs[dec * 5 + (unit - 1)];
+
+    int n = (int) u.get_classes()[c.get_classCode()].size(); // número de estudantes da UC que pertencem à turma
+
+    for (auto& el : u.get_classes()){
+        if (abs(n + 1 - (int) el.second.size()) >= 4){
+            return "Failed due to class disequilibrium";
         }
     }
 
