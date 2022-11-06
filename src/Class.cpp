@@ -1,27 +1,16 @@
 #include "Class.h"
 
-// função auxiliar usada na ordenação do students_
-bool order_by_name(const pair<int, string> p1,
-                   const pair<int, string> p2){
-    return (p1.second < p2.second);
-}
-
-bool Class::operator<(const Class& c) const{
-    return (classCode_ < c.get_classCode());
-}
-
 /**
  * @brief Construct a new Class:: Class object
- * 
- * @param classCode code (XLEICXX) of the class
+ * @param classCode code of the class
  * @param schedule schedule of the class
  */
 Class::Class(string classCode, Schedule schedule) : 
              classCode_(classCode), schedule_(schedule) {}
 
 /**
- * @brief returns the code (XLEICXX) of the class
- * @return string 
+ * @brief returns the code of the class
+ * @return string with the code of the class
  */
 string Class::get_classCode() const{
     return classCode_;
@@ -29,20 +18,23 @@ string Class::get_classCode() const{
 
 /**
  * @brief returns the schedule of the class
- * @return Schedule 
+ * @return Schedule with the schedule of the class
  */
 Schedule Class::get_schedule() const{
     return schedule_;
 }
 
-
+/**
+ * @brief returns all the UCs of a class and their respective students
+ * @return map<string, set<string>> with all all the UCs of a class and their respective students
+ */
 map<string, set<string>> Class::get_ucs() const{
     return ucs_;
 }
 
 /**
  * @brief returns all the students that are in the class
- * @return vector<pair<int, string>> 
+ * @return vector<pair<int, string>> with all the students that are in the class
  */
 vector<pair<int, string>> Class::get_students() const{
     return students_;
@@ -82,9 +74,9 @@ void Class::print_students(bool by_code, bool descending) const{
 /**
  * @brief adds a student to the class
  * complexity = n*log(n)
- * @param studentCode code (upXXXXXXXXX) of the student
+ * @param studentCode code of the student
  * @param studentName name of the student
- * @param ucCode code (L.EICXXX) of the UC
+ * @param ucCode code of the UC
  */
 void Class::add_student(int studentCode, const string& studentName, const string& ucCode){
     bool found = false;
@@ -153,4 +145,36 @@ void Class::remove_student(const string& studentName, const string& ucCode){
             }
         }
     }
+}
+
+/**
+ * @brief compares two students by name
+ * @param p1 name of the student
+ * @param p2 name of the student
+ * @return true if the name of the student p1 comes first alphabetically
+ * @return false if the name of the student p2 comes first alphabetically
+ */
+bool order_by_name(const pair<int, string> p1,
+                   const pair<int, string> p2){
+    return (p1.second < p2.second);
+}
+
+/**
+ * @brief compares the code of a class to the code of other class
+ * @param c code of the class to be compared to
+ * @return true if the codes are equal
+ * @return false if the codes are not equal
+ */
+bool Class::equals(Class c){
+    return (c.get_classCode() == classCode_);
+}
+
+/**
+ * @brief compares the code of a class to the code of other class
+ * @param c code of the class to be compared to
+ * @return true if the code compared to is bigger than the other code
+ * @return false if the code compared to is smaller than the other code
+ */
+bool Class::operator<(const Class& c) const{
+    return (classCode_ < c.get_classCode());
 }

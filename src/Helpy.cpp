@@ -16,19 +16,38 @@ map<string, int> Helpy::command = {{"display", 1}, {"print", 1}, {"show", 1}, {"
 map<string, int> Helpy::target = {{"uc", 6}, {"class", 8}, {"student", 10}, {"students", 10}, {"all", 22}, {"remove", 100}, {"add",200}};
 map<string, int> Helpy::what = {{"schedule", 24}, {"classes", 27}, {"class", 27}, {"ucs", 30}, {"uc", 30}, {"students", 33}, {"student", 33}, {"zero", 0}};
 
-// função auxiliar usada para tratar dos comandos
+/**
+ * @brief turns the characters of a string all into lowercase or uppercase
+ * 
+ * @param s string to be modified
+ * @param uppercase if true turns all the characters of the string to uppercase; if false turns all the characters of the string to lowercase
+ */
 void lowercase(string& s, bool uppercase = false){
     for (char& c : s){
         c = (uppercase) ? toupper(c) : tolower(c);
     }
 }
 
-// função auxiliar usada para ordenar os estudantes por código
+/**
+ * @brief compares two student codes
+ * @param s1 student code
+ * @param s2 student code
+ * @return true if student code s1 is lower than the student code s2
+ * @return false if student code s1 is bigger than the student code s2
+ */
 bool order_bycode(const Student s1, const Student s2){
     return (s1.get_studentCode() < s2.get_studentCode());
 }
 
-
+/**
+ * @brief Construct a new Helpy:: Helpy object
+ * 
+ * @param students 
+ * @param UCs 
+ * @param classes 
+ * @param c_blocks 
+ * @param u_blocks 
+ */
 Helpy::Helpy(vector<Student>& students, vector<UC>& UCs, vector<Class>& classes, 
              map<string, list<Block>>& c_blocks, map<string, list<Block>>& u_blocks) : 
              all_students(students), all_UCs(UCs), all_classes(classes), 

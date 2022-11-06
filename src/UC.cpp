@@ -1,14 +1,8 @@
 #include "UC.h"
 
-// função auxiliar usada na ordenação do students_
-bool foo(const pair<int, string> p1, const pair<int, string> p2){
-    return (p1.second < p2.second);
-}
-
 /**
  * @brief construct a new UC::UC object
- * 
- * @param ucCode code (L.EICXXX) of the UC
+ * @param ucCode code of the UC
  * @param classes classes that belong to that UC
  */
 UC::UC(string ucCode, map<string, set<string>> classes) :
@@ -16,8 +10,7 @@ UC::UC(string ucCode, map<string, set<string>> classes) :
 
 /**
  * @brief construct a new UC::UC object
- * 
- * @param ucCode code (L.EICXXX) of the UC
+ * @param ucCode code of the UC
  * @param classes classes that belong to the UC
  * @param schedule schedule of all the classes that belong to the UC
  */
@@ -35,8 +28,8 @@ void UC::print_classes(){
 }
 
 /**
- * @brief returns the code (L.EICXXX) of the UC
- * @return string 
+ * @brief returns the code of the UC
+ * @return string with the code of the UC
  */
 string UC::get_ucCode() const{
     return ucCode_;
@@ -44,7 +37,7 @@ string UC::get_ucCode() const{
 
 /**
  * @brief returns all the classes of the UC
- * @return set<string> 
+ * @return set<string> with all the classes of the UC
  */
 map<string, set<string>> UC::get_classes() const{
     return classes_;
@@ -53,7 +46,7 @@ map<string, set<string>> UC::get_classes() const{
 /**
  * @brief removes a determined class from the UC
  * complexity = n
- * @param classCode code (XLEICXX) of the class that will be removed from the UC
+ * @param classCode code of the class that will be removed from the UC
  */
 void UC::remove_class(string classCode){
     for(auto iter = classes_.begin(); iter != classes_.end();){
@@ -159,8 +152,19 @@ void UC::set_schedule(Schedule schedule){
 
 /**
  * @brief returns the schedule of the UC
- * @return Schedule 
+ * @return Schedule with the schedule of the UC
  */
 Schedule UC::get_schedule(){
     return schedule_;
+}
+
+/**
+ * @brief compares two pairs
+ * @param p1 first pair
+ * @param p2 second pair
+ * @return true if the string of the first pair comes before the string of the second pair
+ * @return false if the string of the second pair comes before the string of the first pair
+ */
+bool foo(const pair<int, string> p1, const pair<int, string> p2){
+    return (p1.second < p2.second);
 }

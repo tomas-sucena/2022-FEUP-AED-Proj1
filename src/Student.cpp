@@ -2,32 +2,31 @@
 
 /**
  * @brief Construct a new Student:: Student object
- * 
- * @param studentCode code (upXXXXXXXXX) of the student
+ * @param studentCode code of the student
  * @param studentName name of the student
  */
 Student::Student(string studentCode, string studentName) :
                  studentCode_(studentCode), studentName_(studentName){}
 
 /**
- * @brief returns the code (upXXXXXXXXX) of the student
- * @return string 
+ * @brief returns the code of the student
+ * @return string with the code of the student
  */
 string Student::get_studentCode() const{
     return studentCode_;
 }
 
 /**
- * @brief returns the student name
- * @return string 
+ * @brief returns the name of the student
+ * @return string with the name of the student
  */
 string Student::get_studentName() const{
     return studentName_;
 }
 
 /**
- * @brief returns all the UCs the student is enrolled in
- * @return map<string, string> 
+ * @brief returns all the UCs the student is enrolled in and the respective class
+ * @return map<string, string> with all the UCs the student is enrolled in and the respective class
  */
 map<string, string> Student::get_ucs() const{
     return ucs_;
@@ -35,7 +34,7 @@ map<string, string> Student::get_ucs() const{
 
 /**
  * @brief returns all the classes the student is in
- * @return set<string> 
+ * @return set<string> with all the classes the student is in
  */
 set<string> Student::get_classes() const{
     return classes_;
@@ -43,7 +42,7 @@ set<string> Student::get_classes() const{
 
 /**
  * @brief returns the schedule of the student
- * @return Schedule 
+ * @return Schedule with the schedule of the student
  */
 Schedule Student::get_schedule() const{
     return schedule_;
@@ -51,8 +50,8 @@ Schedule Student::get_schedule() const{
 
 /**
  * @brief adds an UC to the student
- * @param ucCode code (L.EICXXX) of the UC that will be added
- * @param classCode code (XLEICXX) of the class of the UC that will be added
+ * @param ucCode code of the UC that will be added
+ * @param classCode code of the class of the UC that will be added
  */
 void Student::add_uc(string ucCode, string classCode){
     ucs_[ucCode] = classCode;
@@ -60,7 +59,7 @@ void Student::add_uc(string ucCode, string classCode){
 
 /**
  * @brief adds a class to the student
- * @param classCode code (XLEICXX) of the class that will be added
+ * @param classCode code of the class that will be added
  */
 void Student::add_class(string classCode){
     classes_.insert(classCode);
@@ -69,7 +68,7 @@ void Student::add_class(string classCode){
 /**
  * @brief removes a class from the student
  * complexity = log(n)
- * @param classCode code (XLEICXX) of the class that will be removed
+ * @param classCode code of the class that will be removed
  * @return number of classes erased
  */
 int Student::remove_class(const string& classCode){
@@ -131,6 +130,12 @@ set<string> Student::get_uc() const{
     return uc_;
 }
 
+/**
+ * @brief compares a student to other student
+ * @param s student to be compared to
+ * @return true if the name of the student comes first alphabetically
+ * @return false if the name of the student to be compared to comes first alphabetically
+ */
 bool Student::operator<(const Student& s) const{
     return (studentName_ < s.get_studentName());
 }

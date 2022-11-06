@@ -7,8 +7,8 @@ using namespace std;
 class Request
 {
 private:
-    string type;
-    string target;
+    string type_;
+    string target_;
     string student_;
     string uc_;
     string cl_;

@@ -16,7 +16,7 @@ Schedule::Schedule(list<Block> blocks) : blocks_(blocks) {
 
 /**
  * @brief returns all the blocks of the schedule
- * @return list<Block> 
+ * @return list<Block> with all the blocks of the schedule
  */
 list<Block> Schedule::get_blocks() const{
     return blocks_;
@@ -37,7 +37,7 @@ void Schedule::print(){
 /**
  * @brief converts the StartHour and the EndHour of a block to time values
  * @param time float number that represents a particular time value
- * @return string 
+ * @return string with a time value
  */
 string Schedule::to_hours(float time){
     istringstream time_(to_string(time));
