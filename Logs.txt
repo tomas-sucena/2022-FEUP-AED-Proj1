@@ -33,3 +33,4 @@ Failed to add L.EIC021 to class 3LEIC10 on student 202072322:Failed due to Sched
 Failed to remove 3LEIC08 from student 202027272:Fuck this
 Failed to add L.EIC013 to class 2LEIC02 on student 202059232:Failed because the student is already enrolled in the selected UC
 Failed to add L.EIC012 to class 2LEIC01 on student 202059232:Failed due to Schedule overlap
+Failed to add L.EIC011 to class 2LEIC01 on student 202059232:Failed due to class disequilibrium
