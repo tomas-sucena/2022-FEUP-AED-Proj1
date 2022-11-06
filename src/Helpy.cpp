@@ -1426,6 +1426,26 @@ string Helpy::is_valid(Student& s, Class& c, string uc){
     }
 
     // verificar se não há sobreposição de aulas no horário
+    Block blocc;
+
+    for (const Block& b : c.get_schedule().get_blocks()){
+        if (b.get_code() == uc){
+            blocc = b;
+            break;
+        }
+    }
+
+    for (const Block& b : s.get_schedule().get_blocks()){
+        bool type_conflict = (blocc.get_type() != "T" && b.get_type() != "T");
+        bool start_conflict = (blocc.get_startHour() >= b.get_startHour() && blocc.get_startHour() < b.get_endHour());
+        bool end_conflict = (blocc.get_endHour() > b.get_startHour() && blocc.get_endHour() <= b.get_endHour());
+
+        if (type_conflict && (start_conflict || end_conflict)){
+            return "Failed due to Schedule overlap";
+        }
+    }
+
+    /*
     Schedule st = s.get_schedule();
     Schedule sch = c.get_schedule();
     for(const Block& b: sch.get_blocks()){
@@ -1436,7 +1456,7 @@ string Helpy::is_valid(Student& s, Class& c, string uc){
                 }
             }
         }
-    }
+    }*/
 
     // verificar se a troca gera desequilíbrio nas turmas das UCs
     int dec = uc[6] - '0',
@@ -1465,12 +1485,14 @@ string Helpy::is_valid_change(Student s, Schedule schedule_, Class& c, set<strin
 
     // verificar se não há sobreposição de aulas no horário
     for(Block& b: schedule_.get_blocks()){
-        if (b.get_type() != "T"){
-            for(Block& su: schedule_.get_blocks()){
-                if((su.get_type() != "T") && (&b != &su) && ((su.get_startHour() >= b.get_startHour() && su.get_startHour() < b.get_endHour())
-                    || (su.get_endHour() > b.get_startHour() && su.get_endHour() <= b.get_endHour()))){
-                    return "Failed due to Schedule overlap";
-                }
+        for(Block& su: schedule_.get_blocks()){
+            bool eq = (&b == &su);
+            bool type_conflict = (b.get_type() != "T" && su.get_type() != "T");
+            bool start_conflict = (su.get_startHour() >= b.get_startHour() && su.get_startHour() < b.get_endHour());
+            bool end_conflict = (su.get_endHour() > b.get_startHour() && su.get_endHour() <= b.get_endHour());
+
+            if (!eq && (type_conflict && (start_conflict || end_conflict))){
+                return "Failed due to Schedule overlap";
             }
         }
     }

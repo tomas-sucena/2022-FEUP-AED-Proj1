@@ -17,6 +17,10 @@ Block::Block(string code, string weekday, string startHour, string duration, str
     endHour_ = stof(startHour) + stof(duration);
 }
 
+Block::Block(){
+    startHour_ = endHour_ = 0;
+}
+
 /**
  * @brief returns the code of the UC
  * @return string with the code of the UC

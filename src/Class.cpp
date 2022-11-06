@@ -162,16 +162,6 @@ bool order_by_name(const pair<int, string> p1,
 /**
  * @brief compares the code of a class to the code of other class
  * @param c code of the class to be compared to
- * @return true if the codes are equal
- * @return false if the codes are not equal
- */
-bool Class::equals(Class c){
-    return (c.get_classCode() == classCode_);
-}
-
-/**
- * @brief compares the code of a class to the code of other class
- * @param c code of the class to be compared to
  * @return true if the code compared to is bigger than the other code
  * @return false if the code compared to is smaller than the other code
  */

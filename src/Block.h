@@ -23,6 +23,7 @@ class Block{
         // constructor
         Block(string code, string weekday, string startHour, 
               string duration, string type);
+        Block();
 
 
         // methods
