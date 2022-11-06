@@ -1,6 +1,18 @@
 #include "Class.h"
 
 /**
+ * @brief compares two students by name
+ * @param p1 name of the student
+ * @param p2 name of the student
+ * @return true if the name of the student p1 comes first alphabetically
+ * @return false if the name of the student p2 comes first alphabetically
+ */
+bool order_by_name(const pair<int, string> p1,
+                   const pair<int, string> p2){
+    return (p1.second < p2.second);
+}
+
+/**
  * @brief Construct a new Class:: Class object
  * @param classCode code of the class
  * @param schedule schedule of the class
@@ -137,18 +149,6 @@ void Class::remove_student(string studentName){
  */
 int Class::size() const{
     return students_.size();
-}
-
-/**
- * @brief compares two students by name
- * @param p1 name of the student
- * @param p2 name of the student
- * @return true if the name of the student p1 comes first alphabetically
- * @return false if the name of the student p2 comes first alphabetically
- */
-bool order_by_name(const pair<int, string> p1,
-                   const pair<int, string> p2){
-    return (p1.second < p2.second);
 }
 
 /**
