@@ -146,12 +146,7 @@ b2: cout << endl << YELLOW << BREAK << RESET << endl;
         cout << "* UC" << endl;
         cout << endl;
     }
-    else if (s1 == "add"){
-        cout << endl << YELLOW << BREAK << RESET << endl << endl;
-        cout << "* Student" << endl;
-        cout << endl;
-    }
-    else if (s1 == "remove"){
+    else if (s1 == "add" || s1 == "remove"){
         cout << endl << YELLOW << BREAK << RESET << endl << endl;
         cout << "* Student" << endl;
         cout << endl;
@@ -1330,55 +1325,77 @@ void Helpy::add(Request sub){
 
 void Helpy::change(Request sub){
     for(Student& s: all_students){
-        if(s.get_studentCode() == sub.get_student()){
-            set<string> student_uc = s.get_uc();
-            map<string,string> a = s.get_ucs();
-            for(string ucs : student_uc){
-                int num = (ucs[0] == 'L') ? (ucs[6] - '0') * 10 + (ucs[7] - '0') - 1 : (int) all_UCs.size()-1;
+        if (s.get_studentCode() == sub.get_student()){
+            // verificar se todas as UCs da turma antiga são lecionadas na nova
+            for (const auto& [ucCode, classCode] : s.get_ucs()){
+                int num = (ucCode[0] == 'L') ? (int) (ucCode[6] - '0') * 10 + (ucCode[7] - '0') - 1 :
+                                               (int) all_UCs.size()-1;
+
                 UC& u = all_UCs[num];
-                set<string> uc_class = u.get_classes();
-                if(uc_class.find(sub.get_class()) == uc_class.end()){
+
+                if(u.get_classes().find(sub.get_class()) == u.get_classes().end()){
                     log(sub, "Not all UCs from previous class are taught at the new class");
                     cout << RED << "Failed, see logs for more information"<< RESET << endl;
                     return;
                 }
             }
-            map<string, string> pain;
-            for(const auto& i: a){
-                if(student_uc.find(i.first) != student_uc.end()){
-                    pain[i.first] = sub.get_class();
-                } else {
-                    pain[i.first] = i.second;
+
+            // atualizar a turma em que cada UC do estudante é lecionada
+            map<string, string> new_UCs = s.get_ucs();
+            set<string> ucCodes;
+
+            for (auto& p : new_UCs){
+                if (p.second == sub.get_uc()){
+                    p.second = sub.get_class();
+                    ucCodes.insert(p.first);
                 }
             }
+
+            // criar o novo horário do estudante
             list<Block> blocks;
+
             for (auto it = s.get_ucs().begin(); it != s.get_ucs().end(); it++){
                 for (const Block& b : class_blocks[it->second]){
-                    if (b.get_code() == it->first)
-                    {
+                    if (b.get_code() == it->first) {
                         blocks.push_back(b);
                     }
                 }
             }
-            Schedule student_schedule = Schedule(blocks);
+
+            Schedule new_schedule = Schedule(blocks);
+
             int year = sub.get_class()[0] - '0';
             int num = (sub.get_class()[5] - '0') * 10 + (sub.get_class()[6] - '0');
-            Class& c = all_classes[(year - 1) * 16 + (num - 1)];
-            string grief = is_valid_change(s, student_schedule, c, student_uc);
+
+            Class& new_class = all_classes[(year - 1) * 16 + (num - 1)];
+
+            // verificar se a troca é válida
+            string grief = is_valid_change(s, new_schedule, new_class, ucCodes);
+
             if(grief == "yes"){
-                s.set_ucs(pain);
-                s.set_Schedule(student_schedule);
-                //c.add_student(stoi(s.get_studentCode()), s.get_studentName());
+                s.set_ucs(new_UCs);
+                s.set_Schedule(new_schedule);
+
+                // adicionar estudante à nova turma
+                for (const string& code : ucCodes){
+                    new_class.add_student(stoi(s.get_studentCode()), s.get_studentName(), code);
+                }
+
+                // remover estudante da turma antiga
                 year = sub.get_uc()[0] - '0';
                 num = (sub.get_uc()[5] - '0') * 10 + (sub.get_uc()[6] - '0');
-                Class& o = all_classes[(year - 1) * 16 + (num - 1)];
-                o.remove_student(s.get_studentName());
+
+                Class& old_class = all_classes[(year - 1) * 16 + (num - 1)];
+                old_class.remove_student(s.get_studentName());
+
                 cout << GREEN << "Successfully changed student " << sub.get_student() << " from class " << sub.get_uc() << " to class " << sub.get_class() << "." << RESET << endl;
-            } else {
+            }
+            else {
                 log(sub, grief);
                 cout << RED << "Failed, see logs for more information"<< RESET << endl;
-                return;
             }
+
+            return;
         }
     }
 }
@@ -1434,18 +1451,36 @@ string Helpy::is_valid(Student s, Class& cl, string uc){
 }
 
 string Helpy::is_valid_change(Student s, Schedule schedule_, Class& c, set<string> ucs){
-    if(c.size() >= 30){
-        return "Failed due to exceeding class limit";
+    // verificar se a turma está cheia
+    for (string uc : ucs){
+        if (c.get_occupation()[uc].size() >= 30){
+            return "Failed because the class is full";
+        }
     }
+
+    // verificar se não há sobreposição de aulas no horário
     for(Block& b: schedule_.get_blocks()){
-        if(b.get_type() == "TP" || b.get_type() == "PL"){
+        if (b.get_type() != "T"){
             for(Block& su: schedule_.get_blocks()){
-                if((su.get_type() == "TP" || su.get_type() == "PL") && (&b != &su) && ((su.get_startHour() >= b.get_startHour() && su.get_startHour() < b.get_endHour()) || (su.get_endHour() > b.get_startHour() && su.get_endHour() <= b.get_endHour()))){
+                if((su.get_type() != "T") && (&b != &su) && ((su.get_startHour() >= b.get_startHour() && su.get_startHour() < b.get_endHour()) || (su.get_endHour() > b.get_startHour() && su.get_endHour() <= b.get_endHour()))){
                     return "Failed due to Schedule overlap";
                 }
             }
         }
     }
+
+    // verificar se a troca gera desequilíbrio nas turmas das UCs
+    for (string uc : ucs){
+        int dec = uc[6] - '0',
+            unit = uc[7] - '0';
+
+        UC& u = all_UCs[dec * 5 + (unit - 1)];
+
+
+
+    }
+
+    /*
     for(string uc: ucs){
         int num = (uc[0] == 'L') ? (uc[6] - '0') * 10 + (uc[7] - '0') - 1 : all_UCs.size() - 1;
         UC& u = all_UCs[num];
@@ -1478,7 +1513,7 @@ string Helpy::is_valid_change(Student s, Schedule schedule_, Class& c, set<strin
                 return "Failed due to class disequilibrium";
             }
         }
-    }
+    }*/
 
     return "yes";
 }

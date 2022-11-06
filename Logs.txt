@@ -26,3 +26,6 @@ Failed to remove 2LEIC08 from student 202044867:Fuck this
 Failed to remove 3LEIC05 from student 202073597:Fuck this
 Failed to remove 3LEIC05 from student 202073597:Fuck this
 Failed to remove L.EIC012 from student 202034072:Failed because the student does not have the selected UC
+Failed to remove 1LEIC01 from student 202021152:Fuck this
+Failed to remove 1LEIC01 from student 202021152:Failed because the student is not in the selected Class
+Failed to remove L.EIC015 from student 202021152:Failed because the student does not have the selected UC
