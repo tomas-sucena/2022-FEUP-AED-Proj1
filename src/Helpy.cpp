@@ -1054,7 +1054,6 @@ a20:cout << endl << YELLOW << BREAK << RESET << endl;
     string cl; cin >> cl; lowercase(cl, true);
 
     queuer.push(Request(s1,s3,st,cl));
-    log(Request(s1,s3,st,cl), "Fuck this");
 }
 
 void Helpy::remove_student_ucs(string& s1, string& s2, string& s3){
