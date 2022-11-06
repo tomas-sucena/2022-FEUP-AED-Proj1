@@ -11,7 +11,7 @@
 #define BOLD    "\033[1m"
 #define BREAK   "- - - - - - - - - - - - - - - - - - - - -"
 
-map<string, int> Helpy::command = {{"display", 1}, {"print", 1}, {"show", 1}, {"remove", 100}, {"add", 200}};
+map<string, int> Helpy::command = {{"display", 1}, {"print", 1}, {"show", 1}, {"remove", 100}, {"add", 200}, {"change", 300}};
 map<string, int> Helpy::target = {{"uc", 6}, {"class", 8}, {"student", 10}, {"students", 10}, {"all", 22}, {"remove", 100}, {"add", 200}};
 map<string, int> Helpy::what = {{"schedule", 24}, {"classes", 27}, {"class", 27}, {"ucs", 30}, {"uc", 30}, {"students", 33}, {"student", 33}, {"zero", 0}};
 
@@ -310,16 +310,20 @@ bool Helpy::process_command(string& s1, string& s2, string& s3){
             display_all_students();
             break;
         }
-        case(137) : { // remove student classes
+        case(137) : {
             remove_student_classes(s1, s2, s3);
             break;
         }
-        case(140) : { // remove student uc
+        case(140) : {
             remove_student_ucs(s1, s2, s3);
             break;
         }
-        case(240) : { //add uc to student
+        case(240) : {
             add_student_uc(s1, s2, s3);
+            break;
+        }
+        case(337) : {
+            change_student_class(s1, s2, s3);
             break;
         }
         default : {
@@ -1090,7 +1094,6 @@ a21:cout << endl << YELLOW << BREAK << RESET << endl;
 
 void Helpy::add_student_uc(string& s1, string& s2, string& s3){
 a22:cout << endl << YELLOW << BREAK << RESET << endl;
-
     cout << endl << "Please type the code (upXXXXXXXXX) or the name of the desired student" << endl;
 
     string st; getline(cin >> ws, st);
@@ -1122,6 +1125,46 @@ a22:cout << endl << YELLOW << BREAK << RESET << endl;
 
     cout << endl << YELLOW << BREAK << RESET << endl;
     cout << endl << "Please type the code of the class you want to add the UC to" << endl;
+    string f; cin >> f; lowercase(f, true);
+
+    queuer.push(Request(s1,s3,st,cl,f));
+}
+
+void Helpy::change_student_class(string& s1, string& s2, string& s3){
+a23:cout << endl << YELLOW << BREAK << RESET << endl;
+    cout << endl << "Please type the code (upXXXXXXXXX) or the name of the desired student" << endl;
+
+    string st; getline(cin >> ws, st);
+    lowercase(st);
+
+    bool valid = false;
+
+    for (const Student& s : all_students){
+        string smol = s.get_studentName();
+        lowercase(smol);
+
+        if (s.get_studentCode() == st || smol == st){
+            st = s.get_studentCode();
+            valid = true;
+
+            break;
+        }
+    }
+
+    if (!valid){
+        cout << endl << YELLOW << BREAK << RESET << endl << endl;
+        cout << RED << "I'm sorry, but that student does not exist." << RESET << endl;
+        goto a23;
+    }
+
+    cout << endl << YELLOW << BREAK << RESET << endl;
+    cout << endl << "Please type the code of the class you want to change the student \033[4mfrom"
+         << RESET << "." << endl;
+    string cl; cin >> cl; lowercase(cl, true);
+
+    cout << endl << YELLOW << BREAK << RESET << endl;
+    cout << endl << "Please type the code of the class you want to change the student \033[4mto"
+         << RESET << "." << endl;
     string f; cin >> f; lowercase(f, true);
 
     queuer.push(Request(s1,s3,st,cl,f));
@@ -1199,6 +1242,8 @@ void Helpy::rem(Request sub){
 
                     UC& u = all_UCs[dec * 5 + (unit - 1)];
                     u.remove_student(stoi(s.get_studentCode()));
+
+
 
                     cout << endl << YELLOW << BREAK << RESET << endl << endl;
                     cout << "UC-" << u.get_ucCode() << " has sucessfully been removed from " << sub.get_student() << endl;
@@ -1443,7 +1488,7 @@ string Helpy::is_valid(Student& s, Class& c, string uc){
             return "Failed due to Schedule overlap";
         }
     }
-    
+
     // verificar se a troca gera desequilíbrio nas turmas das UCs
     int dec = uc[6] - '0',
         unit = uc[7] - '0';

@@ -57,6 +57,7 @@ class Helpy {
         void remove_student_classes(string& s1, string& s2, string& s3);
         void remove_student_ucs(string& s1, string& s2, string& s3);
         void add_student_uc(string& s1, string& s2, string& s3);
+        void change_student_class(string& s1, string& s2, string& s3);
 
         void add(Request sub);
         void rem(Request sub);
