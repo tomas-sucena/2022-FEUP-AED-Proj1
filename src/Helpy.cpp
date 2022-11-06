@@ -183,7 +183,7 @@ b2: cout << endl << YELLOW << BREAK << RESET << endl;
         cout << "* UC" << endl;
         cout << endl;
     }
-    else if (s1 == "add" || s1 == "remove"){
+    else if (s1 == "add" || s1 == "remove" || s1 == "change"){
         cout << endl << YELLOW << BREAK << RESET << endl << endl;
         cout << "* Student" << endl;
         cout << endl;
@@ -191,11 +191,6 @@ b2: cout << endl << YELLOW << BREAK << RESET << endl;
     else if (s1 == "process"){
         cout << endl << YELLOW << BREAK << RESET << endl << endl;
         cout << "* Queue" << endl;
-        cout << endl;
-    }
-    else if (s1 == "change"){
-        cout << endl << YELLOW << BREAK << RESET << endl << endl;
-        cout << "* Student" << endl;
         cout << endl;
     }
     else if (s1 == "quit"){
@@ -1336,6 +1331,8 @@ void Helpy::rem(Request sub){
                         }
                     }
 
+                    string classCode = iit->get_classCode(); // turma em que o estudante estava inscrito na UC
+
                     blocks.erase(iit);
                     s.set_Schedule(Schedule(blocks));
 
@@ -1347,27 +1344,11 @@ void Helpy::rem(Request sub){
                     u.remove_student(stoi(s.get_studentCode()));
 
                     // remover o estudante da turma em que estava inscrito na UC
-                    int studentCode = stoi(s.get_studentCode());
+                    int year = classCode[0] - '0';
+                    int num = (classCode[5] - '0') * 10 + (classCode[6] - '0');
 
-                    for (Class& c : all_classes){
-                        if (!c.find_student(studentCode)){
-                            continue;
-                        }
-
-                        bool found = false;
-                        for (const Block& b : c.get_schedule().get_blocks()){
-                            if (b == *iit){
-                                c.remove_student(s.get_studentName(), sub.get_uc());
-
-                                found = true;
-                                break;
-                            }
-                        }
-
-                        if (found){
-                            break;
-                        }
-                    }
+                    Class& c = all_classes[(year - 1) * 16 + (num - 1)];
+                    c.remove_student(s.get_studentName(), u.get_ucCode());
 
                     cout << endl << YELLOW << BREAK << RESET << endl << endl;
                     cout << "UC-" << u.get_ucCode() << " has sucessfully been removed from " << sub.get_student() << endl;
