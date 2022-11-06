@@ -31,7 +31,7 @@ class Class {
         void remove_student(string studentName);//por implementar
         int size() const;
 
-        bool equals(Class anime);
+        bool equals(Class c);
         bool operator<(const Class& c) const; // overloading
 };
 
