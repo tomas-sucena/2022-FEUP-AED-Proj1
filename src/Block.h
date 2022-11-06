@@ -35,7 +35,7 @@ class Block{
         string get_type() const;
         string get_classCode() const;
 
-        string set_classCode(const string& classCode);
+        void set_classCode(const string& classCode);
 
         bool operator<(const Block& b) const; // overloading
         bool operator==(const Block& b) const; // overloading

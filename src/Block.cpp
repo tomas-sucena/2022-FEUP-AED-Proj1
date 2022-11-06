@@ -76,7 +76,7 @@ string Block::get_classCode() const{
  * @brief sets the code of the class to whose schedule the block belongs
  * @param code of the class
  */
-string Block::set_classCode(const string& classCode) {
+void Block::set_classCode(const string& classCode) {
     classCode_ = classCode;
 }
 

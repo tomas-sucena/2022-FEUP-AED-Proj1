@@ -146,6 +146,7 @@ b2: cout << endl << YELLOW << BREAK << RESET << endl;
     cout << "* Display" << endl;
     cout << "* Add" << endl;
     cout << "* Remove" << endl;
+    cout << "* Change" << endl;
     cout << "* Process" << endl;
     cout << "* Quit" << endl;
     cout << endl;
@@ -174,6 +175,11 @@ b2: cout << endl << YELLOW << BREAK << RESET << endl;
         cout << "* Queue" << endl;
         cout << endl;
     }
+    else if (s1 == "change"){
+        cout << endl << YELLOW << BREAK << RESET << endl << endl;
+        cout << "* Student" << endl;
+        cout << endl;
+    }
     else if (s1 == "quit"){
         goto e2;
     }
@@ -197,6 +203,11 @@ b2: cout << endl << YELLOW << BREAK << RESET << endl;
     else if (command[s1] == 100 && s2 == "student"){ // s1 -> remove
         cout << endl << YELLOW << BREAK << RESET << endl << endl;
         cout << "* UC" << endl;
+        cout << "* Class" << endl;
+        cout << endl;
+    }
+    else if (command[s1] == 300 && s2 == "student"){ // s1 -> change
+        cout << endl << YELLOW << BREAK << RESET << endl << endl;
         cout << "* Class" << endl;
         cout << endl;
     }
