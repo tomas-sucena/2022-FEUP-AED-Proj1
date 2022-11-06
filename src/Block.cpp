@@ -17,6 +17,9 @@ Block::Block(string code, string weekday, string startHour, string duration, str
     endHour_ = stof(startHour) + stof(duration);
 }
 
+/**
+ * @brief Construct a new Block:: Block object
+ */
 Block::Block(){
     startHour_ = endHour_ = 0;
 }
