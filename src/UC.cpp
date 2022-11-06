@@ -1,6 +1,17 @@
 #include "UC.h"
 
 /**
+ * @brief compares two pairs
+ * @param p1 first pair
+ * @param p2 second pair
+ * @return true if the string of the first pair comes before the string of the second pair
+ * @return false if the string of the second pair comes before the string of the first pair
+ */
+bool foo(const pair<int, string> p1, const pair<int, string> p2){
+    return (p1.second < p2.second);
+}
+
+/**
  * @brief construct a new UC::UC object
  * @param ucCode code of the UC
  * @param classes classes that belong to that UC
@@ -156,15 +167,4 @@ void UC::set_schedule(Schedule schedule){
  */
 Schedule UC::get_schedule(){
     return schedule_;
-}
-
-/**
- * @brief compares two pairs
- * @param p1 first pair
- * @param p2 second pair
- * @return true if the string of the first pair comes before the string of the second pair
- * @return false if the string of the second pair comes before the string of the first pair
- */
-bool foo(const pair<int, string> p1, const pair<int, string> p2){
-    return (p1.second < p2.second);
 }
