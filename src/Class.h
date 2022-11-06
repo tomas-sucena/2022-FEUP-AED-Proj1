@@ -26,6 +26,7 @@ class Class {
         map<string, set<string>> get_ucs() const;
         Schedule get_schedule() const;
 
+        bool find_student(const int& studentCode) const;
         void print_students(bool by_code, bool descending) const;
         void add_student(int studentCode, const string& studentName, const string& ucCode);
         void remove_student(const string& studentName, const string& ucCode = "");

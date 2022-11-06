@@ -153,7 +153,9 @@ int main(){
 
             for (Block& b : c.get_schedule().get_blocks()){
                 if (b.get_code() == ucCode){
+                    b.set_classCode(c.get_classCode());
                     blocks.push_back(b);
+
                     break;
                 }
             }
