@@ -155,7 +155,7 @@ void Class::remove_student(const string& studentName, const string& ucCode){
         }
     }
 
-    // remover o estudante da turma, caso ele/a não esteja inscrito na turma em nenhuma UC
+    // remover o estudante da turma, caso não esteja inscrito na turma em nenhuma UC
     if (n == 0){
         for(auto it = students_.begin(); it != students_.end(); it++){
             if(it->second == studentName){
