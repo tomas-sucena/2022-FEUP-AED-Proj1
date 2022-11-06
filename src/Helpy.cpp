@@ -592,7 +592,8 @@ a9: cout << endl << YELLOW << BREAK << RESET << endl << endl;
 }
 
 void Helpy::display_student_schedule() const{
-a10:cout << endl << "Please write the code (upXXXXXXXXX) or the name of the desired student." << endl;
+a10:cout << endl << YELLOW << BREAK << RESET << endl;
+    cout << endl << "Please write the code (upXXXXXXXXX) or the name of the desired student." << endl;
 
     string inp; getline(cin >> ws, inp);
     lowercase(inp);
@@ -1069,9 +1070,9 @@ a21:cout << endl << YELLOW << BREAK << RESET << endl;
 
     cout << endl << YELLOW << BREAK << RESET << endl;
     cout << endl << "Please type the code of the UC you want to remove" << endl;
-    string cl; cin >> cl; lowercase(cl, true);
+    string uc; cin >> uc; lowercase(uc, true);
 
-    queuer.push(Request(s1,s3,st,cl));
+    queuer.push(Request(s1,s3,st,uc, ""));
 }
 
 void Helpy::add_student_uc(string& s1, string& s2, string& s3){
@@ -1152,10 +1153,12 @@ void Helpy::processQueue(){
 
 void Helpy::rem(Request sub){
     bool valid = false;
+
     if(sub.get_target() == "uc"){
         for(Student& s : all_students){
             if(s.get_studentCode() == sub.get_student()){
                 valid = true;
+
                 map<string, string> a = s.get_ucs();
 
                 auto it = a.find(sub.get_uc());
@@ -1164,7 +1167,7 @@ void Helpy::rem(Request sub){
                     a.erase(it);
                     s.set_ucs(a);
 
-                    // criar o novo horário do estudante
+                    // atualizar o horário do estudante
                     list<Block> blocks = s.get_schedule().get_blocks();
 
                     auto iit = blocks.begin();
@@ -1196,45 +1199,68 @@ void Helpy::rem(Request sub){
                 }
             }
         }
-    } else if(sub.get_target() == "class"){
+    }
+    else if (sub.get_target() == "class"){
         for(Student& s: all_students){
             if (s.get_studentCode() == sub.get_student())
             {
                 valid = true;
-                set<string> cl = s.get_classes();
-                if(cl.find(sub.get_uc()) != cl.end()){
-                  cl.erase(sub.get_uc());
-                  map<string, string> a = s.get_ucs();
-                  for(auto i: a){
-                    if(i.second == sub.get_uc()){
-                        int num = (i.first[0] == 'L') ? (i.first[6] - '0') * 5 + (i.first[7] - '0') - 1 : all_UCs.size()-1;
-                        UC& u = all_UCs[num];
-                        u.add_student(stoi(s.get_studentCode()), s.get_studentName());
-                        a.erase(i.first); // isto remove a class do estudante
-                    }
-                }
-                int year = sub.get_uc()[0] - '0';
-                int num = (sub.get_uc()[5] - '0') * 10 + (sub.get_uc()[6] - '0');
-                Class& c = all_classes[(year - 1) * 16 + (num - 1)];
-                c.remove_student(s.get_studentName()); // remover o estudante da class
-                list<Block> blocks;
-                    for (auto it = s.get_ucs().begin(); it != s.get_ucs().end(); it++){
-                        for(const Block& b : class_blocks[it->second]){
-                            if (b.get_code() == it->first)
-                            {
-                                blocks.push_back(b);
-                            }
+
+                // remover a turma do estudante
+                if (s.remove_class(sub.get_class()) > 0){
+                    map<string, string> a = s.get_ucs();
+
+                    set<string> ucCodes; // códigos das UCs associadas à turma
+
+                    // remover o estudante das UCs associada à turma
+                    for(auto it = a.begin(); it != a.end();){
+                        if (it->second == sub.get_class()){
+                            int num = (it->first[0] == 'L') ? (int) (it->first[6] - '0') * 5 + (it->first[7] - '0') - 1 :
+                                                              (int) all_UCs.size() - 1;
+
+                            UC& u = all_UCs[num];
+                            u.remove_student(stoi(s.get_studentCode()));
+
+                            // remover a UC do estudante
+                            ucCodes.insert(it->first);
+                            it = a.erase(it);
+                        }
+                        else{
+                            it++;
                         }
                     }
+
+                    s.set_ucs(a);
+
+                    // remover o estudante da turma
+                    int year = sub.get_class()[0] - '0';
+                    int num = (sub.get_class()[5] - '0') * 10 + (sub.get_class()[6] - '0');
+
+                    Class& c = all_classes[(year - 1) * 16 + (num - 1)];
+                    c.remove_student(s.get_studentName());
+
+                    // atualizar o horário do estudante
+                    list<Block> blocks = s.get_schedule().get_blocks();
+
+                    for (auto iit = blocks.begin(); iit != blocks.end();){
+                        if (ucCodes.find(iit->get_code()) != ucCodes.end()){
+                            iit = blocks.erase(iit);
+                        }
+                        else{
+                            iit++;
+                        }
+                    }
+
                     s.set_Schedule(Schedule(blocks));
-                cout << "The student has been removed from the selected class" << endl;
-                } else {
+
+                    cout << "The student has been removed from the selected class" << endl;
+                }
+                else {
                     log(sub, "Failed because the student is not in the selected Class");
-                    cout << RED << "Failed, see logs for more information"<< RESET <<  endl;
+                    cout << RED << "Failed, see logs for more information" << RESET <<  endl;
                     return;
                 }
             }
-            
         }
     }
     if(!valid){
@@ -1458,12 +1484,14 @@ string Helpy::is_valid_change(Student s, Schedule schedule_, Class& c, set<strin
 }
 
 void Helpy::log(Request r, string s){
-    fstream f;
-    f.open("../Logs.txt", ios::app);
+    ofstream f("../Logs.txt", ios::app);
+
     if(r.get_type() == "remove"){
-        f<<"Failed to " << r.get_type() <<' ' << r.get_uc() <<  " from student " << r.get_student() << ":" << s << endl;
+        string code = (r.get_uc().empty()) ? r.get_class() : r.get_uc();
+
+        f << "Failed to " << r.get_type() <<' ' << code <<  " from student " << r.get_student() << ":" << s << endl;
     } else if(r.get_type() == "add") {
-        f<<"Failed to " << r.get_type() << ' ' << r.get_uc() << " to class " << r.get_class() << " on student " << r.get_student() <<':' << s << endl;
+        f << "Failed to " << r.get_type() << ' ' << r.get_uc() << " to class " << r.get_class() << " on student " << r.get_student() <<':' << s << endl;
     } else{
         f << "Failed to " << r.get_type() << ' ' << r.get_student() << " from class " << r.get_uc() << " to class " << r.get_class() << ':' << s << endl;
     }

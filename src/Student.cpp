@@ -67,6 +67,17 @@ void Student::add_class(string classCode){
 }
 
 /**
+ * @brief removes a class from the student
+ * complexity = log(n)
+ * @param classCode code (XLEICXX) of the class that will be removed
+ * @return number of classes erased
+ */
+int Student::remove_class(const string& classCode){
+    return (int) classes_.erase(classCode);
+}
+
+
+/**
  * @brief sets the schedule of the student
  * @param a schedule of the student
  */

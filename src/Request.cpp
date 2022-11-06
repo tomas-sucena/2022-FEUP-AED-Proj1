@@ -6,9 +6,9 @@
  * @param a 
  * @param b 
  * @param c 
- * @param d 
+ * @param e
  */
-Request::Request(string a, string b, string c, string d) : type(a), target(b), student_(c), uc_(d) {};
+Request::Request(string a, string b, string c, string e) : type(a), target(b), student_(c), cl_(e) {};
 
 /**
  * @brief Construct a new Request:: Request object

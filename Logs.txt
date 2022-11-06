@@ -14,3 +14,15 @@ Failed to remove 2LEIC10 from student 202040617:Fuck this
 Failed to remove L.EIC011 from student Abilio:The selected student does not exist
 Failed to remove 2LEIC08 from student 202044867:Fuck this
 Failed to remove QUIT from student 202040617:Fuck this
+Failed to remove 2LEIC08 from student 202044867:Fuck this
+Failed to remove 2LEIC08 from student 202044867:Fuck this
+Failed to remove 2LEIC08 from student 202044867:Fuck this
+Failed to remove 2LEIC08 from student 202044867:Fuck this
+Failed to remove  from student 202044867:Fuck this
+Failed to remove  from student 202044867:Fuck this
+Failed to remove  from student 202044867:Fuck this
+Failed to remove 2LEIC08 from student 202044867:Fuck this
+Failed to remove 2LEIC08 from student 202044867:Fuck this
+Failed to remove 3LEIC05 from student 202073597:Fuck this
+Failed to remove 3LEIC05 from student 202073597:Fuck this
+Failed to remove L.EIC012 from student 202034072:Failed because the student does not have the selected UC

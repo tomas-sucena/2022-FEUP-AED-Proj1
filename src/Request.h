@@ -14,7 +14,7 @@ private:
     string cl_;
 
 public:
-    Request(string a, string b, string c, string d);
+    Request(string a, string b, string c, string e);
     Request(string a, string b, string c, string d, string e);
     string get_type() const;
     string get_target() const;

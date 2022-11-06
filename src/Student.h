@@ -30,13 +30,15 @@ class Student{
         set<string> get_classes() const;
         Schedule get_schedule() const;
         set<string> get_uc() const;
-        
 
-        void add_uc(string ucCode, string classCode);
-        void add_class(string classCode);
         void set_Schedule(Schedule a);
         void set_ucs(map<string,string> sub);
         void set_uc();
+
+        void add_uc(string ucCode, string classCode);
+        void add_class(string classCode);
+
+        int remove_class(const string& classCode);
 
         void print_classes() const;
         void print_ucs() const;

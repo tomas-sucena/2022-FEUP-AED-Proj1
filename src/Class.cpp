@@ -113,10 +113,10 @@ void Class::add_student(int studentCode, const string& studentName, const string
 
     if (!found){
         students_.push_back({studentCode, studentName});
+        sort(students_.begin(), students_.end());
+
         occupation_[ucCode].insert(studentName);
     }
-    
-    sort(students_.begin(), students_.end());
 }
 
 /**
