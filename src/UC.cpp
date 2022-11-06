@@ -35,14 +35,16 @@ void UC::print_classes(){
 }
 
 /**
- * @return string with the code (L.EICXXX) of the UC
+ * @brief returns the code (L.EICXXX) of the UC
+ * @return string 
  */
 string UC::get_ucCode() const{
     return ucCode_;
 }
 
 /**
- * @return set<string> with all the classes of the UC
+ * @brief returns all the classes of the UC
+ * @return set<string> 
  */
 set<string> UC::get_classes() const{
     return classes_;
@@ -108,7 +110,7 @@ void UC::add_student(int studentCode, string studentName){
 
 /**
  * @brief removes a student from the UC
- * complexity = n
+ * complexity = log(n)
  * @param studentName name of the student
  */
 void UC::remove_student(const int& studentCode){
@@ -143,7 +145,8 @@ void UC::set_schedule(Schedule schedule){
 }
 
 /**
- * @return schedule of the UC
+ * @brief returns the schedule of the UC
+ * @return Schedule 
  */
 Schedule UC::get_schedule(){
     return schedule_;
