@@ -15,6 +15,7 @@ class Block{
         float startHour_;
         float endHour_;
         string type_;
+        string classCode_;
 
         // dias da semana
         static map<string, int> week;
@@ -32,8 +33,12 @@ class Block{
         float get_startHour() const;
         float get_endHour() const;
         string get_type() const;
+        string get_classCode() const;
+
+        string set_classCode(const string& classCode);
 
         bool operator<(const Block& b) const; // overloading
+        bool operator==(const Block& b) const; // overloading
 };
 
 #endif

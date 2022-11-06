@@ -62,7 +62,23 @@ string Block::get_type() const{
 }
 
 /**
- * @brief compares a block to other block
+ * @brief returns the code of the class to whose schedule the block belongs
+ * @return class code
+ */
+string Block::get_classCode() const{
+    return classCode_;
+}
+
+/**
+ * @brief sets the code of the class to whose schedule the block belongs
+ * @param code of the class
+ */
+string Block::set_classCode(const string& classCode) {
+    classCode_ = classCode;
+}
+
+/**
+ * @brief compares a block with another block
  * @param b block to be compared to
  * @return true if the block to be compared to happens after the other block
  * @return false if the block to be compared to happens before the other block
@@ -73,4 +89,15 @@ bool Block::operator<(const Block& b) const{
     }
     
     return (Block::week[weekday_] < Block::week[b.get_weekday()]);
+}
+
+/**
+ * @brief compares a block with another block
+ * @param b block to be compared to
+ * @return true if the blocks are equal
+ * @return false if the blocks differ in one or more parameters
+ */
+bool Block::operator==(const Block& b) const{
+    return (code_ == b.get_code() && weekday_ == b.get_weekday() && type_ == b.get_type()
+            && startHour_ == b.get_startHour() && endHour_ == b.get_endHour() && classCode_ == b.get_classCode());
 }

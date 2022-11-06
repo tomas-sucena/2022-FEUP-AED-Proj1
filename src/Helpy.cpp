@@ -1243,7 +1243,28 @@ void Helpy::rem(Request sub){
                     UC& u = all_UCs[dec * 5 + (unit - 1)];
                     u.remove_student(stoi(s.get_studentCode()));
 
+                    // remover o estudante da turma em que estava inscrito na UC
+                    int studentCode = stoi(s.get_studentCode());
 
+                    for (Class& c : all_classes){
+                        if (!c.find_student(studentCode)){
+                            continue;
+                        }
+
+                        bool found = false;
+                        for (const Block& b : c.get_schedule().get_blocks()){
+                            if (b == *iit){
+                                c.remove_student(s.get_studentName(), sub.get_uc());
+
+                                found = true;
+                                break;
+                            }
+                        }
+
+                        if (found){
+                            break;
+                        }
+                    }
 
                     cout << endl << YELLOW << BREAK << RESET << endl << endl;
                     cout << "UC-" << u.get_ucCode() << " has sucessfully been removed from " << sub.get_student() << endl;

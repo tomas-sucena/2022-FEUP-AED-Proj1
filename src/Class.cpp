@@ -84,15 +84,12 @@ void Class::print_students(bool by_code, bool descending) const{
 }
 
 /**
- * @brief adds a student to the class
- * complexity = n*log(n)
+ * @brief finds if a student belongs to the class
+ * complexity = log(n)
  * @param studentCode code of the student
- * @param studentName name of the student
- * @param ucCode code of the UC
+ * @return boolean indicating if the student belongs to the class
  */
-void Class::add_student(int studentCode, const string& studentName, const string& ucCode){
-    bool found = false;
-    
+bool Class::find_student(const int& studentCode) const{
     // pesquisa binária
     int lower = 0, upper = (int) students_.size() - 1;
 
@@ -106,12 +103,22 @@ void Class::add_student(int studentCode, const string& studentName, const string
             upper = mid - 1;
         }
         else{
-            found = true;
-            break;
+            return true;
         }
     }
 
-    if (!found){
+    return false;
+}
+
+/**
+ * @brief adds a student to the class
+ * complexity = n*log(n)
+ * @param studentCode code of the student
+ * @param studentName name of the student
+ * @param ucCode code of the UC
+ */
+void Class::add_student(int studentCode, const string& studentName, const string& ucCode){
+    if (!find_student(studentCode)){
         students_.push_back({studentCode, studentName});
         sort(students_.begin(), students_.end());
 
