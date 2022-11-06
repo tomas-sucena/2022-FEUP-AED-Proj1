@@ -151,8 +151,6 @@ void Class::remove_student(const string& studentName, const string& ucCode){
             if (p.first == ucCode){
                 p.second.erase(studentName);
                 n--;
-
-                break;
             }
         }
     }
