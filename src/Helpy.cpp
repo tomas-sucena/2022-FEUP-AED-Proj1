@@ -1149,7 +1149,7 @@ void Helpy::processQueue(){
 void Helpy::rem(Request sub){
     bool valid = false;
 
-    if(sub.get_target() == "uc"){
+    if (sub.get_target() == "uc"){
         for(Student& s : all_students){
             if(s.get_studentCode() == sub.get_student()){
                 valid = true;
@@ -1297,7 +1297,7 @@ void Helpy::add(Request sub){
                     unit = sub.get_uc()[7] - '0';
 
                 UC& u = all_UCs[dec * 5 + (unit - 1)];
-                u.add_student(stoi(s.get_studentCode()), s.get_studentName());
+                u.add_student(stoi(s.get_studentCode()), s.get_studentName(), sub.get_class());
 
                 // atualizar o horário do estudante
                 list<Block> blocks = s.get_schedule().get_blocks();
@@ -1415,37 +1415,6 @@ string Helpy::is_valid(Student s, Class& cl, string uc){
             }
         }
     }
-    /*
-    int num = (uc[0] == 'L') ? (uc[6] - '0') * 10 + (uc[7] - '0') - 1 : all_UCs.size() - 1;
-    UC& u = all_UCs[num];
-    set<string> sub = u.get_classes();
-    int dif = 0;
-    for(auto cla = sub.begin() ; cla != sub.end(); cla++){
-        int year = (*cla)[0] - '0';
-        int nu = ((*cla)[5] - '0') * 10 + ((*cla)[6] - '0');
-        int max = INT32_MIN;
-        Class& g = all_classes[(year - 1) * 16 + (nu - 1)];
-        for(auto pain = sub.begin(); pain != sub.end(); pain++){
-            if(pain == cla){
-                continue;
-            }
-            year = (*pain)[0] - '0';
-            nu = ((*pain)[5] - '0') * 10 + ((*pain)[6] - '0');
-            Class& o = all_classes[(year - 1) * 16 + (nu - 1)];
-            dif = (&g == &cl) ? abs(g.get_occupation()[uc] - o.get_occupation()[uc]) + 1 : abs(g.get_occupation()[uc] - o.get_occupation()[uc]);
-            if(&g == &cl){
-                cout << "Same" << endl;
-            }
-            cout << g.get_occupation()[uc] << endl;
-            cout << o.get_occupation()[uc] << endl;
-            if(dif > max){
-                max = dif;
-            }
-        }
-        if(max >= 4){
-            return "Failed due to class disequilibrium";
-        }
-    }*/
 
     return "yes";
 }
@@ -1462,7 +1431,8 @@ string Helpy::is_valid_change(Student s, Schedule schedule_, Class& c, set<strin
     for(Block& b: schedule_.get_blocks()){
         if (b.get_type() != "T"){
             for(Block& su: schedule_.get_blocks()){
-                if((su.get_type() != "T") && (&b != &su) && ((su.get_startHour() >= b.get_startHour() && su.get_startHour() < b.get_endHour()) || (su.get_endHour() > b.get_startHour() && su.get_endHour() <= b.get_endHour()))){
+                if((su.get_type() != "T") && (&b != &su) && ((su.get_startHour() >= b.get_startHour() && su.get_startHour() < b.get_endHour())
+                    || (su.get_endHour() > b.get_startHour() && su.get_endHour() <= b.get_endHour()))){
                     return "Failed due to Schedule overlap";
                 }
             }
@@ -1477,43 +1447,15 @@ string Helpy::is_valid_change(Student s, Schedule schedule_, Class& c, set<strin
         UC& u = all_UCs[dec * 5 + (unit - 1)];
 
 
+        int n = (int) u.get_classes()[c.get_classCode()].size(); /* número de estudantes da UC que pertencem
+                                                                    à turma para a qual se quer trocar */
 
-    }
-
-    /*
-    for(string uc: ucs){
-        int num = (uc[0] == 'L') ? (uc[6] - '0') * 10 + (uc[7] - '0') - 1 : all_UCs.size() - 1;
-        UC& u = all_UCs[num];
-        set<string> sub = u.get_classes();
-        int dif = 0;
-        for(auto cla = sub.begin() ; cla != sub.end(); cla++){
-            int year = (*cla)[0] - '0';
-            int nu = ((*cla)[5] - '0') * 10 + ((*cla)[6] - '0');
-            int max = INT32_MIN;
-            Class& g = all_classes[(year - 1) * 16 + (nu - 1)];
-            for(auto pain = sub.begin(); pain != sub.end(); pain++){
-                if(pain == cla){
-                    continue;
-                }
-                year = (*pain)[0] - '0';
-                nu = ((*pain)[5] - '0') * 10 + ((*pain)[6] - '0');
-                Class& o = all_classes[(year - 1) * 16 + (nu - 1)];
-                dif = (&g == &c) ? abs(int(g.get_occupation()[uc].size() - o.get_occupation()[uc].size())) + 1 :
-                                   abs(int(g.get_occupation()[uc].size() - o.get_occupation()[uc].size()));
-                if(&g == &c){
-                    cout << "Same" << endl;
-                }
-                cout << g.get_occupation()[uc].size() << endl;
-                cout << o.get_occupation()[uc].size() << endl;
-                if(dif > max){
-                    max = dif;
-                }
-            }
-            if(max >= 4){
+        for (auto& el : u.get_classes()){
+            if (abs(n + 1 - (int) el.second.size()) >= 4){
                 return "Failed due to class disequilibrium";
             }
         }
-    }*/
+    }
 
     return "yes";
 }

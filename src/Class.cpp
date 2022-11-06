@@ -117,24 +117,40 @@ void Class::add_student(int studentCode, const string& studentName, const string
 
 /**
  * @brief removes a student from the class
- * complexity = n
+ * complexity = n*log(n)
  * @param studentName 
  */
-void Class::remove_student(string studentName){
-    for(auto it = students_.begin(); it != students_.end(); it++){
-        if(it->second == studentName){
-            students_.erase(it);
-            break;
+void Class::remove_student(const string& studentName, const string& ucCode){
+    int n = 0; // número de UCs em que o estudante está inscrito na turma
+
+    // remover o estudante da contagem de alunos em cada UC
+    if (ucCode.empty()){
+        // para TODAS as turmas
+        for (auto& p : ucs_){
+            p.second.erase(studentName);
+        }
+    }
+    else{
+        // para UMA turma específica
+        for (auto& p : ucs_){
+            auto it = p.second.find(studentName);
+
+            n += (it != p.second.end()) ? 1 : 0;
+
+            if (p.first == ucCode){
+                p.second.erase(studentName);
+                break;
+            }
         }
     }
 
-    // remover o estudante da contagem de alunos em cada UC
-    for (auto& p : ucs_){
-        auto it = p.second.find(studentName);
-
-        if (it != p.second.end()){
-            p.second.erase(it);
-            break;
+    // remover o estudante da turma, caso ele/a não esteja inscrito na turma em nenhuma UC
+    if (n == 0){
+        for(auto it = students_.begin(); it != students_.end(); it++){
+            if(it->second == studentName){
+                students_.erase(it);
+                break;
+            }
         }
     }
 }

@@ -29,3 +29,4 @@ Failed to remove L.EIC012 from student 202034072:Failed because the student does
 Failed to remove 1LEIC01 from student 202021152:Fuck this
 Failed to remove 1LEIC01 from student 202021152:Failed because the student is not in the selected Class
 Failed to remove L.EIC015 from student 202021152:Failed because the student does not have the selected UC
+Failed to add L.EIC021 to class 3LEIC10 on student 202072322:Failed due to Schedule overlap

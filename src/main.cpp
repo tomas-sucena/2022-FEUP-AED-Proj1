@@ -20,7 +20,7 @@ int main(){
 
     string line; getline(classes_per_uc, line); // ignorar o cabeçalho
 
-    map<string, set<string>> mappy;
+    map<string, map<string, set<string>>> mappy;
     
     while (getline(classes_per_uc, line)){
         istringstream line_(line);
@@ -33,7 +33,7 @@ int main(){
         // ler o ClassCode
         getline(line_, classCode, '\r');
 
-        mappy[ucCode].insert(classCode);
+        mappy[ucCode][classCode];
     }
 
     vector<UC> all_UCs;
@@ -123,7 +123,7 @@ int main(){
 
         UC& u = all_UCs[dec * 5 + (unit - 1)];
 
-        u.add_student(stoi(studentCode), studentName);
+        u.add_student(stoi(studentCode), studentName, classCode);
     }
 
     vector<Student> all_students;

@@ -28,7 +28,7 @@ class Class {
 
         void print_students(bool by_code, bool descending) const;
         void add_student(int studentCode, const string& studentName, const string& ucCode);
-        void remove_student(string studentName);
+        void remove_student(const string& studentName, const string& ucCode = "");
 
         bool operator<(const Class& c) const; // overloading
 };

@@ -11,7 +11,7 @@ bool foo(const pair<int, string> p1, const pair<int, string> p2){
  * @param ucCode code (L.EICXXX) of the UC
  * @param classes classes that belong to that UC
  */
-UC::UC(string ucCode, set<string> classes) : 
+UC::UC(string ucCode, map<string, set<string>> classes) :
        ucCode_(ucCode), classes_(classes) {}
 
 /**
@@ -21,7 +21,7 @@ UC::UC(string ucCode, set<string> classes) :
  * @param classes classes that belong to the UC
  * @param schedule schedule of all the classes that belong to the UC
  */
-UC::UC(string ucCode, set<string> classes, Schedule schedule) :
+UC::UC(string ucCode, map<string, set<string>> classes, Schedule schedule) :
        ucCode_(ucCode), classes_(classes), schedule_(schedule) {};
 
 /**
@@ -29,8 +29,8 @@ UC::UC(string ucCode, set<string> classes, Schedule schedule) :
  * complexity = n
  */
 void UC::print_classes(){
-    for (string c : classes_){
-        cout << c << endl;
+    for (const auto& p : classes_){
+        cout << p.first << endl;
     }
 }
 
@@ -46,7 +46,7 @@ string UC::get_ucCode() const{
  * @brief returns all the classes of the UC
  * @return set<string> 
  */
-set<string> UC::get_classes() const{
+map<string, set<string>> UC::get_classes() const{
     return classes_;
 }
 
@@ -57,7 +57,7 @@ set<string> UC::get_classes() const{
  */
 void UC::remove_class(string classCode){
     for(auto iter = classes_.begin(); iter != classes_.end();){
-        if (*iter == classCode){
+        if (iter->first == classCode){
             iter = classes_.erase(iter);
         }
         else{
@@ -103,17 +103,21 @@ void UC::print_students(bool by_code, bool descending) const{
  * @param studentCode code (upXXXXXXXXX) of the student
  * @param studentName name of the student
  */
-void UC::add_student(int studentCode, string studentName){
+void UC::add_student(int studentCode, string studentName, string classCode){
     students_.push_back({studentCode, studentName});
     sort(students_.begin(), students_.end());
+
+    classes_[classCode].insert(studentName);
 }
 
 /**
  * @brief removes a student from the UC
- * complexity = log(n)
+ * complexity = n*log(n)
  * @param studentName name of the student
  */
 void UC::remove_student(const int& studentCode){
+    string studentName;
+
     // pesquisa binária
     int lower = 0, upper = (int) students_.size() - 1;
 
@@ -129,11 +133,20 @@ void UC::remove_student(const int& studentCode){
         }
         else{
             res = mid;
+            studentName = students_[mid].second;
+
             break;
         }
     }
 
     students_.erase(students_.begin() + res);
+
+    // remover o estudante da contagem de alunos em cada turma
+    for (auto& p : classes_){
+        if (p.second.erase(studentName) > 0) {
+            break;
+        }
+    }
 }
 
 /**
