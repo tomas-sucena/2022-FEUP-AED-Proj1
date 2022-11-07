@@ -95,7 +95,7 @@ a0: cout << endl << YELLOW << BREAK << RESET << endl << endl;
 
 /**
  * @brief executes the advanced mode of the UI
- * complexity = n^2
+ * complexity = n
  */
 void Helpy::advanced_mode(){
 
@@ -145,14 +145,14 @@ t1: cout << endl << YELLOW << BREAK << RESET << endl;
     }
 
 e1: cout << endl << YELLOW << BREAK << RESET << endl << endl;
-    cout << "See you next time!" << endl;
+    cout << "See you next time!" << endl << endl;
 }
 
                             ///             GUIDED MODE             ////
 
 /**
  * @brief executes the guided mode of the UI
- * complexity = n^2
+ * complexity = n
  */
 void Helpy::guided_mode(){
 
@@ -285,12 +285,12 @@ t2: cout << endl << YELLOW << BREAK << RESET << endl;
     }
 
 e2: cout << endl << YELLOW << BREAK << RESET << endl << endl;
-    cout << "See you next time!" << endl;
+    cout << "See you next time!" << endl << endl;
 }
 
 /**
  * @brief processes the commands that were inputed
- * complexity = n
+ * complexity = n^3*log(n)
  * @param s1 first word of the command
  * @param s2 second word of the command
  * @param s3 third word of the command
@@ -1095,7 +1095,7 @@ a19:cout << endl << YELLOW << BREAK << RESET << endl << endl;
 void Helpy::remove_student_classes(string& s1, string& s2, string& s3){
 a20:cout << endl << YELLOW << BREAK << RESET << endl;
 
-    cout << endl << "Please type the code (upXXXXXXXXX) or the name of the desired student" << endl;
+    cout << endl << "Please type the code (upXXXXXXXXX) or the name of the desired student." << endl;
 
     string st; getline(cin >> ws, st);
     lowercase(st);
@@ -1121,7 +1121,7 @@ a20:cout << endl << YELLOW << BREAK << RESET << endl;
     }
 
     cout << endl << YELLOW << BREAK << RESET << endl;
-    cout << endl << "Please type the code of the class you want to remove" << endl;
+    cout << endl << "Please type the code of the class you want to remove." << endl;
     string cl; cin >> cl; lowercase(cl, true);
 
     queuer.push(Request(s1,s3,st,cl));
@@ -1137,7 +1137,7 @@ a20:cout << endl << YELLOW << BREAK << RESET << endl;
 void Helpy::remove_student_ucs(string& s1, string& s2, string& s3){
 a21:cout << endl << YELLOW << BREAK << RESET << endl;
 
-    cout << endl << "Please type the code (upXXXXXXXXX) or the name of the desired student" << endl;
+    cout << endl << "Please type the code (upXXXXXXXXX) or the name of the desired student." << endl;
 
     string st; getline(cin >> ws, st);
     lowercase(st);
@@ -1163,7 +1163,7 @@ a21:cout << endl << YELLOW << BREAK << RESET << endl;
     }
 
     cout << endl << YELLOW << BREAK << RESET << endl;
-    cout << endl << "Please type the code of the UC you want to remove" << endl;
+    cout << endl << "Please type the code of the UC you want to remove." << endl;
     string uc; cin >> uc; lowercase(uc, true);
 
     queuer.push(Request(s1,s3,st,uc, ""));
@@ -1178,7 +1178,7 @@ a21:cout << endl << YELLOW << BREAK << RESET << endl;
  */
 void Helpy::add_student_uc(string& s1, string& s2, string& s3){
 a22:cout << endl << YELLOW << BREAK << RESET << endl;
-    cout << endl << "Please type the code (upXXXXXXXXX) or the name of the desired student" << endl;
+    cout << endl << "Please type the code (upXXXXXXXXX) or the name of the desired student." << endl;
 
     string st; getline(cin >> ws, st);
     lowercase(st);
@@ -1204,11 +1204,11 @@ a22:cout << endl << YELLOW << BREAK << RESET << endl;
     }
 
     cout << endl << YELLOW << BREAK << RESET << endl;
-    cout << endl << "Please type the code of the UC you want to add" << endl;
+    cout << endl << "Please type the code of the UC you want to add." << endl;
     string cl; cin >> cl; lowercase(cl, true);
 
     cout << endl << YELLOW << BREAK << RESET << endl;
-    cout << endl << "Please type the code of the class you want to add the UC to" << endl;
+    cout << endl << "Please type the code of the class you want to add the UC to." << endl;
     string f; cin >> f; lowercase(f, true);
 
     queuer.push(Request(s1,s3,st,cl,f));
@@ -1216,7 +1216,7 @@ a22:cout << endl << YELLOW << BREAK << RESET << endl;
 
 void Helpy::change_student_class(string& s1, string& s2, string& s3){
 a23:cout << endl << YELLOW << BREAK << RESET << endl;
-    cout << endl << "Please type the code (upXXXXXXXXX) or the name of the desired student" << endl;
+    cout << endl << "Please type the code (upXXXXXXXXX) or the name of the desired student." << endl;
 
     string st; getline(cin >> ws, st);
     lowercase(st);
@@ -1351,13 +1351,14 @@ void Helpy::rem(Request sub){
                     c.remove_student(s.get_studentName(), u.get_ucCode());
 
                     cout << endl << YELLOW << BREAK << RESET << endl << endl;
-                    cout << "UC-" << u.get_ucCode() << " has sucessfully been removed from " << sub.get_student() << endl;
+                    cout << GREEN << "UC-" << u.get_ucCode() << " has sucessfully been removed from " << sub.get_student() << "." << RESET << endl;
 
                     break;
                 }
                 else {
-                    log(sub, "Failed because the student does not have the selected UC");
-                    cout << RED << "Failed, see logs for more information"<< RESET << endl;
+                    log(sub, "Failed because the student does not have the selected UC.");
+                    cout << endl << YELLOW << BREAK << RESET << endl << endl;
+                    cout << RED << "Failed, see logs for more information."<< RESET << endl;
                     return;
                 }
             }
@@ -1416,10 +1417,11 @@ void Helpy::rem(Request sub){
 
                     s.set_Schedule(Schedule(blocks));
 
-                    cout << "The student has been removed from the selected class" << endl;
+                    cout << "The student has been removed from the selected class." << endl;
                 }
                 else {
-                    log(sub, "Failed because the student is not in the selected Class");
+                    log(sub, "Failed because the student is not in the selected Class.");
+                    cout << endl << YELLOW << BREAK << RESET << endl << endl;
                     cout << RED << "Failed, see logs for more information" << RESET <<  endl;
                     return;
                 }
@@ -1427,8 +1429,9 @@ void Helpy::rem(Request sub){
         }
     }
     if(!valid){
-        log(sub, "The selected student does not exist");
-        cout << RED << "Failed, see logs for more information"<< RESET << endl;
+        log(sub, "The selected student does not exist.");
+        cout << endl << YELLOW << BREAK << RESET << endl << endl;
+        cout << RED << "Failed, see logs for more information."<< RESET << endl;
     }
 }
 
@@ -1443,8 +1446,9 @@ void Helpy::add(Request sub){
             map<string, string> s_ucs = s.get_ucs();
 
             if(s_ucs.find(sub.get_uc()) != s_ucs.end()){
-                log(sub, "Failed because the student is already enrolled in the selected UC");
-                cout << RED << "Failed, see logs for more information" << RESET << endl;
+                log(sub, "Failed because the student is already enrolled in the selected UC.");
+                cout << endl << YELLOW << BREAK << RESET << endl << endl;
+                cout << RED << "Failed, see logs for more information." << RESET << endl;
                 return;
             }
 
@@ -1483,12 +1487,13 @@ void Helpy::add(Request sub){
                 }
 
                 s.set_Schedule(Schedule(blocks));
-
-                cout << GREEN << "Successfully added UC " << sub.get_uc() << " to class " << sub.get_class() <<" on student " << sub.get_student() << RESET << endl;
+                cout << endl << YELLOW << BREAK << RESET << endl << endl;
+                cout << GREEN << "Successfully added UC " << sub.get_uc() << " to class " << sub.get_class() << " on student " << sub.get_student() << "." << RESET << endl;
             }
             else {
                 log(sub, conf);
-                cout << RED << "Failed, see logs for more information"<< RESET << endl;
+                cout << endl << YELLOW << BREAK << RESET << endl << endl;
+                cout << RED << "Failed, see logs for more information." << RESET << endl;
             }
 
             break;
@@ -1512,8 +1517,9 @@ void Helpy::change(Request sub){
                 UC& u = all_UCs[num];
 
                 if(u.get_classes().find(sub.get_class()) == u.get_classes().end()){
-                    log(sub, "Not all UCs from previous class are taught at the new class");
-                    cout << RED << "Failed, see logs for more information"<< RESET << endl;
+                    log(sub, "Not all UCs from previous class are taught at the new class.");
+                    cout << endl << YELLOW << BREAK << RESET << endl << endl;
+                    cout << RED << "Failed, see logs for more information."<< RESET << endl;
                     return;
                 }
             }
@@ -1565,12 +1571,13 @@ void Helpy::change(Request sub){
 
                 Class& old_class = all_classes[(year - 1) * 16 + (num - 1)];
                 old_class.remove_student(s.get_studentName());
-
+                cout << endl << YELLOW << BREAK << RESET << endl << endl;
                 cout << GREEN << "Successfully changed student " << sub.get_student() << " from class " << sub.get_uc() << " to class " << sub.get_class() << "." << RESET << endl;
             }
             else {
                 log(sub, grief);
-                cout << RED << "Failed, see logs for more information"<< RESET << endl;
+                cout << endl << YELLOW << BREAK << RESET << endl << endl;
+                cout << RED << "Failed, see logs for more information."<< RESET << endl;
             }
 
             return;
@@ -1608,7 +1615,7 @@ string Helpy::is_valid(Student& s, Class& c, string uc){
         bool end_conflict = (blocc.get_endHour() > b.get_startHour() && blocc.get_endHour() <= b.get_endHour());
 
         if (type_conflict && (start_conflict || end_conflict)){
-            return "Failed due to Schedule overlap";
+            return "Failed due to Schedule overlap.";
         }
     }
 
@@ -1622,7 +1629,7 @@ string Helpy::is_valid(Student& s, Class& c, string uc){
 
     for (auto& el : u.get_classes()){
         if (abs(n + 1 - (int) el.second.size()) >= 4){
-            return "Failed due to class disequilibrium";
+            return "Failed due to class disequilibrium.";
         }
     }
 
@@ -1642,7 +1649,7 @@ string Helpy::is_valid_change(Student s, Schedule schedule_, Class& c, set<strin
     // verificar se a turma está cheia
     for (string uc : ucs){
         if (c.get_ucs()[uc].size() >= 30){
-            return "Failed because the class is full";
+            return "Failed because the class is full.";
         }
     }
 
@@ -1673,7 +1680,7 @@ string Helpy::is_valid_change(Student s, Schedule schedule_, Class& c, set<strin
 
         for (auto& el : u.get_classes()){
             if (abs(n + 1 - (int) el.second.size()) >= 4){
-                return "Failed due to class disequilibrium";
+                return "Failed due to class disequilibrium.";
             }
         }
     }
@@ -1700,4 +1707,3 @@ void Helpy::log(Request r, string s){
     }
     f.close();
 }
-
