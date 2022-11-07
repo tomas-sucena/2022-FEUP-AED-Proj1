@@ -1,1 +1,5 @@
 Failed to change 202044867 from class 2LEIC01 to class 2LEIC05:Failed due to Schedule overlap
+Failed to change 202040617 from class 3LEIC08 to class 3LEIC01:Failed due to Schedule overlap
+Failed to change 202026847 from class 1LEIC01 to class 1LEIC08:Failed due to Schedule overlap
+Failed to change 201920727 from class 1LEIC05 to class 1LEIC01:Failed due to Schedule overlap
+Failed to change 201978187 from class 3LEIC05 to class 3LEIC01:Failed due to Schedule overlap
