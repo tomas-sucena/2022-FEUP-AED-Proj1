@@ -1511,15 +1511,28 @@ void Helpy::add(Request sub){
 void Helpy::change(Request sub){
     for (Student& s: all_students){
         if (s.get_studentCode() == sub.get_student()){
-            // verificar se todas as UCs da turma antiga são lecionadas na nova
-            for (const auto& [ucCode, classCode] : s.get_ucs()){
-                int num = (ucCode[0] == 'L') ? (int) (ucCode[6] - '0') * 5 + (ucCode[7] - '0') - 1 :
-                                               (int) all_UCs.size()-1;
+            // verificar se o estudante está na turma da qual pretende sair
+            int year = sub.get_uc()[0] - '0';
+            int num = (sub.get_uc()[5] - '0') * 10 + (sub.get_uc()[6] - '0');
 
-                UC& u = all_UCs[num];
+            Class& old_class = all_classes[(year - 1) * 16 + (num - 1)];
+
+            if (!old_class.find_student(stoi(s.get_studentCode()))){
+                log(sub, "The student does not belong the class they want to leave from.");
+                cout << endl << YELLOW << BREAK << RESET << endl << endl;
+                cout << RED << "Failed, see logs for more information."<< RESET << endl;
+                return;
+            }
+
+            // verificar se todas as UCs da turma antiga são lecionadas na nova
+            for (const auto& p : s.get_ucs()){
+                int n = (p.first[0] == 'L') ? (int) (p.first[6] - '0') * 5 + (p.first[7] - '0') - 1 :
+                                              (int) all_UCs.size() - 1;
+
+                UC& u = all_UCs[n];
 
                 if(u.get_classes().find(sub.get_class()) == u.get_classes().end()){
-                    log(sub, "Not all UCs from previous class are taught at the new class.");
+                    log(sub, "Not all UCs from the previous class are taught at the new class.");
                     cout << endl << YELLOW << BREAK << RESET << endl << endl;
                     cout << RED << "Failed, see logs for more information."<< RESET << endl;
                     return;
@@ -1552,8 +1565,8 @@ void Helpy::change(Request sub){
 
             Schedule new_schedule = Schedule(blocks);
 
-            int year = sub.get_class()[0] - '0';
-            int num = (sub.get_class()[5] - '0') * 10 + (sub.get_class()[6] - '0');
+            year = sub.get_class()[0] - '0';
+            num = (sub.get_class()[5] - '0') * 10 + (sub.get_class()[6] - '0');
 
             Class& new_class = all_classes[(year - 1) * 16 + (num - 1)];
 
@@ -1570,10 +1583,6 @@ void Helpy::change(Request sub){
                 }
 
                 // remover estudante da turma antiga
-                year = sub.get_uc()[0] - '0';
-                num = (sub.get_uc()[5] - '0') * 10 + (sub.get_uc()[6] - '0');
-
-                Class& old_class = all_classes[(year - 1) * 16 + (num - 1)];
                 old_class.remove_student(s.get_studentName());
                 cout << endl << YELLOW << BREAK << RESET << endl << endl;
                 cout << GREEN << "Successfully changed student " << sub.get_student() << " from class " << sub.get_uc() << " to class " << sub.get_class() << "." << RESET << endl;
@@ -1615,6 +1624,7 @@ string Helpy::is_valid(Student& s, Class& c, string uc){
 
     for (const Block& b : s.get_schedule().get_blocks()){
         bool type_conflict = (blocc.get_type() != "T" && b.get_type() != "T");
+        bool day_conflict = (blocc.get_weekday() != b.get_weekday());
         bool start_conflict = (blocc.get_startHour() >= b.get_startHour() && blocc.get_startHour() < b.get_endHour());
         bool end_conflict = (blocc.get_endHour() > b.get_startHour() && blocc.get_endHour() <= b.get_endHour());
 
@@ -1658,14 +1668,15 @@ string Helpy::is_valid_change(Student s, Schedule schedule_, Class& c, set<strin
     }
 
     // verificar se não há sobreposição de aulas no horário
-    for(Block& b: schedule_.get_blocks()){
-        for(Block& su: schedule_.get_blocks()){
-            bool eq = (&b == &su);
+    for (Block& b: schedule_.get_blocks()){
+        for (Block& su: schedule_.get_blocks()){
+            bool eq = (b == su);
             bool type_conflict = (b.get_type() != "T" && su.get_type() != "T");
+            bool day_conflict = (b.get_weekday() == su.get_weekday());
             bool start_conflict = (su.get_startHour() >= b.get_startHour() && su.get_startHour() < b.get_endHour());
             bool end_conflict = (su.get_endHour() > b.get_startHour() && su.get_endHour() <= b.get_endHour());
 
-            if (!eq && (type_conflict && (start_conflict || end_conflict))){
+            if (!eq && (type_conflict && day_conflict && (start_conflict || end_conflict))){
                 return "Failed due to Schedule overlap";
             }
         }
