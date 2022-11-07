@@ -1,0 +1,1 @@
+Failed to change 202044867 from class 2LEIC01 to class 2LEIC05:Failed due to Schedule overlap

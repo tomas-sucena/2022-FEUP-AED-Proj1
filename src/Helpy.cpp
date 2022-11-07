@@ -1509,11 +1509,11 @@ void Helpy::add(Request sub){
  * @param sub request
  */
 void Helpy::change(Request sub){
-    for(Student& s: all_students){
+    for (Student& s: all_students){
         if (s.get_studentCode() == sub.get_student()){
             // verificar se todas as UCs da turma antiga são lecionadas na nova
             for (const auto& [ucCode, classCode] : s.get_ucs()){
-                int num = (ucCode[0] == 'L') ? (int) (ucCode[6] - '0') * 10 + (ucCode[7] - '0') - 1 :
+                int num = (ucCode[0] == 'L') ? (int) (ucCode[6] - '0') * 5 + (ucCode[7] - '0') - 1 :
                                                (int) all_UCs.size()-1;
 
                 UC& u = all_UCs[num];
@@ -1531,18 +1531,20 @@ void Helpy::change(Request sub){
             set<string> ucCodes;
 
             for (auto& p : new_UCs){
+                ucCodes.insert(p.first);
+
                 if (p.second == sub.get_uc()){
                     p.second = sub.get_class();
-                    ucCodes.insert(p.first);
                 }
             }
 
             // criar o novo horário do estudante
             list<Block> blocks;
+            map<string, string> bug = s.get_ucs();
 
-            for (auto it = s.get_ucs().begin(); it != s.get_ucs().end(); it++){
-                for (const Block& b : class_blocks[it->second]){
-                    if (b.get_code() == it->first) {
+            for (const auto& p : s.get_ucs()){
+                for (const Block& b : class_blocks[p.second]){
+                    if (b.get_code() == p.first) {
                         blocks.push_back(b);
                     }
                 }
