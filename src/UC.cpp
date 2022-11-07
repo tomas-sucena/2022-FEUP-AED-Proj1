@@ -30,7 +30,7 @@ UC::UC(string ucCode, map<string, set<string>> classes, Schedule schedule) :
 
 /**
  * @brief prints the classes of the UC
- * complexity = n
+ * ;complexity = o(n)
  */
 void UC::print_classes(){
     for (const auto& p : classes_){
@@ -56,7 +56,7 @@ map<string, set<string>> UC::get_classes() const{
 
 /**
  * @brief removes a determined class from the UC
- * complexity = n
+ * ;complexity = o(n)
  * @param classCode code of the class that will be removed from the UC
  */
 void UC::remove_class(string classCode){
@@ -72,7 +72,7 @@ void UC::remove_class(string classCode){
 
 /**
  * @brief prints all the students enrolled in the UC
- * complexity = n*log(n)
+ * ;complexity = o(n*log(n))
  * @param by_code true if ordered by student code; false if ordered by student name
  * @param descending true if in descending order; false if in ascending order
  */
@@ -103,7 +103,7 @@ void UC::print_students(bool by_code, bool descending) const{
 
 /**
  * @brief adds a student to the UC
- * complexity = n*log(n)
+ * ;complexity = o(n*log(n))
  * @param studentCode code (upXXXXXXXXX) of the student
  * @param studentName name of the student
  */
@@ -116,7 +116,7 @@ void UC::add_student(int studentCode, string studentName, string classCode){
 
 /**
  * @brief removes a student from the UC
- * complexity = n*log(n)
+ * ;complexity = o(n*log(n))
  * @param studentName name of the student
  */
 void UC::remove_student(const int& studentCode){

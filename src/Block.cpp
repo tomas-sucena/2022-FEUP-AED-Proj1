@@ -66,7 +66,7 @@ string Block::get_type() const{
 
 /**
  * @brief returns the code of the class to whose schedule the block belongs
- * @return class code
+ * @return code of the class
  */
 string Block::get_classCode() const{
     return classCode_;
@@ -74,7 +74,7 @@ string Block::get_classCode() const{
 
 /**
  * @brief sets the code of the class to whose schedule the block belongs
- * @param code of the class
+ * @param classCode code of the class
  */
 void Block::set_classCode(const string& classCode) {
     classCode_ = classCode;
