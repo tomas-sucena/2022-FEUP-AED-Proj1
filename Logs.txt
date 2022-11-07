@@ -1,1 +1,4 @@
 Failed to change 202044867 from class 2LEIC01 to class 2LEIC05:Failed due to Schedule overlap
+Failed to change 201978187 from class 3LEIC05 to class 3LEIC01:Failed due to Schedule overlap
+Failed to change 201978187 from class 3LEIC01 to class 3LEIC05:Failed due to Schedule overlap
+Failed to change 201978187 from class 3LEIC01 to class 3LEIC05:The student does not belong the class they want to leave from.
