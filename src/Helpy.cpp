@@ -118,7 +118,8 @@ b1: cout << endl << YELLOW << BREAK << RESET << endl;
 
     if(s1 == "process" && s2 == "queue"){
         processQueue();
-        cout << endl << "Queue has been processed" << endl;
+        cout << endl << YELLOW << BREAK << RESET << endl << endl;
+        cout << "Queue has been processed" << endl;
         goto t1;
     }
 
@@ -205,7 +206,8 @@ b2: cout << endl << YELLOW << BREAK << RESET << endl;
 
     if (s1 == "process" && s2 == "queue"){
         processQueue();
-        cout << endl << "Queue has been processed" << endl;
+        cout << endl << YELLOW << BREAK << RESET << endl << endl;
+        cout << "Queue has been processed" << endl;
         goto t2;
     }
     else if (command[s1] == 200 && s2 == "student"){ // s1 -> add
@@ -1416,7 +1418,7 @@ void Helpy::rem(Request sub){
                     }
 
                     s.set_Schedule(Schedule(blocks));
-
+                    cout << endl << YELLOW << BREAK << RESET << endl << endl;
                     cout << "The student has been removed from the selected class." << endl;
                 }
                 else {
