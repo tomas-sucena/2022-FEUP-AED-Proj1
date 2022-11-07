@@ -67,7 +67,7 @@ void Student::add_class(string classCode){
 
 /**
  * @brief removes a class from the student
- * ;complexity = o(log(n))
+ * ;complexity = O(log(n))
  * @param classCode code of the class that will be removed
  * @return number of classes erased
  */
@@ -86,7 +86,7 @@ void Student::set_Schedule(Schedule a){
 
 /**
  * @brief prints all the classes the student is in
- * ;complexity = o(n)
+ * ;complexity = O(n)
  */
 void Student::print_classes() const{
     for (string classCode : classes_){
@@ -96,7 +96,7 @@ void Student::print_classes() const{
 
 /**
  * @brief prints all the UCs the student is enrolled in
- * ;complexity = o(n)
+ * ;complexity = O(n)
  */
 void Student::print_ucs() const{
     for (auto info : ucs_){

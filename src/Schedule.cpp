@@ -7,7 +7,7 @@ Schedule::Schedule(){}
 
 /**
  * @brief Construct a new Schedule:: Schedule object
- * ;complexity = o(n*log(n))
+ * ;complexity = O(n*log(n))
  * @param blocks list of blocks containing classes (aulas)
  */
 Schedule::Schedule(list<Block> blocks) : blocks_(blocks) {
@@ -24,7 +24,7 @@ list<Block> Schedule::get_blocks() const{
 
 /**
  * @brief prints the schedule
- * ;complexity = o(n)
+ * ;complexity = O(n)
  */
 void Schedule::print(){
     for (auto it = blocks_.begin(); it != blocks_.end(); it++){

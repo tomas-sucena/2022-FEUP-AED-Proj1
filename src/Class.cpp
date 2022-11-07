@@ -54,7 +54,7 @@ vector<pair<int, string>> Class::get_students() const{
 
 /**
  * @brief prints all the students that are in the class
- * ;complexity = o(n*log(n))
+ * ;complexity = O(n*log(n))
  * @param by_code true if ordered by student code; false if ordered by student name
  * @param descending true if in descending order; false if in ascending order
  */
@@ -85,7 +85,7 @@ void Class::print_students(bool by_code, bool descending) const{
 
 /**
  * @brief finds if a student belongs to the class
- * ;complexity = o(log(n))
+ * ;complexity = O(log(n))
  * @param studentCode code of the student
  * @return boolean indicating if the student belongs to the class
  */
@@ -112,7 +112,7 @@ bool Class::find_student(const int& studentCode) const{
 
 /**
  * @brief adds a student to the class
- * ;complexity = o(n*log(n))
+ * ;complexity = O(n*log(n))
  * @param studentCode code of the student
  * @param studentName name of the student
  * @param ucCode code of the UC
@@ -128,7 +128,7 @@ void Class::add_student(int studentCode, const string& studentName, const string
 
 /**
  * @brief removes a student from the class
- * ;complexity = o(n*log(n))
+ * ;complexity = O(n*log(n))
  * @param studentName 
  */
 void Class::remove_student(const string& studentName, const string& ucCode){
