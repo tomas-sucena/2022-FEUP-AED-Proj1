@@ -1512,14 +1512,14 @@ void Helpy::change(Request sub){
     for (Student& s: all_students){
         if (s.get_studentCode() == sub.get_student()){
             // verificar se todas as UCs da turma antiga são lecionadas na nova
-            for (const auto& [ucCode, classCode] : s.get_ucs()){
-                int num = (ucCode[0] == 'L') ? (int) (ucCode[6] - '0') * 5 + (ucCode[7] - '0') - 1 :
-                                               (int) all_UCs.size()-1;
+            for (const auto& p : s.get_ucs()){
+                int num = (p.first[0] == 'L') ? (int) (p.first[6] - '0') * 5 + (p.first[7] - '0') - 1 :
+                                                (int) all_UCs.size() - 1;
 
                 UC& u = all_UCs[num];
 
                 if(u.get_classes().find(sub.get_class()) == u.get_classes().end()){
-                    log(sub, "Not all UCs from previous class are taught at the new class.");
+                    log(sub, "Not all UCs from the previous class are taught at the new class.");
                     cout << endl << YELLOW << BREAK << RESET << endl << endl;
                     cout << RED << "Failed, see logs for more information."<< RESET << endl;
                     return;
